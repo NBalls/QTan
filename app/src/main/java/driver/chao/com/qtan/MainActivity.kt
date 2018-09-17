@@ -214,6 +214,13 @@ class MainActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.kedui).text = mList[i].getKe()
             rootViews.findViewById<TextView>(R.id.panText).text = getEndPan(mList[i])
             rootViews.findViewById<TextView>(R.id.resultText).text = mList[i].bifen
+            if (mList[i].like) {
+                rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like_already)
+                rootViews.setBackgroundColor(Color.parseColor("#FF0000"))
+            } else {
+                rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like)
+                rootViews.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            }
             val bifen = mList[i].bifen
             if (bifen.matches(Regex("\\d-\\d"))) {
                 val zPoint = bifen.substring(0, 1)
@@ -240,6 +247,18 @@ class MainActivity : AppCompatActivity() {
                     layout.visibility = View.GONE
                 } else {
                     layout.visibility = View.VISIBLE
+                }
+            }
+
+            rootViews.findViewById<ImageView>(R.id.likeImage).onClick {
+                mList[i].like = !mList[i].like
+                val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
+                val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
+                dataList.forEach {
+                    if (it.id == mList[i].id) {
+                        it.like = mList[i].like
+                        fillData(dataList)
+                    }
                 }
             }
 
@@ -419,12 +438,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun validateData(mList: List<RBean>) {
         val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
-        val mDataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
-        for (i in 0 until mDataList.size) {
+        val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
+        for (i in 0 until dataList.size) {
             for (j in 0 until mList.size) {
-                if (mList[j].getZhudui().contains(mDataList[i].zhu)
-                        && mList[j].getLiansai().contains(mDataList[i].liansai)) {
-                    mDataList[i].bifen = mList[j].points
+                if (mList[j].getZhudui().contains(dataList[i].zhu)
+                        && mList[j].getLiansai().contains(dataList[i].liansai)) {
+                    dataList[i].bifen = mList[j].points
                     break
                 }
             }
@@ -433,15 +452,19 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             // 更新保存数据
             validateButton.text = "验证"
-            sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(mDataList)).apply()
-            fillItem(PrintClass.parse144(mDataList) as ArrayList<MainBean>, R.id.oneLayout)
-            fillItem(PrintClass.parse165(mDataList) as ArrayList<MainBean>, R.id.one65Layout)
-            fillItem(PrintClass.parseCOver(mDataList) as ArrayList<MainBean>, R.id.coverLayout)
-            fillItem(PrintClass.parseDown(mDataList) as ArrayList<MainBean>, R.id.downLayout)
-            fillItem(PrintClass.parseZero(mDataList) as ArrayList<MainBean>, R.id.zeroLayout)
-            fillItem(PrintClass.parseCut(mDataList) as ArrayList<MainBean>, R.id.cutLayout)
-            fillItem(PrintClass.parse025(mDataList) as ArrayList<MainBean>, R.id.one25Layout)
-            fillItem(PrintClass.parseDeep(mDataList) as ArrayList<MainBean>, R.id.deepLayout)
+            fillData(dataList)
         }
+    }
+
+    private fun fillData(dataList: List<MainBean>) {
+        sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
+        fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
+        fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
+        fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
+        fillItem(PrintClass.parseDown(dataList) as ArrayList<MainBean>, R.id.downLayout)
+        fillItem(PrintClass.parseZero(dataList) as ArrayList<MainBean>, R.id.zeroLayout)
+        fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
+        fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
+        fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
     }
 }

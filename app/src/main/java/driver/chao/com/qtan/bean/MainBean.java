@@ -20,6 +20,7 @@ public class MainBean implements Serializable {
     private String bigUrl = "";
     private String result = "-";
     private String ypan = "";
+    private Boolean isLike = false;
     public List<YBean> yList = new ArrayList();
     public List<OBean> oList = new ArrayList();
 
@@ -145,5 +146,13 @@ public class MainBean implements Serializable {
 
     public void setYpan(String ypan) {
         this.ypan = ypan;
+    }
+
+    public Boolean getLike() {
+        return isLike;
+    }
+
+    public void setLike(Boolean like) {
+        isLike = like;
     }
 }
