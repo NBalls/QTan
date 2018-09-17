@@ -24,6 +24,7 @@ import driver.chao.com.qtan.parse.PrintClass
 import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
 import driver.chao.com.qtan.util.getYMDHMS
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
 import org.jsoup.Jsoup
@@ -390,10 +391,11 @@ class MainActivity : AppCompatActivity() {
                 mList[i].like = !mList[i].like
                 val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
                 val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
-                dataList.forEach {
-                    if (it.id == mList[i].id) {
-                        it.like = mList[i].like
+                for (j in 0 until dataList.size) {
+                    if (dataList[j].id == mList[i].id) {
+                        dataList[j].like = mList[i].like
                         fillData(dataList)
+                        break
                     }
                 }
             }
@@ -593,7 +595,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillData(dataList: List<MainBean>) {
-        sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
+        Observable.create<Boolean> { subscrbe ->
+            sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
+            subscrbe.onNext(true)
+            subscrbe.onCompleted()
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
         fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
         fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
         fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)

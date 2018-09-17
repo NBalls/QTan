@@ -21,6 +21,16 @@ fun getYMDHMS(): String {
     return sdf.format(Date(System.currentTimeMillis()))
 }
 
+fun getMD(): String {
+    val sdf = SimpleDateFormat("MM.dd")
+    return sdf.format(Date(System.currentTimeMillis()))
+}
+
+fun getMYDR(): String {
+    val sdf = SimpleDateFormat("MM月dd日")
+    return sdf.format(Date(System.currentTimeMillis()))
+}
+
 fun getYMDs(): List<String> {
     val strList = ArrayList<String>()
     for (i in 0..20) {

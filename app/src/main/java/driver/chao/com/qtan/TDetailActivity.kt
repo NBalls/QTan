@@ -10,18 +10,27 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.parse.ParseClass
+import driver.chao.com.qtan.util.getMD
+import driver.chao.com.qtan.util.getMYDR
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
+
 
 class TDetailActivity : AppCompatActivity() {
+
+    private lateinit var mainBean: MainBean
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tdetail)
 
-        val mainBean = intent.getSerializableExtra("mainBean") as MainBean
+        mainBean = intent.getSerializableExtra("mainBean") as MainBean
         fillItem(mainBean, R.id.detailLayout)
 
         ParseClass.parseRData(mainBean)
@@ -38,35 +47,230 @@ class TDetailActivity : AppCompatActivity() {
 
     private fun initView() {
         findViewById<Button>(R.id.zzButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("诸葛看球").append(getMD()).append("会员推荐\n\n")
+            sb.append("重心单 ")
+                    .append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time)
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.zhu)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("-")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan.substring(1))
+            } else {
+                sb.append("平手")
+            }
+            sb.append("\n\n").append("建议: 稳胆单 双注，实力单 均注！！！")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "诸葛重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.zkButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("诸葛看球").append(getMD()).append("会员推荐\n\n")
+            sb.append("重心单 ")
+                    .append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time)
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.ke)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append(mainBean.yList[0].endPan)
+            } else {
+                sb.append("平手")
+            }
+            sb.append("\n\n").append("建议: 稳胆单 双注，实力单 均注！！！")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "诸葛重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.dzButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("貂蝉看盘").append(getMYDR()).append("足球推荐\n\n")
+            sb.append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time)
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.zhu)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("-")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan.substring(1))
+            } else {
+                sb.append("平手")
+            }
+            sb.append("  【重心单】")
+            sb.append("\n\n").append("温馨提示：信心推荐，常跟才是王道")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "貂蝉重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.dkButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("貂蝉看盘").append(getMYDR()).append("足球推荐\n\n")
+            sb.append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time)
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.ke)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append(mainBean.yList[0].endPan)
+            } else {
+                sb.append("平手")
+            }
+            sb.append("  【重心单】")
+            sb.append("\n\n").append("温馨提示：信心推荐，常跟才是王道")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "貂蝉重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.szButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("〔大师兄").append(getMYDR()).append("会员推荐〕\n\n")
+            sb.append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time)
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.zhu)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("-")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan.substring(1))
+            } else {
+                sb.append("平手")
+            }
+            sb.append("(大圣神威单)")
+            sb.append("\n\n").append("彩市有风险，下注需谨慎，神威单双注，冲锋单均注")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "大师兄大圣神威单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.skButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("〔大师兄").append(getMYDR()).append("会员推荐〕\n\n")
+            sb.append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time)
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.ke)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append("-")
+                sb.append(mainBean.yList[0].endPan)
+            } else {
+                sb.append("平手")
+            }
+            sb.append("(大圣神威单)")
+            sb.append("\n\n").append("彩市有风险，下注需谨慎，神威单双注，冲锋单均注")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "大师兄大圣神威单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.qzButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("奇侠").append(getMD()).append("龙腾凤翔单\n\n")
+            sb.append("〔").append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time).append("〕")
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.zhu)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("-")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan.substring(1))
+            } else {
+                sb.append("平手")
+            }
+            sb.append("\n\n").append("*本赛事分析支持中国竞彩，仅供参阅，据此购彩，风险自担")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "奇侠龙腾凤翔单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.qkButton).onClick {
-
+            val sb = StringBuffer()
+            sb.append("奇侠").append(getMD()).append("龙腾凤翔单\n\n")
+            sb.append("〔").append(mainBean.liansai)
+                    .append(" ")
+                    .append(mainBean.time).append("〕")
+                    .append(" ")
+                    .append(mainBean.zhu)
+                    .append("VS")
+                    .append(mainBean.ke)
+                    .append("\n")
+            sb.append("推荐：").append(mainBean.ke)
+            if (mainBean.yList[0].endPan.toFloat() > 0) {
+                sb.append("+")
+                sb.append(mainBean.yList[0].endPan)
+            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+                sb.append(mainBean.yList[0].endPan)
+            } else {
+                sb.append("平手")
+            }
+            sb.append("\n\n").append("*本赛事分析支持中国竞彩，仅供参阅，据此购彩，风险自担")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText(null, sb.toString())
+            clipboard.primaryClip = clipData
+            Toast.makeText(this, "奇侠龙腾凤翔单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
     }
 
