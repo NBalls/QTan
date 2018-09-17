@@ -205,6 +205,17 @@ public class PrintClass {
         return mList;
     }
 
+    public static List<MainBean> parseLike(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            if (mDataList.get(i).getLike()) {
+                mList.add(mDataList.get(i));
+            }
+        }
+
+        return mList;
+    }
+
 
     private static boolean isCompany(String company) {
         return company.contains("易胜博")
