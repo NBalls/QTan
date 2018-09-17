@@ -106,6 +106,66 @@ class MainActivity : AppCompatActivity() {
         initWebView()
     }
 
+    private val onCheckedChangeListener = object : CompoundButton.OnCheckedChangeListener {
+        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            if (buttonView?.id == R.id.coverCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.downCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.pingCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.cutCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.pingToPBCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.overCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.one44Checkbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.one65Checkbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.GONE
+                }
+            } else if (buttonView?.id == R.id.allCheckbox) {
+                if (isChecked) {
+                    findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.VISIBLE
+                } else {
+                    findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.GONE
+                }
+            }
+        }
+    }
+
     private fun initWebView() {
         webView.settings.javaScriptEnabled = true
         webView2.settings.javaScriptEnabled = true
@@ -114,6 +174,81 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = CWebViewClient()
         webView2.webViewClient = CWebViewClient2()
         ParseClass.tanCompleteListener = tanCompleteListener
+
+        (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.pingCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.cutCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.pingToPBCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.allCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        if ((findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.pingCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.cutCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.pingToPBCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.allCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.GONE
+        }
+        findViewById<Button>(R.id.selectAllButton).onClick {
+            (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.pingCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.cutCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.pingToPBCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).isChecked = true
+        }
+        findViewById<Button>(R.id.unselectAllButton).onClick {
+            (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.pingCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.cutCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.pingToPBCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).isChecked = false
+        }
 
         freshButton.onClick {
             titleText.text = TEXT_LOADING
@@ -187,21 +322,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun parseData(data: String, date: String, time: String) {
-        val mDataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
+        val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
         val sb = StringBuffer()
-        sb.append("有效比赛:").append(mDataList.size).append("场\n")
+        sb.append("有效比赛:").append(dataList.size).append("场\n")
         sb.append("刷新日期:").append(date).append("\n")
         sb.append("刷新时间:").append(time).append("\n")
         titleText.text = sb.toString()
 
-        fillItem(PrintClass.parse144(mDataList) as ArrayList<MainBean>, R.id.oneLayout)
-        fillItem(PrintClass.parse165(mDataList) as ArrayList<MainBean>, R.id.one65Layout)
-        fillItem(PrintClass.parseCOver(mDataList) as ArrayList<MainBean>, R.id.coverLayout)
-        fillItem(PrintClass.parseDown(mDataList) as ArrayList<MainBean>, R.id.downLayout)
-        fillItem(PrintClass.parseZero(mDataList) as ArrayList<MainBean>, R.id.zeroLayout)
-        fillItem(PrintClass.parseCut(mDataList) as ArrayList<MainBean>, R.id.cutLayout)
-        fillItem(PrintClass.parse025(mDataList) as ArrayList<MainBean>, R.id.one25Layout)
-        fillItem(PrintClass.parseDeep(mDataList) as ArrayList<MainBean>, R.id.deepLayout)
+        fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
+        fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
+        fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
+        fillItem(PrintClass.parseDown(dataList) as ArrayList<MainBean>, R.id.downLayout)
+        fillItem(PrintClass.parseZero(dataList) as ArrayList<MainBean>, R.id.zeroLayout)
+        fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
+        fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
+        fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
+        fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
     }
 
     private fun fillItem(mList: ArrayList<MainBean>, parentId: Int) {
@@ -466,5 +602,6 @@ class MainActivity : AppCompatActivity() {
         fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
         fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
         fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
+        fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
     }
 }

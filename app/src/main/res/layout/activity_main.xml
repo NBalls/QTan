@@ -147,6 +147,117 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/coverCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="变盘比赛"
+                android:checked="true"
+                />
+            <CheckBox
+                android:id="@+id/downCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="下盘比赛"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/pingCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="平手盘"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/cutCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="降盘降水"
+                android:checked="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/pingToPBCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="平至平半"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/overCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="深盘变盘"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/one44Checkbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="144盘"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/one65Checkbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="165盘"
+                android:checked="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/allCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="全部比赛"
+                android:checked="false"
+                />
+
+            <Button
+                android:id="@+id/selectAllButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="全选"
+                />
+
+            <Button
+                android:id="@+id/unselectAllButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="全不选"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/outCoverLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -352,7 +463,7 @@
                 android:textSize="15sp"
                 android:padding="10dp"
                 android:textColor="#cc0000"
-                android:text="1.44盘（即时盘）"
+                android:text="1.44盘"
                 android:background="#EEEEEE"
                 />
             <LinearLayout
@@ -383,11 +494,43 @@
                 android:textSize="15sp"
                 android:padding="10dp"
                 android:textColor="#cc0000"
-                android:text="1.65盘（初盘，即时盘）"
+                android:text="1.65盘"
                 android:background="#eeeeee"
                 />
             <LinearLayout
                 android:id="@+id/one65Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/outAllLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/allTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="全部比赛"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/allLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

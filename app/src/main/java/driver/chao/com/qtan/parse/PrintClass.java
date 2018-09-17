@@ -70,11 +70,23 @@ public class PrintClass {
                 if (isCompany(mDataList.get(i).getyList().get(j).company)) {
                     float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
                     float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
-                    if (endPan > 0 && endPan < 1 && startPan - endPan == 0f && Float.valueOf(mDataList.get(i).getyList().get(j).startKRate) -
-                            Float.valueOf(mDataList.get(i).getyList().get(j).endKRate) > 0) {
+                    if (endPan > 0 && endPan < 1 && startPan - endPan == 0f && Float.valueOf(mDataList.get(i).getyList().get(j).startZRate) <= 0.86 &&
+                            Float.valueOf(mDataList.get(i).getyList().get(j).endZRate) - Float.valueOf(mDataList.get(i).getyList().get(j).startZRate) > 0) {
                         count = count + 1;
-                    } else if (endPan < 0 && endPan > -1 && startPan - endPan == 0f && Float.valueOf(mDataList.get(i).getyList().get(j).endZRate) -
-                            Float.valueOf(mDataList.get(i).getyList().get(j).startZRate) < 0) {
+                    } else if (endPan < 0 && endPan > -1 && startPan - endPan == 0f && Float.valueOf(mDataList.get(i).getyList().get(j).startKRate) <= 0.86 &&
+                            Float.valueOf(mDataList.get(i).getyList().get(j).endKRate) - Float.valueOf(mDataList.get(i).getyList().get(j).startKRate) > 0) {
+                        count = count + 1;
+                    }
+                }
+
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
+                    float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
+                    float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
+                    if (endPan > 0 && endPan < 1 && startPan - endPan == 0f && Float.valueOf(mDataList.get(i).getyList().get(j).startZRate) >= 1 &&
+                            Float.valueOf(mDataList.get(i).getyList().get(j).startZRate) - Float.valueOf(mDataList.get(i).getyList().get(j).endZRate) > 0) {
+                        count = count + 1;
+                    } else if (endPan < 0 && endPan > -1 && startPan - endPan == 0f && Float.valueOf(mDataList.get(i).getyList().get(j).startKRate) >= 1 &&
+                            Float.valueOf(mDataList.get(i).getyList().get(j).startKRate) - Float.valueOf(mDataList.get(i).getyList().get(j).endKRate) > 0) {
                         count = count + 1;
                     }
                 }
