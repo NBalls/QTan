@@ -27,7 +27,7 @@ import rx.schedulers.Schedulers;
  * Created by aaron on 2018/7/23.
  * 解析数据
  */
-public class MClass {
+public class ParseClass {
     public static TanCompleteListener tanCompleteListener = null;
     private static APIClient apiClient = new APIClient();
     private static ArrayList mDataList = new ArrayList();

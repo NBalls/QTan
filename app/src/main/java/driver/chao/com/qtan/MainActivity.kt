@@ -19,7 +19,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.bean.RBean
-import driver.chao.com.qtan.parse.MClass
+import driver.chao.com.qtan.parse.ParseClass
 import driver.chao.com.qtan.parse.PrintClass
 import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         webView2.addJavascriptInterface(InJavaScriptLocalObj2(), "java_obj")
         webView.webViewClient = CWebViewClient()
         webView2.webViewClient = CWebViewClient2()
-        MClass.tanCompleteListener = tanCompleteListener
+        ParseClass.tanCompleteListener = tanCompleteListener
 
         freshButton.onClick {
             titleText.text = TEXT_LOADING
@@ -399,7 +399,7 @@ class MainActivity : AppCompatActivity() {
         fun showSource(html: String) {
             val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
             val doc = Jsoup.parse(htmlStr)
-            MClass.parseMainData(doc)
+            ParseClass.parseMainData(doc)
         }
     }
 
@@ -425,7 +425,7 @@ class MainActivity : AppCompatActivity() {
             Observable.create<List<RBean>> { subscribe ->
                 val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
                 val doc = Jsoup.parse(htmlStr)
-                val mList = MClass.parseResult(doc)
+                val mList = ParseClass.parseResult(doc)
                 subscribe.onNext(mList)
                 subscribe.onCompleted()
             }.subscribeOn(Schedulers.io())
