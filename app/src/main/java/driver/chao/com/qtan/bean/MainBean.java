@@ -21,8 +21,11 @@ public class MainBean implements Serializable {
     private String result = "-";
     private String ypan = "";
     private Boolean isLike = false;
-    public List<YBean> yList = new ArrayList();
-    public List<OBean> oList = new ArrayList();
+    public List<YBean> yList = new ArrayList();// 亚盘
+    public List<OBean> oList = new ArrayList();// 欧盘
+    public List<NBean> dList = new ArrayList();// 对战历史
+    public List<NBean> zList = new ArrayList();// 主队近况
+    public List<NBean> kList = new ArrayList();// 客队近况
 
     @Override
     public String toString() {
@@ -154,5 +157,29 @@ public class MainBean implements Serializable {
 
     public void setLike(Boolean like) {
         isLike = like;
+    }
+
+    public List<NBean> getdList() {
+        return dList;
+    }
+
+    public void setdList(List<NBean> dList) {
+        this.dList = dList;
+    }
+
+    public List<NBean> getzList() {
+        return zList;
+    }
+
+    public void setzList(List<NBean> zList) {
+        this.zList = zList;
+    }
+
+    public List<NBean> getkList() {
+        return kList;
+    }
+
+    public void setkList(List<NBean> kList) {
+        this.kList = kList;
     }
 }

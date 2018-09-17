@@ -15,6 +15,11 @@ public class NBean {
     public String kePoint = "";
     public String ids = "";
 
+    @Override
+    public String toString() {
+        return liansai + " " + date + " " + zhudui + "VS" + kedui + " " + zhuPoint + ":" + kePoint;
+    }
+
     public String getDate() {
         return date;
     }

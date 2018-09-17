@@ -13,12 +13,15 @@ import java.util.List;
 
 import driver.chao.com.qtan.APIClient;
 import driver.chao.com.qtan.bean.MainBean;
+import driver.chao.com.qtan.bean.NBean;
 import driver.chao.com.qtan.bean.OBean;
 import driver.chao.com.qtan.bean.RBean;
 import driver.chao.com.qtan.bean.YBean;
 import driver.chao.com.qtan.util.ParserUtil;
 import driver.chao.com.qtan.util.TanCompleteListener;
 import driver.chao.com.qtan.util.TanListener;
+import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -160,55 +163,95 @@ public class ParseClass {
         }
     }
 
-    public static void parseRData(MainBean mainBean) {
-        // TODO 解析分析数据（对往比赛，近期比赛）
-        apiClient.getNetClient().doGetRequestHtml(mainBean.getAUrl(), new HashMap<String, String>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        Log.i("MClass", s);
-                        // 解析亚盘数据
-                        /*String paramYStr1 = s.substring(s.indexOf("Vs_hOdds=[["));
-                        String paramYStr2 = paramYStr1.substring(11, paramYStr1.indexOf("]];"));
-                        String[] arrYStr1 = paramYStr2.split("],\\[");
-                        for (int i = 0; i < arrYStr1.length; i ++) {
-                            // Log.i("MClass", arrYStr1[i] + "");
-                        }
-                        // 解析欧盘数据
-                        String paramOStr1 = s.substring(s.indexOf("Vs_eOdds = [["));
-                        String paramOStr2 = paramOStr1.substring(11, paramOStr1.indexOf("]];"));
-                        String[] arrOStr1 = paramOStr2.split("],\\[");
-                        for (int i = 0; i < arrOStr1.length; i ++) {
-                            Log.i("MClass", arrOStr1[i] + "");
-                        }
+    public static Observable<String> parseRData(final MainBean mainBean) {
+        return apiClient.getNetClient().doGetRequestHtml(mainBean.getAUrl(), new HashMap<String, String>());
+    }
 
+    public static List<NBean> parseZList(String s) {
+        String subStr1 = s.substring(s.indexOf("h_data"));
+        String subStr2 = subStr1.substring(9, subStr1.indexOf("]];"));
+        String[] arrayStr1 = subStr2.split("],\\[");
+        List<NBean> zList = new ArrayList();
+        for (int i = 0; i < arrayStr1.length; i ++) {
+            String subStr3 = arrayStr1[i];
+            String[] arrayStr2 = subStr3.split(",");
+            NBean nBean = new NBean();
+            nBean.setDate(arrayStr2[0].substring(1, arrayStr2[0].length() - 1));
+            nBean.setKePoint(arrayStr2[9]);
+            nBean.setLiansai(arrayStr2[2].substring(1, arrayStr2[2].length() - 1));
+            nBean.setZhuPoint(arrayStr2[8]);
+            nBean.setIds(arrayStr2[15]);
+            Document doc = Jsoup.parseBodyFragment(arrayStr2[5] + arrayStr2[7]);
+            Elements elements = doc.getElementsByAttribute("title");
+            if (elements.size() == 2) {
+                nBean.setZhudui(elements.get(0).text());
+                nBean.setKedui(elements.get(1).text());
+            }
+            if (!TextUtils.isEmpty(nBean.getZhudui()) && !TextUtils.isEmpty(nBean.getKedui())) {
+                zList.add(nBean);
+            }
+            // Log.i("MClass", nBean.toString());
+        }
 
-                        String subStr1 = s.substring(s.indexOf("v_data"));
-                        String subStr2 = subStr1.substring(11, subStr1.indexOf("]];"));
-                        String[] arrayStr1 = subStr2.split("],\\[");
-                        String subStr3 = arrayStr1[0];
-                        String[] arrayStr2 = subStr3.split(",");
+        return zList;
+    }
 
-                        NBean nBean = new NBean();
-                        nBean.setDate(arrayStr2[0]);
-                        String kedui = arrayStr2[7];
-                        nBean.setKedui(kedui.substring(kedui.indexOf(">") + 1, kedui.indexOf("<")));
-                        nBean.setKePoint(arrayStr2[9]);
-                        nBean.setKePai(kedui.substring(kedui.indexOf("：") + 1, kedui.indexOf("\">")).trim());
-                        nBean.setLiansai(arrayStr2[2]);
-                        String zhudui = arrayStr2[5];
-                        nBean.setZhudui(zhudui.substring(zhudui.indexOf(">") + 1, zhudui.indexOf("<")));
-                        nBean.setZhuPoint(arrayStr2[8]);
-                        nBean.setZhuPai(zhudui.substring(zhudui.indexOf("：") + 1, zhudui.indexOf("\">")).trim());
-                        nBean.setIds(arrayStr2[15]);
-                        // getY(arrYStr1, nBean.getIds());
-                        String temp1 = s.substring(s.indexOf("[" + nBean.getIds() + ",8"));
-                        String temp2 = temp1.substring(0, temp1.indexOf("],\\["));
-                        Log.i("MClass", temp2);*/
-                    }
-                });
+    public static List<NBean> parseKList(String s) {
+        String subStr1 = s.substring(s.indexOf("a_data"));
+        String subStr2 = subStr1.substring(11, subStr1.indexOf("]];"));
+        String[] arrayStr1 = subStr2.split("],\\[");
+        List<NBean> kList = new ArrayList();
+        for (int i = 0; i < arrayStr1.length; i ++) {
+            String subStr3 = arrayStr1[i];
+            String[] arrayStr2 = subStr3.split(",");
+            NBean nBean = new NBean();
+            nBean.setDate(arrayStr2[0].substring(1, arrayStr2[0].length() - 1));
+            nBean.setKePoint(arrayStr2[9]);
+            nBean.setLiansai(arrayStr2[2].substring(1, arrayStr2[2].length() - 1));
+            nBean.setZhuPoint(arrayStr2[8]);
+            nBean.setIds(arrayStr2[15]);
+            Document doc = Jsoup.parseBodyFragment(arrayStr2[5] + arrayStr2[7]);
+            Elements elements = doc.getElementsByAttribute("title");
+            if (elements.size() == 2) {
+                nBean.setZhudui(elements.get(0).text());
+                nBean.setKedui(elements.get(1).text());
+            }
+            if (!TextUtils.isEmpty(nBean.getZhudui()) && !TextUtils.isEmpty(nBean.getKedui())) {
+                kList.add(nBean);
+            }
+            Log.i("MClass", nBean.toString());
+        }
+
+        return kList;
+    }
+
+    public static List<NBean> parseDList(String s) {
+        String subStr1 = s.substring(s.indexOf("v_data"));
+        String subStr2 = subStr1.substring(11, subStr1.indexOf("]];"));
+        String[] arrayStr1 = subStr2.split("],\\[");
+        List<NBean> dList = new ArrayList();
+        for (int i = 0; i < arrayStr1.length; i ++) {
+            String subStr3 = arrayStr1[i];
+            String[] arrayStr2 = subStr3.split(",");
+            NBean nBean = new NBean();
+            nBean.setDate(arrayStr2[0].substring(1, arrayStr2[0].length() - 1));
+            nBean.setKePoint(arrayStr2[9]);
+            nBean.setLiansai(arrayStr2[2].substring(1, arrayStr2[2].length() - 1));
+            nBean.setZhuPoint(arrayStr2[8]);
+            nBean.setIds(arrayStr2[15]);
+            Document doc = Jsoup.parseBodyFragment(arrayStr2[5] + arrayStr2[7]);
+            Elements elements = doc.getElementsByAttribute("title");
+            if (elements.size() == 2) {
+                nBean.setZhudui(elements.get(0).text());
+                nBean.setKedui(elements.get(1).text());
+            }
+            if (!TextUtils.isEmpty(nBean.getZhudui()) && !TextUtils.isEmpty(nBean.getKedui())) {
+                dList.add(nBean);
+            }
+            // Log.i("MClass", nBean.toString());
+        }
+
+        return dList;
     }
 
     public static List<RBean> parseResult(Document doc) {

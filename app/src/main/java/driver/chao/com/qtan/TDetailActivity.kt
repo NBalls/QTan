@@ -9,8 +9,11 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import driver.chao.com.qtan.bean.MainBean
+import driver.chao.com.qtan.parse.ParseClass
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 class TDetailActivity : AppCompatActivity() {
 
@@ -20,6 +23,16 @@ class TDetailActivity : AppCompatActivity() {
 
         val mainBean = intent.getSerializableExtra("mainBean") as MainBean
         fillItem(mainBean, R.id.detailLayout)
+
+        ParseClass.parseRData(mainBean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ s ->
+                    mainBean.setdList(ParseClass.parseDList(s))
+                    mainBean.setzList(ParseClass.parseZList(s))
+                    mainBean.setkList(ParseClass.parseKList(s))
+                    parseNear(findViewById(R.id.parseYaLayout), mainBean)
+                }, {})
         initView()
     }
 
@@ -54,6 +67,71 @@ class TDetailActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.qkButton).onClick {
 
+        }
+    }
+
+    private fun parseNear(container: LinearLayout, mainBean: MainBean) {
+        container.addView(LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai_near, null, false))
+        for (i in 0 until Math.min(mainBean.dList.size, 5)) {
+            val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai, null, false)
+            rootViews.findViewById<TextView>(R.id.dateText).text = mainBean.dList[i].date.trim()
+            rootViews.findViewById<TextView>(R.id.liansaiText).text = mainBean.dList[i].liansai.trim()
+            rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.dList[i].zhudui.trim()
+            rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.dList[i].zhuPoint.trim() + "-" + mainBean.dList[i].kePoint.trim()
+            rootViews.findViewById<TextView>(R.id.keText).text = mainBean.dList[i].kedui.trim()
+            if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
+            } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "输"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#00FF00")
+            } else {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "平"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#888888")
+            }
+            container.addView(rootViews)
+        }
+
+        container.addView(LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai_near, null, false))
+        for (i in 0 until Math.min(mainBean.zList.size, 5)) {
+            val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai, null, false)
+            rootViews.findViewById<TextView>(R.id.dateText).text = mainBean.zList[i].date.trim()
+            rootViews.findViewById<TextView>(R.id.liansaiText).text = mainBean.zList[i].liansai.trim()
+            rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.zList[i].zhudui.trim()
+            rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.zList[i].zhuPoint.trim() + "-" + mainBean.zList[i].kePoint.trim()
+            rootViews.findViewById<TextView>(R.id.keText).text = mainBean.zList[i].kedui.trim()
+            if (mainBean.zList[i].zhuPoint.trim().toInt() > mainBean.zList[i].kePoint.trim().toInt()) {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
+            } else if (mainBean.zList[i].zhuPoint.trim().toInt() < mainBean.zList[i].kePoint.trim().toInt()) {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "输"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#00FF00")
+            } else {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "平"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#888888")
+            }
+            container.addView(rootViews)
+        }
+
+        container.addView(LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai_near, null, false))
+        for (i in 0 until Math.min(mainBean.kList.size, 5)) {
+            val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai, null, false)
+            rootViews.findViewById<TextView>(R.id.dateText).text = mainBean.kList[i].date.trim()
+            rootViews.findViewById<TextView>(R.id.liansaiText).text = mainBean.kList[i].liansai.trim()
+            rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.kList[i].zhudui.trim()
+            rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.kList[i].zhuPoint.trim() + "-" + mainBean.kList[i].kePoint.trim()
+            rootViews.findViewById<TextView>(R.id.keText).text = mainBean.kList[i].kedui.trim()
+            if (mainBean.kList[i].zhuPoint.trim().toInt() > mainBean.kList[i].kePoint.trim().toInt()) {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
+            } else if (mainBean.kList[i].zhuPoint.trim().toInt() < mainBean.kList[i].kePoint.trim().toInt()) {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "输"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#00FF00")
+            } else {
+                rootViews.findViewById<TextView>(R.id.resultText).text = "平"
+                rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#888888")
+            }
+            container.addView(rootViews)
         }
     }
 
