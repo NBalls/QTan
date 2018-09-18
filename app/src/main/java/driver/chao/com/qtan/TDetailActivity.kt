@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.parse.ParseClass
 import driver.chao.com.qtan.util.getMD
@@ -19,7 +16,13 @@ import rx.schedulers.Schedulers
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.widget.Toast
+import android.graphics.Bitmap
+import android.util.Log
+import android.widget.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class TDetailActivity : AppCompatActivity() {
@@ -73,6 +76,8 @@ class TDetailActivity : AppCompatActivity() {
             val clipData = ClipData.newPlainText(null, sb.toString())
             clipboard.primaryClip = clipData
             Toast.makeText(this, "诸葛重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
+
+            (findViewById<TextView>(R.id.zzText) as TextView).text = sb.toString()
         }
 
         findViewById<Button>(R.id.zkButton).onClick {
@@ -101,6 +106,14 @@ class TDetailActivity : AppCompatActivity() {
             val clipData = ClipData.newPlainText(null, sb.toString())
             clipboard.primaryClip = clipData
             Toast.makeText(this, "诸葛重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
+
+            val cv = findViewById<FrameLayout>(R.id.imageLayout)
+            cv.isDrawingCacheEnabled = true
+            cv.buildDrawingCache()
+            val bmp = cv.drawingCache
+            bmp.setHasAlpha(false)
+            bmp.prepareToDraw()
+            saveBitmapForSdCard("123123", bmp)
         }
 
         findViewById<Button>(R.id.dzButton).onClick {
@@ -276,13 +289,42 @@ class TDetailActivity : AppCompatActivity() {
 
     private fun parseNear(container: LinearLayout, mainBean: MainBean) {
         container.addView(LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai_near, null, false))
-        for (i in 0 until Math.min(mainBean.dList.size, 5)) {
+        for (i in 0 until Math.min(mainBean.dList.size, 10)) {
+            // 对战历史
             val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai, null, false)
             rootViews.findViewById<TextView>(R.id.dateText).text = mainBean.dList[i].date.trim()
             rootViews.findViewById<TextView>(R.id.liansaiText).text = mainBean.dList[i].liansai.trim()
             rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.dList[i].zhudui.trim()
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.dList[i].zhuPoint.trim() + "-" + mainBean.dList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.dList[i].kedui.trim()
+
+            if (mainBean.zhu.contains(mainBean.dList[i].zhudui) || mainBean.dList[i].zhudui.trim().contains(mainBean.zhu)) {
+                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#FF0000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                } else {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#0000FF")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                }
+            } else if (mainBean.zhu.contains(mainBean.dList[i].kedui) || mainBean.dList[i].kedui.trim().contains(mainBean.zhu)) {
+                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#00FF00")
+                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#FF0000")
+                } else {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#0000FF")
+                }
+            } else {
+                rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+            }
+
             if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
@@ -296,14 +338,43 @@ class TDetailActivity : AppCompatActivity() {
             container.addView(rootViews)
         }
 
+        // 主队近期比赛
         container.addView(LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai_near, null, false))
-        for (i in 0 until Math.min(mainBean.zList.size, 5)) {
+        for (i in 0 until Math.min(mainBean.zList.size, 10)) {
             val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai, null, false)
             rootViews.findViewById<TextView>(R.id.dateText).text = mainBean.zList[i].date.trim()
             rootViews.findViewById<TextView>(R.id.liansaiText).text = mainBean.zList[i].liansai.trim()
             rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.zList[i].zhudui.trim()
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.zList[i].zhuPoint.trim() + "-" + mainBean.zList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.zList[i].kedui.trim()
+
+            if (mainBean.zhu.contains(mainBean.dList[i].zhudui) || mainBean.dList[i].zhudui.trim().contains(mainBean.zhu)) {
+                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#FF0000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                } else {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#0000FF")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                }
+            } else if (mainBean.zhu.contains(mainBean.dList[i].kedui) || mainBean.dList[i].kedui.trim().contains(mainBean.zhu)) {
+                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#00FF00")
+                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#FF0000")
+                } else {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#0000FF")
+                }
+            } else {
+                rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+            }
+
             if (mainBean.zList[i].zhuPoint.trim().toInt() > mainBean.zList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
@@ -317,14 +388,42 @@ class TDetailActivity : AppCompatActivity() {
             container.addView(rootViews)
         }
 
+        // 客队近期比赛
         container.addView(LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai_near, null, false))
-        for (i in 0 until Math.min(mainBean.kList.size, 5)) {
+        for (i in 0 until Math.min(mainBean.kList.size, 10)) {
             val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item_sai, null, false)
             rootViews.findViewById<TextView>(R.id.dateText).text = mainBean.kList[i].date.trim()
             rootViews.findViewById<TextView>(R.id.liansaiText).text = mainBean.kList[i].liansai.trim()
             rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.kList[i].zhudui.trim()
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.kList[i].zhuPoint.trim() + "-" + mainBean.kList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.kList[i].kedui.trim()
+
+            if (mainBean.ke.contains(mainBean.dList[i].zhudui) || mainBean.dList[i].zhudui.trim().contains(mainBean.ke)) {
+                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#FF0000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                } else {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#0000FF")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+                }
+            } else if (mainBean.ke.contains(mainBean.dList[i].kedui) || mainBean.dList[i].kedui.trim().contains(mainBean.ke)) {
+                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#00FF00")
+                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#FF0000")
+                } else {
+                    rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                    rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#0000FF")
+                }
+            } else {
+                rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
+                rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
+            }
             if (mainBean.kList[i].zhuPoint.trim().toInt() > mainBean.kList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
@@ -366,7 +465,7 @@ class TDetailActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.rText).text = "未"
             rootViews.findViewById<TextView>(R.id.rText).textColor = Color.parseColor("#000000")
         }
-        rootViews.findViewById<LinearLayout>(R.id.parseYaLayout).visibility = View.VISIBLE
+        rootViews.findViewById<LinearLayout>(R.id.parseYaLayout).visibility = View.GONE
         parseYa(rootViews.findViewById(R.id.parseYaLayout), mainBean)
 
         rootViews.findViewById<TextView>(R.id.yaText).onClick {
@@ -476,6 +575,45 @@ class TDetailActivity : AppCompatActivity() {
                 company.contains("金宝博") ||
                 company.contains("盈禾") ||
                 company.contains("立博")
+
+    }
+
+    /**
+     * 保存到内存卡
+     *
+     * @param bitName
+     * @param mBitmap
+     */
+    fun saveBitmapForSdCard(bitName: String, mBitmap: Bitmap) {
+        //创建file对象
+        val f = File("/sdcard/$bitName.png")
+        try {
+            //创建
+            f.createNewFile()
+        } catch (e: IOException) {
+
+        }
+
+        var fOut: FileOutputStream? = null
+        try {
+            fOut = FileOutputStream(f)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
+
+        //原封不动的保存在内存卡上
+        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
+        try {
+            fOut!!.flush()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        try {
+            fOut!!.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
 
     }
 }
