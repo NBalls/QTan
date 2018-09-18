@@ -127,7 +127,7 @@ public class ParseClass {
                         @Override
                         public void call(String s) {
                             String[] result = s.split("\n");
-                            String ouData = result[26];
+                            String ouData = result[28];
                             if (ouData.contains("\"") && ouData.contains("\"")) {
                                 String ouData1 = ouData.substring(ouData.indexOf("\"") + 1, ouData.lastIndexOf("\""));
                                 String[] ouData2 = ouData1.split("\",\"");
