@@ -222,22 +222,22 @@ class TDetailActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.zList[i].zhuPoint.trim() + "-" + mainBean.zList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.zList[i].kedui.trim()
 
-            if (mainBean.zhu.contains(mainBean.dList[i].zhudui) || mainBean.dList[i].zhudui.trim().contains(mainBean.zhu)) {
-                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+            if (mainBean.zhu.contains(mainBean.zList[i].zhudui) || mainBean.zList[i].zhudui.trim().contains(mainBean.zhu)) {
+                if (mainBean.zList[i].zhuPoint.trim().toInt() > mainBean.zList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#FF0000")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
-                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                } else if (mainBean.zList[i].zhuPoint.trim().toInt() < mainBean.zList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#00FF00")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
                 } else {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#0000FF")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
                 }
-            } else if (mainBean.zhu.contains(mainBean.dList[i].kedui) || mainBean.dList[i].kedui.trim().contains(mainBean.zhu)) {
-                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+            } else if (mainBean.zhu.contains(mainBean.zList[i].kedui) || mainBean.zList[i].kedui.trim().contains(mainBean.zhu)) {
+                if (mainBean.zList[i].zhuPoint.trim().toInt() > mainBean.zList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#00FF00")
-                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                } else if (mainBean.zList[i].zhuPoint.trim().toInt() < mainBean.zList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#FF0000")
                 } else {
@@ -272,22 +272,22 @@ class TDetailActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.kList[i].zhuPoint.trim() + "-" + mainBean.kList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.kList[i].kedui.trim()
 
-            if (mainBean.ke.contains(mainBean.dList[i].zhudui) || mainBean.dList[i].zhudui.trim().contains(mainBean.ke)) {
-                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+            if (mainBean.ke.contains(mainBean.kList[i].zhudui) || mainBean.kList[i].zhudui.trim().contains(mainBean.ke)) {
+                if (mainBean.kList[i].zhuPoint.trim().toInt() > mainBean.kList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#FF0000")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
-                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                } else if (mainBean.kList[i].zhuPoint.trim().toInt() < mainBean.kList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#00FF00")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
                 } else {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#0000FF")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#000000")
                 }
-            } else if (mainBean.ke.contains(mainBean.dList[i].kedui) || mainBean.dList[i].kedui.trim().contains(mainBean.ke)) {
-                if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
+            } else if (mainBean.ke.contains(mainBean.kList[i].kedui) || mainBean.kList[i].kedui.trim().contains(mainBean.ke)) {
+                if (mainBean.kList[i].zhuPoint.trim().toInt() > mainBean.kList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#00FF00")
-                } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
+                } else if (mainBean.kList[i].zhuPoint.trim().toInt() < mainBean.kList[i].kePoint.trim().toInt()) {
                     rootViews.findViewById<TextView>(R.id.zhuText).textColor = Color.parseColor("#000000")
                     rootViews.findViewById<TextView>(R.id.keText).textColor = Color.parseColor("#FF0000")
                 } else {

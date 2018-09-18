@@ -6,7 +6,7 @@ import driver.chao.com.qtan.util.getMYDR
 
 /**
  * Created by aaron on 2018/9/18.
- * 文案编辑类
+ *
  */
 fun zhuZhuZhong(mainBean: MainBean): String {
     val sb = StringBuffer()
