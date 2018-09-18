@@ -6,28 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import driver.chao.com.qtan.bean.MainBean
-import driver.chao.com.qtan.parse.ParseClass
-import driver.chao.com.qtan.util.getMD
-import driver.chao.com.qtan.util.getMYDR
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
-import android.util.Log
+import android.net.Uri
+import android.os.Environment
 import android.widget.*
+import driver.chao.com.qtan.parse.*
+import driver.chao.com.qtan.util.clipDoc
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.io.IOException
-
 
 class TDetailActivity : AppCompatActivity() {
 
     private lateinit var mainBean: MainBean
+    private val FILE_PATH = Environment.getExternalStorageDirectory().absolutePath
+    private var uri: Uri?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,241 +47,118 @@ class TDetailActivity : AppCompatActivity() {
 
     private fun initView() {
         findViewById<Button>(R.id.zzButton).onClick {
-            val sb = StringBuffer()
-            sb.append("诸葛看球").append(getMD()).append("会员推荐\n\n")
-            sb.append("重心单 ")
-                    .append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time)
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.zhu)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("-")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan.substring(1))
-            } else {
-                sb.append("平手")
+            val zzRadioButton = findViewById<RadioButton>(R.id.zzRadioButton)
+            val zlRadioButton = findViewById<RadioButton>(R.id.zlRadioButton)
+            if (zzRadioButton.isChecked) {
+                val doc = zhuZhuZhong(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.zhugeInclude, doc)
+            } else if (zlRadioButton.isChecked) {
+                val doc = zhuZhuLiu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.zhugeInclude, doc)
             }
-            sb.append("\n\n").append("建议: 稳胆单 双注，实力单 均注！！！")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "诸葛重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
-
-            (findViewById<TextView>(R.id.zzText) as TextView).text = sb.toString()
         }
 
         findViewById<Button>(R.id.zkButton).onClick {
-            val sb = StringBuffer()
-            sb.append("诸葛看球").append(getMD()).append("会员推荐\n\n")
-            sb.append("重心单 ")
-                    .append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time)
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.ke)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append(mainBean.yList[0].endPan)
-            } else {
-                sb.append("平手")
+            val zzRadioButton = findViewById<RadioButton>(R.id.zzRadioButton)
+            val zlRadioButton = findViewById<RadioButton>(R.id.zlRadioButton)
+            if (zzRadioButton.isChecked) {
+                val doc = zhuKeZhong(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.zhugeInclude, doc)
+            } else if (zlRadioButton.isChecked) {
+                val doc = zhuKeLiu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.zhugeInclude, doc)
             }
-            sb.append("\n\n").append("建议: 稳胆单 双注，实力单 均注！！！")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "诸葛重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
 
-            val cv = findViewById<FrameLayout>(R.id.imageLayout)
-            cv.isDrawingCacheEnabled = true
-            cv.buildDrawingCache()
-            val bmp = cv.drawingCache
-            bmp.setHasAlpha(false)
-            bmp.prepareToDraw()
-            saveBitmapForSdCard("123123", bmp)
         }
 
         findViewById<Button>(R.id.dzButton).onClick {
-            val sb = StringBuffer()
-            sb.append("貂蝉看盘").append(getMYDR()).append("足球推荐\n\n")
-            sb.append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time)
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.zhu)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("-")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan.substring(1))
-            } else {
-                sb.append("平手")
+            val dzRadioButton = findViewById<RadioButton>(R.id.dzRadioButton)
+            val dfRadioButton = findViewById<RadioButton>(R.id.dfRadioButton)
+            if (dzRadioButton.isChecked) {
+                val doc = diaoZhuZhong(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.diaochanInclude, doc)
+            } else if (dfRadioButton.isChecked) {
+                val doc = diaoZhuFu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.diaochanInclude, doc)
             }
-            sb.append("  【重心单】")
-            sb.append("\n\n").append("温馨提示：信心推荐，常跟才是王道")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "貂蝉重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.dkButton).onClick {
-            val sb = StringBuffer()
-            sb.append("貂蝉看盘").append(getMYDR()).append("足球推荐\n\n")
-            sb.append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time)
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.ke)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append(mainBean.yList[0].endPan)
-            } else {
-                sb.append("平手")
+            val dzRadioButton = findViewById<RadioButton>(R.id.dzRadioButton)
+            val dfRadioButton = findViewById<RadioButton>(R.id.dfRadioButton)
+            if (dzRadioButton.isChecked) {
+                val doc = diaoKeZhong(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.diaochanInclude, doc)
+            } else if (dfRadioButton.isChecked) {
+                val doc = diaoKeFu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.diaochanInclude, doc)
             }
-            sb.append("  【重心单】")
-            sb.append("\n\n").append("温馨提示：信心推荐，常跟才是王道")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "貂蝉重心单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.szButton).onClick {
-            val sb = StringBuffer()
-            sb.append("〔大师兄").append(getMYDR()).append("会员推荐〕\n\n")
-            sb.append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time)
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.zhu)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("-")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan.substring(1))
-            } else {
-                sb.append("平手")
+            val szRadioButton = findViewById<RadioButton>(R.id.szRadioButton)
+            val sfRadioButton = findViewById<RadioButton>(R.id.sfRadioButton)
+            if (szRadioButton.isChecked) {
+                val doc = shiZhuShen(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.shixiongInclude, doc)
+            } else if (sfRadioButton.isChecked) {
+                val doc = shiZhuFu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.shixiongInclude, doc)
             }
-            sb.append("(大圣神威单)")
-            sb.append("\n\n").append("彩市有风险，下注需谨慎，神威单双注，冲锋单均注")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "大师兄大圣神威单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.skButton).onClick {
-            val sb = StringBuffer()
-            sb.append("〔大师兄").append(getMYDR()).append("会员推荐〕\n\n")
-            sb.append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time)
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.ke)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append("-")
-                sb.append(mainBean.yList[0].endPan)
-            } else {
-                sb.append("平手")
+            val szRadioButton = findViewById<RadioButton>(R.id.szRadioButton)
+            val sfRadioButton = findViewById<RadioButton>(R.id.sfRadioButton)
+            if (szRadioButton.isChecked) {
+                val doc = shiKeShen(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.shixiongInclude, doc)
+            } else if (sfRadioButton.isChecked) {
+                val doc = shiKeFu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.shixiongInclude, doc)
             }
-            sb.append("(大圣神威单)")
-            sb.append("\n\n").append("彩市有风险，下注需谨慎，神威单双注，冲锋单均注")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "大师兄大圣神威单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<Button>(R.id.qzButton).onClick {
-            val sb = StringBuffer()
-            sb.append("奇侠").append(getMD()).append("龙腾凤翔单\n\n")
-            sb.append("〔").append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time).append("〕")
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.zhu)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("-")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan.substring(1))
-            } else {
-                sb.append("平手")
-            }
-            sb.append("\n\n").append("*本赛事分析支持中国竞彩，仅供参阅，据此购彩，风险自担")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "奇侠龙腾凤翔单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
+            val doc = qiZhuLong(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.qixiaInclude, doc)
         }
 
         findViewById<Button>(R.id.qkButton).onClick {
-            val sb = StringBuffer()
-            sb.append("奇侠").append(getMD()).append("龙腾凤翔单\n\n")
-            sb.append("〔").append(mainBean.liansai)
-                    .append(" ")
-                    .append(mainBean.time).append("〕")
-                    .append(" ")
-                    .append(mainBean.zhu)
-                    .append("VS")
-                    .append(mainBean.ke)
-                    .append("\n")
-            sb.append("推荐：").append(mainBean.ke)
-            if (mainBean.yList[0].endPan.toFloat() > 0) {
-                sb.append("+")
-                sb.append(mainBean.yList[0].endPan)
-            } else if (mainBean.yList[0].endPan.toFloat() < 0) {
-                sb.append(mainBean.yList[0].endPan)
-            } else {
-                sb.append("平手")
-            }
-            sb.append("\n\n").append("*本赛事分析支持中国竞彩，仅供参阅，据此购彩，风险自担")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, sb.toString())
-            clipboard.primaryClip = clipData
-            Toast.makeText(this, "奇侠龙腾凤翔单已经复制到粘贴板", Toast.LENGTH_SHORT).show()
+            val doc = qiKeLong(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.qixiaInclude, doc)
         }
+
+        findViewById<LinearLayout>(R.id.zhugeInclude).setOnLongClickListener(onLongClickListener)
+        findViewById<LinearLayout>(R.id.diaochanInclude).setOnLongClickListener(onLongClickListener)
+        findViewById<LinearLayout>(R.id.shixiongInclude).setOnLongClickListener(onLongClickListener)
+        findViewById<LinearLayout>(R.id.qixiaInclude).setOnLongClickListener(onLongClickListener)
+    }
+
+    private val onLongClickListener = View.OnLongClickListener {
+        if (uri != null) {
+            var shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "image/*"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent = Intent.createChooser(shareIntent, "分享")
+            startActivity(shareIntent)
+        }
+        true
     }
 
     private fun parseNear(container: LinearLayout, mainBean: MainBean) {
@@ -575,43 +449,48 @@ class TDetailActivity : AppCompatActivity() {
                 company.contains("金宝博") ||
                 company.contains("盈禾") ||
                 company.contains("立博")
-
     }
 
-    /**
-     * 保存到内存卡
-     *
-     * @param bitName
-     * @param mBitmap
-     */
-    fun saveBitmapForSdCard(bitName: String, mBitmap: Bitmap) {
-        //创建file对象
-        val f = File("/sdcard/$bitName.png")
-        try {
-            //创建
-            f.createNewFile()
-        } catch (e: IOException) {
+    private fun viewGone() {
+        findViewById<LinearLayout>(R.id.zhugeInclude).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.diaochanInclude).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.qixiaInclude).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.shixiongInclude).visibility = View.GONE
+    }
 
+    private fun saveSheetCut(viewId: Int, text: String) {
+        viewGone()
+        findViewById<LinearLayout>(viewId).visibility = View.VISIBLE
+        findViewById<LinearLayout>(viewId).findViewById<TextView>(R.id.zzText).text = text
+        findViewById<Button>(R.id.zzButton).post {
+            val cv = findViewById<LinearLayout>(viewId)
+            cv.isDrawingCacheEnabled = true
+            cv.buildDrawingCache()
+            val bmp = cv.drawingCache
+            bmp.setHasAlpha(false)
+            bmp.prepareToDraw()
+            saveBitmapToLocal(System.currentTimeMillis().toString(), bmp)
         }
+    }
 
-        var fOut: FileOutputStream? = null
+    private fun saveBitmapToLocal(fileName: String, bitmap: Bitmap) {
         try {
-            fOut = FileOutputStream(f)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-
-        //原封不动的保存在内存卡上
-        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
-        try {
-            fOut!!.flush()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        try {
-            fOut!!.close()
-        } catch (e: IOException) {
+            // 创建文件流，指向该路径，文件名叫做fileName
+            val file = File(FILE_PATH, fileName + ".png")
+            // file其实是图片，它的父级File是文件夹，判断一下文件夹是否存在，如果不存在，创建文件夹
+            val fileParent = file.parentFile
+            if (!fileParent.exists()) {
+                // 文件夹不存在
+                fileParent.mkdirs()// 创建文件夹
+            }
+            if (!file.exists()) {
+                file.createNewFile()
+            }
+            // 将图片保存到本地
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100,
+                    FileOutputStream(file))
+            uri = Uri.fromFile(file)
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 

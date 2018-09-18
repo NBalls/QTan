@@ -43,6 +43,40 @@
                 android:textColor="@android:color/black"
                 />
 
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+
+                <RadioButton
+                    android:id="@+id/zzRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="重心单"
+                    android:textSize="14sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/zlRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="琉璃单"
+                    android:textSize="14sp"
+                    />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
             <Button
                 android:id="@+id/dzButton"
                 android:layout_width="0dp"
@@ -61,13 +95,35 @@
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 />
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+                <RadioButton
+                    android:id="@+id/dzRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="重心单"
+                    android:textSize="14sp"
+                    />
+                <RadioButton
+                    android:id="@+id/dfRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="福利单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
             >
             <Button
                 android:id="@+id/szButton"
@@ -87,7 +143,37 @@
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 />
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+                <RadioButton
+                    android:id="@+id/szRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="神威单"
+                    android:textSize="14sp"
+                    />
+                <RadioButton
+                    android:id="@+id/sfRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="福利单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            >
             <Button
                 android:id="@+id/qzButton"
                 android:layout_width="0dp"
@@ -106,54 +192,47 @@
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+                <RadioButton
+                    android:id="@+id/qzRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="龙腾凤翔单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/imageLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            >
+        <include
+            android:id="@+id/zhugeInclude"
+            layout="@layout/activity_tdetail_zhuge"
+            android:visibility="gone"
+            />
 
-            <ImageView
-                android:layout_width="360dp"
-                android:layout_height="360dp"
-                android:src="@drawable/zhuge_icon"
-                android:layout_gravity="center_horizontal"
-                />
+        <include
+            android:id="@+id/diaochanInclude"
+            layout="@layout/activity_tdetail_diaochan"
+            android:visibility="gone"
+            />
 
-            <View
-                android:layout_width="360dp"
-                android:layout_height="360dp"
-                android:background="#99EEEEEE"
-                android:layout_gravity="center_horizontal"
-                />
+        <include
+            android:id="@+id/qixiaInclude"
+            layout="@layout/activity_tdetail_qixia"
+            android:visibility="gone"
+            />
 
-            <FrameLayout
-                android:layout_width="360dp"
-                android:layout_height="360dp"
-                android:orientation="vertical"
-                android:layout_gravity="center_horizontal"
-                >
-                <TextView
-                    android:id="@+id/zzText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:padding="20dp"
-                    android:gravity="center_horizontal"
-                    />
-
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/zhuge"
-                    android:layout_marginBottom="20dp"
-                    android:layout_gravity="center_horizontal|bottom"
-                    />
-            </FrameLayout>
-        </FrameLayout>
-
+        <include
+            android:id="@+id/shixiongInclude"
+            layout="@layout/activity_tdetail_shixiong"
+            android:visibility="gone"
+            />
     </LinearLayout>
 </ScrollView>

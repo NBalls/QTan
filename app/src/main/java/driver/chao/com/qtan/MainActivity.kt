@@ -24,7 +24,6 @@ import driver.chao.com.qtan.parse.PrintClass
 import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
 import driver.chao.com.qtan.util.getYMDHMS
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
 import org.jsoup.Jsoup
@@ -107,68 +106,66 @@ class MainActivity : AppCompatActivity() {
         initWebView()
     }
 
-    private val onCheckedChangeListener = object : CompoundButton.OnCheckedChangeListener {
-        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-            if (buttonView?.id == R.id.coverCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.downCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.pingCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.cutCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.pingToPBCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.overCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.one44Checkbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.one65Checkbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.allCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.GONE
-                }
-            } else if (buttonView?.id == R.id.likeCheckbox) {
-                if (isChecked) {
-                    findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.VISIBLE
-                } else {
-                    findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.GONE
-                }
+    private val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        if (buttonView?.id == R.id.coverCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.downCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.pingCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.cutCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.pingToPBCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.overCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.one44Checkbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.one65Checkbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.allCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.likeCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.GONE
             }
         }
     }
