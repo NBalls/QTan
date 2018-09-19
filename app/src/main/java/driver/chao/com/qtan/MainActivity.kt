@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         val SP_DATE_KEY = "sp_date_key"
         val SP_DATA_KEY = "sp_data_key"
 
-        val SP_SAVE_SUCCESS = "保存数据成功......"
         val TOAST_VALIDATE_ERROR = "数据无法验证....."
         val TOAST_DATE_ERROR = "日期格式不正确...."
         val TEXT_LOADING = "正在加载数据......"
@@ -68,6 +67,9 @@ class MainActivity : AppCompatActivity() {
     private val webView2 by lazy {
         findViewById<WebView>(R.id.webView2)
     }
+    private val webView3 by lazy {
+        findViewById<WebView>(R.id.webView3)
+    }
     private val titleText by lazy {
         findViewById<TextView>(R.id.titleText)
     }
@@ -76,9 +78,6 @@ class MainActivity : AppCompatActivity() {
     }
     private val validateButton by lazy {
         findViewById<Button>(R.id.validateButton)
-    }
-    private val saveButton by lazy {
-        findViewById<Button>(R.id.saveButton)
     }
     private val queryButton by lazy {
         findViewById<Button>(R.id.queryButton)
@@ -173,10 +172,13 @@ class MainActivity : AppCompatActivity() {
     private fun initWebView() {
         webView.settings.javaScriptEnabled = true
         webView2.settings.javaScriptEnabled = true
+        webView3.settings.javaScriptEnabled = true
         webView.addJavascriptInterface(InJavaScriptLocalObj(), "java_obj")
         webView2.addJavascriptInterface(InJavaScriptLocalObj2(), "java_obj")
+        webView3.addJavascriptInterface(InJavaScriptLocalObj3(), "java_obj")
         webView.webViewClient = CWebViewClient()
         webView2.webViewClient = CWebViewClient2()
+        webView3.webViewClient = CWebViewClient3()
         ParseClass.tanCompleteListener = tanCompleteListener
 
         (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
@@ -281,15 +283,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        saveButton.onClick {
-            val date = sharedPreferences.getString(SP_DATE_KEY, "")
-            val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
-            val time = sharedPreferences.getString(SP_TIME_KEY, "")
-            sharedPreferences.edit().putString(date, data).apply()
-            sharedPreferences.edit().putString(date + "_time", time)
-            Toast.makeText(this, SP_SAVE_SUCCESS, Toast.LENGTH_SHORT).show()
-        }
-
         queryButton.onClick {
             findViewById<LinearLayout>(R.id.dateLayout)?.visibility = View.VISIBLE
         }
@@ -299,15 +292,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         sureButton.onClick {
-            val date = (findViewById<EditText>(R.id.dateEdit) as EditText).text.toString()
-            if (TextUtils.isEmpty(date) || !date.matches(Regex("\\d\\d\\d\\d-\\d\\d-\\d\\d"))) {
+            val data = (findViewById<EditText>(R.id.dateEdit) as EditText).text.toString()
+            if (TextUtils.isEmpty(data) || !data.matches(Regex("\\d\\d\\d\\d\\d\\d\\d\\d"))) {
                 Toast.makeText(this, TOAST_DATE_ERROR, Toast.LENGTH_SHORT).show()
             } else {
-                findViewById<LinearLayout>(R.id.dateLayout)?.visibility = View.GONE
-                val data = sharedPreferences.getString(date, "{}")
-                val dateTime = sharedPreferences.getString(date + "_time", "")
-                val time = dateTime.substring(dateTime.indexOf(" ") + 1)
-                parseData(data, date, time)
+                val url = DEFAULT_VALIDATE_URL + data + ".htm"
+                webView3?.loadUrl(url)
             }
         }
 
@@ -547,16 +537,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class InJavaScriptLocalObj {
-
-        @JavascriptInterface
-        fun showSource(html: String) {
-            val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
-            val doc = Jsoup.parse(htmlStr)
-            ParseClass.parseMainData(doc)
-        }
-    }
-
     class CWebViewClient2 : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
             view?.postDelayed({
@@ -569,6 +549,31 @@ class MainActivity : AppCompatActivity() {
             }, 0)
 
             super.onPageFinished(view, url)
+        }
+    }
+
+    class CWebViewClient3 : WebViewClient() {
+        override fun onPageFinished(view: WebView?, url: String?) {
+            view?.postDelayed({
+                try {
+                    view.loadUrl("javascript:window.java_obj.showSource("
+                            + "document.getElementById('table_live').outerHTML);")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }, 0)
+
+            super.onPageFinished(view, url)
+        }
+    }
+
+    inner class InJavaScriptLocalObj {
+
+        @JavascriptInterface
+        fun showSource(html: String) {
+            val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
+            val doc = Jsoup.parse(htmlStr)
+            ParseClass.parseMainData(doc)
         }
     }
 
@@ -587,6 +592,16 @@ class MainActivity : AppCompatActivity() {
                     .subscribe({ mList ->
                         validateData(mList)
                     }, {})
+        }
+    }
+
+    inner class InJavaScriptLocalObj3 {
+
+        @JavascriptInterface
+        fun showSource(html: String) {
+            val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
+            val doc = Jsoup.parse(htmlStr)
+            ParseClass.parseLastData(doc)
         }
     }
 

@@ -21,7 +21,6 @@ import driver.chao.com.qtan.util.ParserUtil;
 import driver.chao.com.qtan.util.TanCompleteListener;
 import driver.chao.com.qtan.util.TanListener;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -76,6 +75,56 @@ public class ParseClass {
                     bifen = "0:0";
                 }
                 String ke = elements.get(i).child(6).child(0).text();
+                mainBean.setId(ids);
+                mainBean.setLiansai(liansai);
+                mainBean.setTime(time);
+                mainBean.setStatus(status);
+                mainBean.setZhu(zhu);
+                mainBean.setBifen(bifen);
+                mainBean.setKe(ke);
+                parseYOData(mainBean, tanListener);
+            } else {
+                Log.i("MClass", "开始解析第" + (i + 1) + "条数据，数据不全舍弃.......");
+            }
+            if (i >= Math.min(elements.size(), 200) - 1) {
+                isFinish = true;
+            }
+        }
+    }
+
+
+    /**
+     * 解析比赛数据
+     */
+    public static void parseLastData(Document doc) {
+        count = 0;
+        isFinish = false;
+        mDataList.clear();
+        final Elements elements = doc.body().getElementsByAttribute("infoid");
+        final TanListener tanListener = new TanListener() {
+            @Override
+            public void onTanListener() {
+                if (mDataList.size() >= count - 3 && isFinish) {
+                    if (tanCompleteListener != null) {
+                        tanCompleteListener.onTanCompleteListener(mDataList);
+                    }
+                }
+            }
+        };
+        for (int i = 0; i < Math.min(elements.size(), 200); i ++) {
+            // 亚盘欧指数据不为空，状态为空
+            if (!TextUtils.isEmpty(elements.get(i).child(7).text())) {
+                count = count + 1;
+                Log.i("MClass", "开始解析第" + (i + 1) + "条数据..........");
+                MainBean mainBean = new MainBean();
+                String temp = elements.get(i).child(4).attr("onClick");
+                String ids = temp.substring(temp.indexOf("(") + 1, temp.indexOf(")"));
+                String liansai = elements.get(i).child(0).text();
+                String time = elements.get(i).child(1).text();
+                String status = elements.get(i).child(2).text();
+                String zhu = elements.get(i).child(3).text();
+                String bifen = elements.get(i).child(4).text();
+                String ke = elements.get(i).child(5).text();
                 mainBean.setId(ids);
                 mainBean.setLiansai(liansai);
                 mainBean.setTime(time);
