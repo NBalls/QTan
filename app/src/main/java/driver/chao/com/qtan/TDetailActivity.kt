@@ -19,6 +19,9 @@ import driver.chao.com.qtan.parse.*
 import driver.chao.com.qtan.util.clipDoc
 import java.io.File
 import java.io.FileOutputStream
+import android.content.ClipboardManager
+import android.text.TextUtils
+
 
 class TDetailActivity : AppCompatActivity() {
 
@@ -141,6 +144,25 @@ class TDetailActivity : AppCompatActivity() {
             val doc = qiKeLong(mainBean)
             clipDoc(this, doc)
             saveSheetCut(R.id.qixiaInclude, doc)
+        }
+
+        findViewById<Button>(R.id.updateButton).onClick {
+            val data = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).getPrimaryClip()
+            val item = data.getItemAt(0)
+            val text = item.text.toString()
+            if (TextUtils.isEmpty(text)) {
+                Toast.makeText(this, "粘贴板内容为空", Toast.LENGTH_SHORT).show()
+            } else {
+                if (findViewById<RadioButton>(R.id.zRadioButton).isChecked) {
+                    saveSheetCut(R.id.zhugeInclude, text)
+                } else if (findViewById<RadioButton>(R.id.dRadioButton).isChecked) {
+                    saveSheetCut(R.id.diaochanInclude, text)
+                } else if (findViewById<RadioButton>(R.id.sRadioButton).isChecked) {
+                    saveSheetCut(R.id.shixiongInclude, text)
+                } else if (findViewById<RadioButton>(R.id.qRadioButton).isChecked) {
+                    saveSheetCut(R.id.qixiaInclude, text)
+                }
+            }
         }
 
         findViewById<LinearLayout>(R.id.zhugeInclude).setOnLongClickListener(onLongClickListener)
@@ -493,6 +515,5 @@ class TDetailActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 }

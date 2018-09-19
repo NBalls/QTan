@@ -523,6 +523,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        for (i in 0 until mainBean.yList.size) {
+            if (mainBean.yList[i].company.contains("Crown")) {
+                return mainBean.yList[i].endPan
+            }
+        }
+
         return ""
     }
 

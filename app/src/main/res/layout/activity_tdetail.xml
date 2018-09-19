@@ -172,7 +172,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
             >
             <Button
                 android:id="@+id/qzButton"
@@ -206,6 +205,64 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="龙腾凤翔单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            >
+            <Button
+                android:id="@+id/updateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="修改"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="4"
+                >
+                <RadioButton
+                    android:id="@+id/zRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="诸葛"
+                    android:textSize="14sp"
+                    />
+                <RadioButton
+                    android:id="@+id/dRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="貂蝉"
+                    android:textSize="14sp"
+                    />
+                <RadioButton
+                    android:id="@+id/sRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="师兄"
+                    android:textSize="14sp"
+                    />
+                <RadioButton
+                    android:id="@+id/qRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="奇侠"
                     android:textSize="14sp"
                     />
             </RadioGroup>
