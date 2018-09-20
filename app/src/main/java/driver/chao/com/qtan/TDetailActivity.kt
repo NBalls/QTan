@@ -170,6 +170,18 @@ class TDetailActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.fzButton).onClick {
+            val doc = faZhuXiu(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.defaultInclude, doc)
+        }
+
+        findViewById<Button>(R.id.fkButton).onClick {
+            val doc = faKeXiu(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.defaultInclude, doc)
+        }
+
         findViewById<Button>(R.id.updateButton).onClick {
             val data = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).primaryClip
             val item = data.getItemAt(0)

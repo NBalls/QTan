@@ -254,8 +254,49 @@
                     android:id="@+id/gsRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="神隐单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/fzButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="发哥(主)"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+            <Button
+                android:id="@+id/fkButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="发哥(客)"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+                <RadioButton
+                    android:id="@+id/fxRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="修罗单"
                     android:textSize="14sp"
                     />
             </RadioGroup>
