@@ -24,6 +24,7 @@ import driver.chao.com.qtan.parse.PrintClass
 import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
 import driver.chao.com.qtan.util.getYMDHMS
+import driver.chao.com.qtan.util.runOnIoThread
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
 import org.jsoup.Jsoup
@@ -626,13 +627,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillData(dataList: List<MainBean>) {
-        Observable.create<Boolean> { subscrbe ->
+        runOnIoThread {
             sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
-            subscrbe.onNext(true)
-            subscrbe.onCompleted()
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+        }
         fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
         fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
         fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)

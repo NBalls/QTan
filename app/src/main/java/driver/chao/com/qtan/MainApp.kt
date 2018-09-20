@@ -10,7 +10,7 @@ class MainApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        // 解决高版本图片保存问题
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
         builder.detectFileUriExposure()
