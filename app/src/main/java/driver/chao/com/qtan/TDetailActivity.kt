@@ -146,8 +146,32 @@ class TDetailActivity : AppCompatActivity() {
             saveSheetCut(R.id.qixiaInclude, doc)
         }
 
+        findViewById<Button>(R.id.gzButton).onClick {
+            if (findViewById<RadioButton>(R.id.gjRadioButton).isChecked) {
+                val doc = guiZhuJing(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            } else if (findViewById<RadioButton>(R.id.gsRadioButton).isChecked) {
+                val doc = guiZhuShen(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            }
+        }
+
+        findViewById<Button>(R.id.gkButton).onClick {
+            if (findViewById<RadioButton>(R.id.gjRadioButton).isChecked) {
+                val doc = guiKeJing(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            } else if (findViewById<RadioButton>(R.id.gsRadioButton).isChecked) {
+                val doc = guiKeShen(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            }
+        }
+
         findViewById<Button>(R.id.updateButton).onClick {
-            val data = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).getPrimaryClip()
+            val data = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).primaryClip
             val item = data.getItemAt(0)
             val text = item.text.toString()
             if (TextUtils.isEmpty(text)) {
@@ -478,6 +502,7 @@ class TDetailActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.diaochanInclude).visibility = View.GONE
         findViewById<LinearLayout>(R.id.qixiaInclude).visibility = View.GONE
         findViewById<LinearLayout>(R.id.shixiongInclude).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.defaultInclude).visibility = View.GONE
     }
 
     private fun saveSheetCut(viewId: Int, text: String) {

@@ -506,3 +506,126 @@ fun qiKeLong(mainBean: MainBean): String {
 
     return sb.toString()
 }
+
+fun guiZhuJing(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append(getMD()).append("鬼谷子精算单推荐\n\n")
+    sb.append(mainBean.liansai).append(" ").append(mainBean.time)
+            .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("推荐：").append(mainBean.zhu)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("-")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(1, endPan.length - 2))
+        } else {
+            sb.append(endPan.substring(1))
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("(精算单)\n\n").append("建议：彩市有风险，长跟有保证")
+
+    return sb.toString()
+}
+
+fun guiKeJing(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append(getMD()).append("鬼谷子精算单推荐\n\n")
+    sb.append(mainBean.liansai).append(" ").append(mainBean.time)
+            .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("推荐：").append(mainBean.ke)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("(精算单)\n\n").append("建议：彩市有风险，长跟有保证")
+
+    return sb.toString()
+}
+
+
+fun guiZhuShen(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append(getMD()).append("鬼谷子神隐单推荐\n\n")
+    sb.append(mainBean.liansai).append(" ").append(mainBean.time)
+            .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("推荐：").append(mainBean.zhu)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("-")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(1, endPan.length - 2))
+        } else {
+            sb.append(endPan.substring(1))
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("(神隐单)\n\n").append("建议：彩市有风险，长跟有保证")
+
+    return sb.toString()
+}
+
+fun guiKeShen(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append(getMD()).append("鬼谷子神隐单推荐\n\n")
+    sb.append(mainBean.liansai).append(" ").append(mainBean.time)
+            .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("推荐：").append(mainBean.ke)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("(神隐单)\n\n").append("建议：彩市有风险，长跟有保证")
+
+    return sb.toString()
+}
