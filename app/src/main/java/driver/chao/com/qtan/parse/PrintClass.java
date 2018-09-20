@@ -123,7 +123,64 @@ public class PrintClass {
             }
         }
 
-        return mList;
+        List<MainBean> resultList = new ArrayList();
+        for (int i = 0; i < mList.size(); i ++) {
+            if (mList.get(i).yList.size() <= 0 || mList.get(i).kList.size() <= 0 || mList.get(i).zList.size() <= 0) {
+                continue;
+            }
+            float endPan = Float.valueOf(mList.get(i).yList.get(0).endPan);
+            if (endPan > 0) {
+                // 下盘客队->最近一场红了
+                // 上盘主队->最近一场黑了
+                String kedui = mList.get(i).getKe();
+                if (kedui.trim().contains(mList.get(i).kList.get(0).zhudui.trim()) || mList.get(i).kList.get(0).zhudui.trim().contains(kedui.trim())) {
+                    if (Float.valueOf(mList.get(i).kList.get(0).zhuPoint) > Float.valueOf(mList.get(i).kList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                } else if (kedui.trim().contains(mList.get(i).kList.get(0).kedui.trim()) || mList.get(i).kList.get(0).kedui.trim().contains(kedui.trim())) {
+                    if (Float.valueOf(mList.get(i).kList.get(0).zhuPoint) < Float.valueOf(mList.get(i).kList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                }
+
+                String zhudui = mList.get(i).getZhu();
+                if (zhudui.trim().contains(mList.get(i).zList.get(0).zhudui.trim()) || mList.get(i).zList.get(0).zhudui.trim().contains(zhudui.trim())) {
+                    if (Float.valueOf(mList.get(i).zList.get(0).zhuPoint) < Float.valueOf(mList.get(i).zList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                } else if (zhudui.trim().contains(mList.get(i).zList.get(0).kedui.trim()) || mList.get(i).zList.get(0).kedui.trim().contains(zhudui.trim())) {
+                    if (Float.valueOf(mList.get(i).zList.get(0).zhuPoint) > Float.valueOf(mList.get(i).zList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                }
+            } else if (endPan < 0) {
+                // 下盘主队->最近一场红了
+                // 上盘客队->最近一场黑了
+                String zhudui = mList.get(i).getZhu();
+                if (zhudui.trim().contains(mList.get(i).zList.get(0).zhudui.trim()) || mList.get(i).zList.get(0).zhudui.trim().contains(zhudui.trim())) {
+                    if (Float.valueOf(mList.get(i).zList.get(0).zhuPoint) > Float.valueOf(mList.get(i).zList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                } else if (zhudui.trim().contains(mList.get(i).zList.get(0).kedui.trim()) || mList.get(i).zList.get(0).kedui.trim().contains(zhudui.trim())) {
+                    if (Float.valueOf(mList.get(i).zList.get(0).zhuPoint) < Float.valueOf(mList.get(i).zList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                }
+
+                String kedui = mList.get(i).getZhu();
+                if (kedui.trim().contains(mList.get(i).kList.get(0).zhudui.trim()) || mList.get(i).kList.get(0).zhudui.trim().contains(kedui.trim())) {
+                    if (Float.valueOf(mList.get(i).kList.get(0).zhuPoint) < Float.valueOf(mList.get(i).zList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                } else if (kedui.trim().contains(mList.get(i).kList.get(0).kedui.trim()) || mList.get(i).kList.get(0).kedui.trim().contains(kedui.trim())) {
+                    if (Float.valueOf(mList.get(i).kList.get(0).zhuPoint) > Float.valueOf(mList.get(i).kList.get(0).kePoint)) {
+                        resultList.add(mList.get(i));
+                    }
+                }
+            }
+        }
+
+        return resultList;
     }
 
     /**

@@ -10,5 +10,13 @@ interface TanListener {
 }
 
 interface TanCompleteListener {
+    fun onTanLoadMainDataListener()
+
+    fun onTanLoadYaDataListener()
+
+    fun onTanLoadOuDataListener()
+
+    fun onTanLoadRaDataListener()
+
     fun onTanCompleteListener(mDataList: List<MainBean>)
 }

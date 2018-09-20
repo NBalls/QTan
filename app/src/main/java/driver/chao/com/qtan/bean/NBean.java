@@ -1,10 +1,12 @@
 package driver.chao.com.qtan.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by aaron on 2018/9/13.
  * 近期
  */
-public class NBean {
+public class NBean implements Serializable {
     public String date = "";
     public String zhudui = "";
     public String kedui = "";
@@ -17,7 +19,7 @@ public class NBean {
 
     @Override
     public String toString() {
-        return liansai + " " + date + " " + zhudui + "VS" + kedui + " " + zhuPoint + ":" + kePoint;
+        return liansai + " " + date + " " + zhudui + "VS" + kedui + " " + zhuPoint + ":" + kePoint + "\n";
     }
 
     public String getDate() {

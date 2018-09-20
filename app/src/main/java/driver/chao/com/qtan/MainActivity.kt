@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
         val TOAST_VALIDATE_ERROR = "数据无法验证....."
         val TOAST_DATE_ERROR = "日期格式不正确...."
         val TEXT_LOADING = "正在加载数据......"
+        val TEXT_LOADING_YA = "正在加载亚盘数据......"
+        val TEXT_LOADING_OU = "正在加载欧指数据......"
+        val TEXT_LOADING_RA = "正在加载近期数据......"
         val TEXT_VALIDATEING = "验证中......"
 
         val TAG = "TanFragment"
@@ -80,8 +83,35 @@ class MainActivity : AppCompatActivity() {
         getSharedPreferences(SHARE_NAME, Context.MODE_PRIVATE)
     }
     private val tanCompleteListener = object : TanCompleteListener {
+        override fun onTanLoadMainDataListener() {
+            Handler(Looper.getMainLooper()).post {
+                titleText.text = TEXT_LOADING
+            }
+        }
+
+        override fun onTanLoadYaDataListener() {
+            Handler(Looper.getMainLooper()).post {
+                titleText.text = TEXT_LOADING_YA
+            }
+        }
+
+        override fun onTanLoadOuDataListener() {
+            Handler(Looper.getMainLooper()).post {
+                titleText.text = TEXT_LOADING_OU
+            }
+        }
+
+        override fun onTanLoadRaDataListener() {
+            Handler(Looper.getMainLooper()).post {
+                titleText.text = TEXT_LOADING_RA
+            }
+        }
+
         override fun onTanCompleteListener(mDataList: List<MainBean>) {
             Handler(Looper.getMainLooper()).post {
+                if (ParseClass.subscription != null) {
+                    ParseClass.subscription.unsubscribe()
+                }
                 saveData(mDataList)
             }
         }
@@ -264,7 +294,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         freshButton.onClick {
-            titleText.text = TEXT_LOADING
             webLayout.webView.loadUrl(DEFAULT_WEB_URL)
         }
 

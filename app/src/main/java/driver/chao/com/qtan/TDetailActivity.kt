@@ -8,8 +8,6 @@ import android.view.View
 import driver.chao.com.qtan.bean.MainBean
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -35,16 +33,7 @@ class TDetailActivity : AppCompatActivity() {
 
         mainBean = intent.getSerializableExtra("mainBean") as MainBean
         fillItem(mainBean, R.id.detailLayout)
-
-        ParseClass.parseRData(mainBean)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ s ->
-                    mainBean.setdList(ParseClass.parseDList(s))
-                    mainBean.setzList(ParseClass.parseZList(s))
-                    mainBean.setkList(ParseClass.parseKList(s))
-                    parseNear(findViewById(R.id.parseYaLayout), mainBean)
-                }, {})
+        parseNear(findViewById(R.id.parseYaLayout), mainBean)
         initView()
     }
 

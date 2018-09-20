@@ -32,13 +32,27 @@ public class MainBean implements Serializable {
         StringBuffer sb = new StringBuffer();
         sb.append(liansai + " " + time + "  " + status + "  " + bifen + "  " + zhu + "VS" + ke + "\n");
 
-        sb.append(getYaUrl() + "\n");
+        sb.append("亚盘数据：" + getYaUrl() + "\n");
         for (int i = 0; i < yList.size(); i ++) {
             sb.append(yList.get(i).toString());
         }
 
+        sb.append("欧指数据：" + getOuUrl() + "\n");
         for (int i = 0; i < oList.size(); i ++) {
             sb.append(oList.get(i).toString());
+        }
+
+        sb.append("对战历史：\n");
+        for (int i = 0; i < dList.size(); i ++) {
+            sb.append(dList.get(i).toString());
+        }
+        sb.append("主队近况：\n");
+        for (int i = 0; i < zList.size(); i ++) {
+            sb.append(zList.get(i).toString());
+        }
+        sb.append("客队近况：\n");
+        for (int i = 0; i < kList.size(); i ++) {
+            sb.append(kList.get(i).toString());
         }
         return sb.toString();
     }

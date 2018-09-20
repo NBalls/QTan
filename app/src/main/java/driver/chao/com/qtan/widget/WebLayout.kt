@@ -7,11 +7,8 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import driver.chao.com.qtan.MainActivity
 import driver.chao.com.qtan.R
-import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.bean.RBean
 import driver.chao.com.qtan.parse.ParseClass
 import org.jsoup.Jsoup
@@ -111,7 +108,7 @@ class WebLayout : LinearLayout {
         fun showSource(html: String) {
             val htmlStr = MainActivity.DEFAULT_HTML_PRE + html + MainActivity.DEFAULT_HTML_LAST
             val doc = Jsoup.parse(htmlStr)
-            ParseClass.parseMainData(doc)
+            ParseClass.parseMainData(doc, 1)
         }
     }
 
@@ -140,7 +137,7 @@ class WebLayout : LinearLayout {
         fun showSource(html: String) {
             val htmlStr = MainActivity.DEFAULT_HTML_PRE + html + MainActivity.DEFAULT_HTML_LAST
             val doc = Jsoup.parse(htmlStr)
-            ParseClass.parseLastData(doc)
+            ParseClass.parseMainData(doc, 2)
         }
     }
 }
