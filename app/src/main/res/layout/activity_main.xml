@@ -311,7 +311,7 @@
                 android:textSize="15sp"
                 android:padding="10dp"
                 android:textColor="#cc0000"
-                android:text="下盘低水"
+                android:text="下盘比赛"
                 android:background="#eeeeee"
                 />
             <LinearLayout
@@ -342,7 +342,7 @@
                 android:textSize="15sp"
                 android:padding="10dp"
                 android:textColor="#cc0000"
-                android:text="平手盘"
+                android:text="平手比赛"
                 android:background="#eeeeee"
                 />
             <LinearLayout

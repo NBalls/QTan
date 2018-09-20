@@ -11,6 +11,11 @@ import driver.chao.com.qtan.bean.MainBean;
  */
 public class PrintClass {
 
+    /**
+     * 1.44盘口比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parse144(List<MainBean> mDataList) {
         ArrayList<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -27,6 +32,11 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 1.65盘口比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parse165(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -45,23 +55,37 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 解析变盘比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parseCOver(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
+            int count = 0;
             for (int j = 0; j < mDataList.get(i).getyList().size(); j ++) {
-                if (mDataList.get(i).getyList().get(j).company.contains("易胜博")) {
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
                     float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
                     float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
                     if (Math.abs(startPan - endPan) >= 0.25 && Math.abs(endPan) < 1.75) {
-                        mList.add(mDataList.get(i));
+                        count = count + 1;
                     }
                 }
+            }
+            if (count >= 3) {
+                mList.add(mDataList.get(i));
             }
         }
 
         return mList;
     }
 
+    /**
+     * 解析下盘比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parseDown(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -102,6 +126,11 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 解析平手盘比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parseZero(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -124,7 +153,11 @@ public class PrintClass {
         return mList;
     }
 
-
+    /**
+     * 降盘降水比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parseCut(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -161,6 +194,11 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 平手盘至->平半盘比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parse025(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -183,6 +221,11 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 神盘变盘比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parseDeep(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -205,6 +248,11 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 关注比赛
+     * @param mDataList
+     * @return
+     */
     public static List<MainBean> parseLike(List<MainBean> mDataList) {
         List<MainBean> mList = new ArrayList();
         for (int i = 0; i < mDataList.size(); i ++) {
@@ -218,9 +266,14 @@ public class PrintClass {
 
 
     private static boolean isCompany(String company) {
-        return company.contains("易胜博")
-                || company.contains("365")
-                || company.contains("Crown")
-                || company.contains("威廉");
+        return company.contains("365") ||
+                company.contains("易胜博") ||
+                company.contains("Crown") ||
+                company.contains("威廉") ||
+                company.contains("韦德") ||
+                company.contains("澳门") ||
+                company.contains("金宝博") ||
+                company.contains("盈禾") ||
+                company.contains("立博");
     }
 }

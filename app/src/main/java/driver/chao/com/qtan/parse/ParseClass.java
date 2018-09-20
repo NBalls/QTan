@@ -268,13 +268,16 @@ public class ParseClass {
             if (!TextUtils.isEmpty(nBean.getZhudui()) && !TextUtils.isEmpty(nBean.getKedui())) {
                 kList.add(nBean);
             }
-            Log.i("MClass", nBean.toString());
+            // Log.i("MClass", nBean.toString());
         }
 
         return kList;
     }
 
     public static List<NBean> parseDList(String s) {
+        if (s.contains("v_data = []")) {
+            return new ArrayList<NBean>();
+        }
         String subStr1 = s.substring(s.indexOf("v_data"));
         String subStr2 = subStr1.substring(11, subStr1.indexOf("]];"));
         String[] arrayStr1 = subStr2.split("],\\[");
