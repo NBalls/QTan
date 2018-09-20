@@ -8,25 +8,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
-        <WebView
-            android:id="@+id/webView"
+        <driver.chao.com.qtan.widget.WebLayout
+            android:id="@+id/webLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            ></WebView>
-        <WebView
-            android:id="@+id/webView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            ></WebView>
-        <WebView
-            android:id="@+id/webView3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            ></WebView>
+            ></driver.chao.com.qtan.widget.WebLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

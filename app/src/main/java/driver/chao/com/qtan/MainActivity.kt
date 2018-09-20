@@ -11,9 +11,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -25,12 +22,10 @@ import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
 import driver.chao.com.qtan.util.getYMDHMS
 import driver.chao.com.qtan.util.runOnIoThread
+import driver.chao.com.qtan.widget.WebLayout
+import driver.chao.com.qtan.widget.WebLayoutListener
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
-import org.jsoup.Jsoup
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,8 +34,7 @@ import java.util.*
  * Feature功能列表：
  * 1、解析
  * 2、验证
- * 3、保存
- * 4、获取
+ * 3、获取
  */
 class MainActivity : AppCompatActivity() {
 
@@ -61,15 +55,8 @@ class MainActivity : AppCompatActivity() {
         val DEFAULT_HTML_PRE = "<html><head></head><body>"
         val DEFAULT_HTML_LAST = "</body></html>"
     }
-
-    private val webView by lazy {
-        findViewById<WebView>(R.id.webView)
-    }
-    private val webView2 by lazy {
-        findViewById<WebView>(R.id.webView2)
-    }
-    private val webView3 by lazy {
-        findViewById<WebView>(R.id.webView3)
+    private val webLayout by lazy {
+        findViewById<WebLayout>(R.id.webLayout)
     }
     private val titleText by lazy {
         findViewById<TextView>(R.id.titleText)
@@ -96,6 +83,27 @@ class MainActivity : AppCompatActivity() {
         override fun onTanCompleteListener(mDataList: List<MainBean>) {
             Handler(Looper.getMainLooper()).post {
                 saveData(mDataList)
+            }
+        }
+    }
+    private val webLayoutListener = object : WebLayoutListener {
+        override fun onWebLayoutValidateListener(mList: List<RBean>) {
+            val data = sharedPreferences.getString(MainActivity.SP_DATA_KEY, "{}")
+            val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
+            for (i in 0 until dataList.size) {
+                for (j in 0 until mList.size) {
+                    if (mList[j].getZhudui().contains(dataList[i].zhu)
+                            && mList[j].getLiansai().contains(dataList[i].liansai)) {
+                        dataList[i].bifen = mList[j].points
+                        break
+                    }
+                }
+            }
+
+            runOnUiThread {
+                // 更新保存数据
+                validateButton.text = "验证"
+                fillData(dataList)
             }
         }
     }
@@ -171,16 +179,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initWebView() {
-        webView.settings.javaScriptEnabled = true
-        webView2.settings.javaScriptEnabled = true
-        webView3.settings.javaScriptEnabled = true
-        webView.addJavascriptInterface(InJavaScriptLocalObj(), "java_obj")
-        webView2.addJavascriptInterface(InJavaScriptLocalObj2(), "java_obj")
-        webView3.addJavascriptInterface(InJavaScriptLocalObj3(), "java_obj")
-        webView.webViewClient = CWebViewClient()
-        webView2.webViewClient = CWebViewClient2()
-        webView3.webViewClient = CWebViewClient3()
         ParseClass.tanCompleteListener = tanCompleteListener
+        webLayout.webLayoutListener = webLayoutListener
 
         (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
@@ -265,7 +265,7 @@ class MainActivity : AppCompatActivity() {
 
         freshButton.onClick {
             titleText.text = TEXT_LOADING
-            webView?.loadUrl(DEFAULT_WEB_URL)
+            webLayout.webView.loadUrl(DEFAULT_WEB_URL)
         }
 
         validateButton.onClick {
@@ -278,7 +278,7 @@ class MainActivity : AppCompatActivity() {
             if (sb.toString() != sdf.format(Date())) {
                 validateButton.text = TEXT_VALIDATEING
                 val url = DEFAULT_VALIDATE_URL + sb.toString() + ".htm"
-                webView2?.loadUrl(url)
+                webLayout.webView2.loadUrl(url)
             } else {
                 Toast.makeText(this, TOAST_VALIDATE_ERROR, Toast.LENGTH_SHORT).show()
             }
@@ -298,7 +298,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, TOAST_DATE_ERROR, Toast.LENGTH_SHORT).show()
             } else {
                 val url = DEFAULT_VALIDATE_URL + data + ".htm"
-                webView3?.loadUrl(url)
+                webLayout.webView3.loadUrl(url)
             }
         }
 
@@ -521,109 +521,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         return ""
-    }
-
-    class CWebViewClient : WebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
-            view?.postDelayed({
-                try {
-                    view.loadUrl("javascript:window.java_obj.showSource("
-                            + "document.getElementById('table_live').outerHTML);")
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }, 0)
-
-            super.onPageFinished(view, url)
-        }
-    }
-
-    class CWebViewClient2 : WebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
-            view?.postDelayed({
-                try {
-                    view.loadUrl("javascript:window.java_obj.showSource("
-                            + "document.getElementById('table_live').outerHTML);")
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }, 0)
-
-            super.onPageFinished(view, url)
-        }
-    }
-
-    class CWebViewClient3 : WebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
-            view?.postDelayed({
-                try {
-                    view.loadUrl("javascript:window.java_obj.showSource("
-                            + "document.getElementById('table_live').outerHTML);")
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }, 0)
-
-            super.onPageFinished(view, url)
-        }
-    }
-
-    inner class InJavaScriptLocalObj {
-
-        @JavascriptInterface
-        fun showSource(html: String) {
-            val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
-            val doc = Jsoup.parse(htmlStr)
-            ParseClass.parseMainData(doc)
-        }
-    }
-
-    inner class InJavaScriptLocalObj2 {
-
-        @JavascriptInterface
-        fun showSource(html: String) {
-            Observable.create<List<RBean>> { subscribe ->
-                val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
-                val doc = Jsoup.parse(htmlStr)
-                val mList = ParseClass.parseResult(doc)
-                subscribe.onNext(mList)
-                subscribe.onCompleted()
-            }.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ mList ->
-                        validateData(mList)
-                    }, {})
-        }
-    }
-
-    inner class InJavaScriptLocalObj3 {
-
-        @JavascriptInterface
-        fun showSource(html: String) {
-            val htmlStr = DEFAULT_HTML_PRE + html + DEFAULT_HTML_LAST
-            val doc = Jsoup.parse(htmlStr)
-            ParseClass.parseLastData(doc)
-        }
-    }
-
-    private fun validateData(mList: List<RBean>) {
-        val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
-        val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
-        for (i in 0 until dataList.size) {
-            for (j in 0 until mList.size) {
-                if (mList[j].getZhudui().contains(dataList[i].zhu)
-                        && mList[j].getLiansai().contains(dataList[i].liansai)) {
-                    dataList[i].bifen = mList[j].points
-                    break
-                }
-            }
-        }
-
-        runOnUiThread {
-            // 更新保存数据
-            validateButton.text = "验证"
-            fillData(dataList)
-        }
     }
 
     private fun fillData(dataList: List<MainBean>) {
