@@ -226,6 +226,47 @@
             android:layout_height="wrap_content">
 
             <CheckBox
+                android:id="@+id/byToBQCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0.75至0.5"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/byToYQCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0.75至1"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/yqToYECheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1至1.25"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:id="@+id/overMoreCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="连续变盘"
+                android:checked="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
                 android:id="@+id/allCheckbox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -502,6 +543,130 @@
                 />
             <LinearLayout
                 android:id="@+id/one65Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/out075To05Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/one75To05Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="0.75到0.5"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/one75To05Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/out075To1Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/one75To1Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="0.75到1"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/one75To1Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/outTo125Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/oneTo125Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="1到1.25"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/oneTo125Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/outOverMoreLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/overMoreTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="连续变盘"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/overMoreLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

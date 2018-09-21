@@ -205,6 +205,30 @@ class MainActivity : AppCompatActivity() {
             } else {
                 findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.GONE
             }
+        } else if (buttonView?.id == R.id.byToBQCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.out075To05Layout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.out075To05Layout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.byToYQCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.out075To1Layout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.out075To1Layout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.yqToYECheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outTo125Layout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outTo125Layout).visibility = View.GONE
+            }
+        } else if (buttonView?.id == R.id.overMoreCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.GONE
+            }
         }
     }
 
@@ -222,6 +246,10 @@ class MainActivity : AppCompatActivity() {
         (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         (findViewById<CheckBox>(R.id.allCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         (findViewById<CheckBox>(R.id.likeCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.byToBQCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         if ((findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked) {
             findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
         } else {
@@ -272,6 +300,26 @@ class MainActivity : AppCompatActivity() {
         } else {
             findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.GONE
         }
+        if ((findViewById<CheckBox>(R.id.byToBQCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.out075To05Layout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.out075To05Layout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.out075To1Layout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.out075To1Layout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outTo125Layout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outTo125Layout).visibility = View.GONE
+        }
+        if ((findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.GONE
+        }
         findViewById<Button>(R.id.selectAllButton).onClick {
             (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked = true
             (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).isChecked = true
@@ -281,6 +329,11 @@ class MainActivity : AppCompatActivity() {
             (findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).isChecked = true
             (findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).isChecked = true
             (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).isChecked = true
+
+            (findViewById<CheckBox>(R.id.byToBQCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).isChecked = true
         }
         findViewById<Button>(R.id.unselectAllButton).onClick {
             (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked = false
@@ -291,6 +344,10 @@ class MainActivity : AppCompatActivity() {
             (findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).isChecked = false
             (findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).isChecked = false
             (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.byToBQCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).isChecked = false
         }
 
         freshButton.onClick {
@@ -369,6 +426,10 @@ class MainActivity : AppCompatActivity() {
         fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
         fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
         fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
+        fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
+        fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
+        fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
+        fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
     }
 
     private fun fillItem(mList: ArrayList<MainBean>, parentId: Int) {
@@ -566,5 +627,9 @@ class MainActivity : AppCompatActivity() {
         fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
         fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
         fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
+        fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
+        fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
+        fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
+        fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
     }
 }

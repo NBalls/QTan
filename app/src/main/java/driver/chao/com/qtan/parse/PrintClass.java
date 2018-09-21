@@ -279,7 +279,7 @@ public class PrintClass {
     }
 
     /**
-     * 神盘变盘比赛
+     * 深盘变盘比赛
      * @param mDataList
      * @return
      */
@@ -292,6 +292,114 @@ public class PrintClass {
                     float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
                     float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
                     if (Math.abs(startPan) >= 1 && Math.abs(endPan) - Math.abs(startPan) >= 0.25) {
+                        count = count + 1;
+                    }
+                }
+            }
+
+            if (count >= 2) {
+                mList.add(mDataList.get(i));
+            }
+        }
+
+        return mList;
+    }
+
+    /**
+     * 075-05比赛
+     * @param mDataList
+     * @return
+     */
+    public static List<MainBean> parse075To05(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            int count = 0;
+            for (int j = 0; j < mDataList.get(i).getyList().size(); j ++) {
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
+                    float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
+                    float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
+                    if (startPan == 0.5 && endPan == 0.75) {
+                        count = count + 1;
+                    }
+                }
+            }
+
+            if (count >= 2) {
+                mList.add(mDataList.get(i));
+            }
+        }
+
+        return mList;
+    }
+
+    /**
+     * 075-1比赛
+     * @param mDataList
+     * @return
+     */
+    public static List<MainBean> parse075To1(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            int count = 0;
+            for (int j = 0; j < mDataList.get(i).getyList().size(); j ++) {
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
+                    float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
+                    float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
+                    if (startPan == 0.5 && endPan == 1) {
+                        count = count + 1;
+                    }
+                }
+            }
+
+            if (count >= 2) {
+                mList.add(mDataList.get(i));
+            }
+        }
+
+        return mList;
+    }
+
+    /**
+     * 1-125比赛
+     * @param mDataList
+     * @return
+     */
+    public static List<MainBean> parse1To125(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            int count = 0;
+            for (int j = 0; j < mDataList.get(i).getyList().size(); j ++) {
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
+                    float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
+                    float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
+                    if (startPan == 1 && endPan == 1.25) {
+                        count = count + 1;
+                    }
+                }
+            }
+
+            if (count >= 2) {
+                mList.add(mDataList.get(i));
+            }
+        }
+
+        return mList;
+    }
+
+    /**
+     * 连续变盘比赛
+     * @param mDataList
+     * @return
+     */
+    public static List<MainBean> parseOverMore(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            int count = 0;
+            for (int j = 0; j < mDataList.get(i).getyList().size(); j ++) {
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
+                    float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
+                    float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
+                    if (Math.abs(startPan - endPan) >= 0.5) {
                         count = count + 1;
                     }
                 }
