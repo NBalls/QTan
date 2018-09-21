@@ -458,7 +458,7 @@ class MainActivity : AppCompatActivity() {
                     rootViews.findViewById<TextView>(R.id.rText).textColor = Color.parseColor("#FF0000")
                 } else if (zPoint.toInt() < kPoint.toInt()) {
                     rootViews.findViewById<TextView>(R.id.rText).text = "输"
-                    rootViews.findViewById<TextView>(R.id.rText).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.rText).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.rText).text = "平"
                     rootViews.findViewById<TextView>(R.id.rText).textColor = Color.parseColor("#000000")
@@ -524,7 +524,7 @@ class MainActivity : AppCompatActivity() {
                 if (mainBean.yList[i].endZRate.toFloat() > mainBean.yList[i].startZRate.toFloat()) {
                     rootViews.findViewById<TextView>(R.id.endZRate).textColor = Color.parseColor("#FF0000")
                 } else if (mainBean.yList[i].endZRate.toFloat() < mainBean.yList[i].startZRate.toFloat()) {
-                    rootViews.findViewById<TextView>(R.id.endZRate).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.endZRate).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.endZRate).textColor = Color.parseColor("#000000")
                 }
@@ -532,7 +532,7 @@ class MainActivity : AppCompatActivity() {
                 if (mainBean.yList[i].endPan.toFloat() > mainBean.yList[i].startPan.toFloat()) {
                     rootViews.findViewById<TextView>(R.id.endPan).textColor = Color.parseColor("#FF0000")
                 } else if (mainBean.yList[i].endPan.toFloat() < mainBean.yList[i].startPan.toFloat()) {
-                    rootViews.findViewById<TextView>(R.id.endPan).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.endPan).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.endPan).textColor = Color.parseColor("#000000")
                 }
@@ -540,7 +540,7 @@ class MainActivity : AppCompatActivity() {
                 if (mainBean.yList[i].endKRate.toFloat() > mainBean.yList[i].startKRate.toFloat()) {
                     rootViews.findViewById<TextView>(R.id.endKRate).textColor = Color.parseColor("#FF0000")
                 } else if (mainBean.yList[i].endKRate.toFloat() < mainBean.yList[i].startKRate.toFloat()) {
-                    rootViews.findViewById<TextView>(R.id.endKRate).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.endKRate).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.endKRate).textColor = Color.parseColor("#000000")
                 }
@@ -557,7 +557,7 @@ class MainActivity : AppCompatActivity() {
                 if (mainBean.oList[i].endS.trim().toFloat() > mainBean.oList[i].startS.trim().toFloat()) {
                     rootViews.findViewById<TextView>(R.id.endSRate).textColor = Color.parseColor("#FF0000")
                 } else if (mainBean.oList[i].endS.trim().toFloat() < mainBean.oList[i].startS.trim().toFloat()) {
-                    rootViews.findViewById<TextView>(R.id.endSRate).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.endSRate).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.endSRate).textColor = Color.parseColor("#000000")
                 }
@@ -566,7 +566,7 @@ class MainActivity : AppCompatActivity() {
                 if (mainBean.oList[i].endP.toFloat() > mainBean.oList[i].startP.toFloat()) {
                     rootViews.findViewById<TextView>(R.id.endPRate).textColor = Color.parseColor("#FF0000")
                 } else if (mainBean.oList[i].endP.toFloat() < mainBean.oList[i].startP.toFloat()) {
-                    rootViews.findViewById<TextView>(R.id.endPRate).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.endPRate).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.endPRate).textColor = Color.parseColor("#000000")
                 }
@@ -575,7 +575,7 @@ class MainActivity : AppCompatActivity() {
                 if (mainBean.oList[i].endF.toFloat() > mainBean.oList[i].startF.toFloat()) {
                     rootViews.findViewById<TextView>(R.id.endFRate).textColor = Color.parseColor("#FF0000")
                 } else if (mainBean.oList[i].endF.toFloat() < mainBean.oList[i].startF.toFloat()) {
-                    rootViews.findViewById<TextView>(R.id.endFRate).textColor = Color.parseColor("#00FF00")
+                    rootViews.findViewById<TextView>(R.id.endFRate).textColor = Color.parseColor("#00AE7A")
                 } else {
                     rootViews.findViewById<TextView>(R.id.endFRate).textColor = Color.parseColor("#000000")
                 }

@@ -114,6 +114,7 @@
                 android:textColor="@android:color/black"
                 android:padding="10dp"
                 android:hint="yyyyMMdd"
+                android:inputType="number"
                 android:background="@drawable/border_background"
                 />
 
