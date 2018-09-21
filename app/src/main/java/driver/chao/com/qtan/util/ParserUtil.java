@@ -60,7 +60,7 @@ public class ParserUtil {
             mlevel = -1.75f;
         } else if (pan.equals("受让两球")) {
             mlevel = -2.0f;
-        } else if (pan.equals("受让两球/两半")) {
+        } else if (pan.equals("受让两/两球半")) {
             mlevel = -2.25f;
         } else if (pan.equals("受让两球半")) {
             mlevel = -2.5f;
