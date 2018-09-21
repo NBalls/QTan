@@ -480,12 +480,19 @@ class MainActivity : AppCompatActivity() {
 
             rootViews.findViewById<ImageView>(R.id.likeImage).onClick {
                 mList[i].like = !mList[i].like
+                if (mList[i].like) {
+                    rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like_already)
+                    rootViews.setBackgroundColor(Color.parseColor("#FF0000"))
+                } else {
+                    rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like)
+                    rootViews.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                }
                 val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
                 val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
                 for (j in 0 until dataList.size) {
                     if (dataList[j].id == mList[i].id) {
                         dataList[j].like = mList[i].like
-                        fillData(dataList)
+                        sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
                         break
                     }
                 }
@@ -617,19 +624,22 @@ class MainActivity : AppCompatActivity() {
         runOnIoThread {
             sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
         }
-        fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
-        fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
-        fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
-        fillItem(PrintClass.parseDown(dataList) as ArrayList<MainBean>, R.id.downLayout)
-        fillItem(PrintClass.parseZero(dataList) as ArrayList<MainBean>, R.id.zeroLayout)
-        fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
-        fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
-        fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
-        fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
-        fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
-        fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
-        fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
-        fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
-        fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
+        runOnUiThread {
+            fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
+            fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
+            fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
+            fillItem(PrintClass.parseDown(dataList) as ArrayList<MainBean>, R.id.downLayout)
+            fillItem(PrintClass.parseZero(dataList) as ArrayList<MainBean>, R.id.zeroLayout)
+            fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
+            fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
+            fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
+            fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
+            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
+            fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
+            fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
+            fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
+            fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
+            Log.i("MClass", "4444444444444444")
+        }
     }
 }
