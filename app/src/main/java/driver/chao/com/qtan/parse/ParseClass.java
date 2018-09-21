@@ -57,10 +57,10 @@ public class ParseClass {
                                 int yaCount = 0;
                                 int ouCount = 0;
                                 int raCount = 0;
-                                if (mDataList.size() % 20 == 0) {
-                                    yaCount = mDataList.size() / 20;
+                                if (mDataList.size() % 10 == 0) {
+                                    yaCount = mDataList.size() / 10;
                                 } else {
-                                    yaCount = mDataList.size() / 20 + 1;
+                                    yaCount = mDataList.size() / 10 + 1;
                                 }
                                 if (mDataList.size() % 10 == 0) {
                                     ouCount = mDataList.size() / 10;
@@ -73,7 +73,7 @@ public class ParseClass {
                                     raCount = mDataList.size() / 5 + 1;
                                 }
                                 if (step < yaCount) {
-                                    parseYaData(step, 20);
+                                    parseYaData(step, 10);
                                     tanCompleteListener.onTanLoadYaDataListener();
                                 } else if (step < yaCount + ouCount) {
                                     parseOuData(step - yaCount, 10);
@@ -97,7 +97,7 @@ public class ParseClass {
         for (int i = Math.max(step * count, 0); i < Math.min(mDataList.size(), (step + 1) * count); i ++) {
             Log.i("MClass", "开始解析第" + (i + 1) + "场近期比赛数据");
             final MainBean mainBean = mDataList.get(i);
-            Log.i("MClass", "近期比赛：" + mDataList.get(i).getAUrl());
+            // Log.i("MClass", "近期比赛：" + mDataList.get(i).getAUrl());
             apiClient.getNetClient().doGetRequestHtml(mDataList.get(i).getAUrl(), new HashMap<String, String>())
                     .subscribe(new Action1<String>() {
                         @Override
@@ -242,6 +242,7 @@ public class ParseClass {
                 String status = elements.get(i).child(2).text();
                 String zhu = elements.get(i).child(3).text();
                 String bifen = elements.get(i).child(4).text();
+                Log.i("MClass", "############bifen:" + bifen);
                 String ke = elements.get(i).child(5).text();
                 mainBean.setId(ids);
                 mainBean.setLiansai(liansai);

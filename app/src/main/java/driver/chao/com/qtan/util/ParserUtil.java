@@ -18,55 +18,55 @@ public class ParserUtil {
 
     public static String changePan(String pan) {
         float mlevel = 0f;
-        if (pan.equals("平手")) {
+        if (pan.equals("平手")) {//OK
             mlevel = 0f;
-        } else if (pan.equals("平手/半球")) {
+        } else if (pan.equals("平/半")) {// OK
             mlevel = 0.25f;
-        } else if (pan.equals("半球")) {
+        } else if (pan.equals("半球")) {// OK
             mlevel = 0.5f;
-        } else if (pan.equals("半球/一球")) {
+        } else if (pan.equals("半/一")) {// OK
             mlevel = 0.75f;
-        } else if (pan.equals("一球")) {
+        } else if (pan.equals("一球")) {// OK
             mlevel = 1.0f;
-        } else if (pan.equals("一球/球半")) {
+        } else if (pan.equals("一/球半")) {// OK
             mlevel = 1.25f;
-        } else if (pan.equals("球半")) {
+        } else if (pan.equals("球半")) {// OK
             mlevel = 1.5f;
-        } else if (pan.equals("球半/两球")) {
+        } else if (pan.equals("球半/两")) {// OK
             mlevel = 1.75f;
-        } else if (pan.equals("两球")) {
+        } else if (pan.equals("两球")) {// OK
             mlevel = 2.0f;
-        } else if (pan.equals("两球/两半")) {
+        } else if (pan.equals("两/两球半")) {// OK
             mlevel = 2.25f;
-        } else if (pan.equals("两球半")) {
+        } else if (pan.equals("两球半")) {// OK
             mlevel = 2.5f;
-        } else if (pan.equals("两球半/三球")) {
+        } else if (pan.equals("两球半/三")) {// OK
             mlevel = 2.75f;
-        } else if (pan.equals("三球")) {
+        } else if (pan.equals("三球")) {// OK
             mlevel = 3.0f;
-        } else if (pan.equals("受让平手/半球")) {
+        } else if (pan.equals("受让平/半")) {// OK
             mlevel = -0.25f;
-        } else if (pan.equals("受让半球")) {
+        } else if (pan.equals("受让半球")) {// OK
             mlevel = -0.5f;
-        } else if (pan.equals("受让半球/一球")) {
+        } else if (pan.equals("受让半/一")) {// OK
             mlevel = -0.75f;
-        } else if (pan.equals("受让一球")) {
+        } else if (pan.equals("受让一球")) {// OK
             mlevel = -1.0f;
-        } else if (pan.equals("受让一球/球半")) {
+        } else if (pan.equals("受让一/球半")) {// OK
             mlevel = -1.25f;
-        } else if (pan.equals("受让球半")) {
+        } else if (pan.equals("受让球半")) {// OK
             mlevel = -1.5f;
-        } else if (pan.equals("受让球半/两球")) {
+        } else if (pan.equals("受让球半/两")) {// OK
             mlevel = -1.75f;
-        } else if (pan.equals("受让两球")) {
+        } else if (pan.equals("受让两球")) {// OK
             mlevel = -2.0f;
-        } else if (pan.equals("受让两/两球半")) {
+        } else if (pan.equals("受让两/两球半")) {// OK
             mlevel = -2.25f;
-        } else if (pan.equals("受让两球半")) {
+        } else if (pan.equals("受让两球半")) {// OK
             mlevel = -2.5f;
-        } else if (pan.equals("受让两半/三球")) {
+        } else if (pan.equals("受让两球半/三")) {// OK
             mlevel = -2.75f;
-        } else if (pan.equals("受让三球")) {
+        } else if (pan.equals("受让三球")) {// OK
             mlevel = -3.0f;
         }
 
