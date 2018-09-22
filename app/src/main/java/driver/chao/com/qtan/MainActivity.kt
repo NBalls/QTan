@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kuaiest.video.ui.widget.SimpleRoundProgress
 import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.bean.RBean
 import driver.chao.com.qtan.parse.ParseClass
@@ -26,8 +27,13 @@ import driver.chao.com.qtan.widget.WebLayout
 import driver.chao.com.qtan.widget.WebLayoutListener
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
+import rx.Observable
+import rx.Scheduler
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * 应用解析数据主页面
@@ -83,6 +89,28 @@ class MainActivity : AppCompatActivity() {
         getSharedPreferences(SHARE_NAME, Context.MODE_PRIVATE)
     }
     private val tanCompleteListener = object : TanCompleteListener {
+
+        override fun onTanLoadMainDataCompleteListener(total: Int) {
+            Handler(Looper.getMainLooper()).post {
+                val totalTime = 20 + total / 10 * 10 + total / 10 * 10 + total / 5 * 5 + 10
+
+                Toast.makeText(this@MainActivity, "大概需要解析时间：" + (totalTime / 60) + "分钟......", Toast.LENGTH_LONG).show()
+                findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).visibility = View.VISIBLE
+                findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).setMax(totalTime)
+                (findViewById<TextView>(R.id.titleText) as TextView).text = "" + (totalTime / 60) + "分钟"
+                Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ count ->
+                            if (count <= totalTime) {
+                                findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).progress = count.toInt()
+                            } else {
+                                findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).visibility = View.GONE
+                            }
+                        }, {})
+            }
+        }
+
         override fun onTanLoadMainDataListener() {
             Handler(Looper.getMainLooper()).post {
                 titleText.text = TEXT_LOADING

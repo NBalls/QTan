@@ -12,6 +12,8 @@ interface TanListener {
 interface TanCompleteListener {
     fun onTanLoadMainDataListener()
 
+    fun onTanLoadMainDataCompleteListener(total: Int)
+
     fun onTanLoadYaDataListener()
 
     fun onTanLoadOuDataListener()

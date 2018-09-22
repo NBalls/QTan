@@ -2,6 +2,7 @@ package driver.chao.com.qtan.parse;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -222,6 +223,7 @@ public class ParseClass {
             }
         }
         Log.i("MClass", "有效比赛数据：" + mDataList.size() + "场");
+        tanCompleteListener.onTanLoadMainDataCompleteListener(mDataList.size());
     }
 
     /**
