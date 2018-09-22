@@ -16,10 +16,17 @@ public class NBean implements Serializable {
     public String zhuPoint = "";
     public String kePoint = "";
     public String ids = "";
+    public String zRate = "";
+    public String kRate = "";
+    public String yPan = "";
+    public String osRate = "";
+    public String opRate = "";
+    public String ofRate = "";
 
     @Override
     public String toString() {
-        return liansai + " " + date + " " + zhudui + "VS" + kedui + " " + zhuPoint + ":" + kePoint + "\n";
+        return liansai + " " + date + " " + zhudui + "VS" + kedui + " " + zhuPoint + ":"
+                + kePoint + " " + zRate + " " + yPan + " " + kRate + "\n";
     }
 
     public String getDate() {
@@ -92,5 +99,53 @@ public class NBean implements Serializable {
 
     public void setIds(String ids) {
         this.ids = ids;
+    }
+
+    public String getzRate() {
+        return zRate;
+    }
+
+    public void setzRate(String zRate) {
+        this.zRate = zRate;
+    }
+
+    public String getkRate() {
+        return kRate;
+    }
+
+    public void setkRate(String kRate) {
+        this.kRate = kRate;
+    }
+
+    public String getyPan() {
+        return yPan;
+    }
+
+    public void setyPan(String yPan) {
+        this.yPan = yPan;
+    }
+
+    public String getOsRate() {
+        return osRate;
+    }
+
+    public void setOsRate(String osRate) {
+        this.osRate = osRate;
+    }
+
+    public String getOpRate() {
+        return opRate;
+    }
+
+    public void setOpRate(String opRate) {
+        this.opRate = opRate;
+    }
+
+    public String getOfRate() {
+        return ofRate;
+    }
+
+    public void setOfRate(String ofRate) {
+        this.ofRate = ofRate;
     }
 }

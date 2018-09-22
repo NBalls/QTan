@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:background="#FFEF55"
         android:text="日期/联赛"
         android:textColor="@android:color/black"
@@ -48,6 +48,18 @@
         android:layout_weight="1"
         android:background="#FFEF55"
         android:text="客队"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFEF55"
+        android:text="让球"
         android:textColor="@android:color/black"
         android:textSize="12sp"
         android:gravity="center"

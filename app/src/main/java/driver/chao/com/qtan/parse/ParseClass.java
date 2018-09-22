@@ -51,9 +51,9 @@ public class ParseClass {
                                 parseLastData(doc);
                             }
                             tanCompleteListener.onTanLoadMainDataListener();
-                        } else if (count >= 10) {
+                        } else if (count >= 20) {
                             if (count % 10 == 0) {
-                                int step = Integer.valueOf(count.toString()) / 10 - 1;
+                                int step = Integer.valueOf(count.toString()) / 10 - 2;
                                 int yaCount = 0;
                                 int ouCount = 0;
                                 int raCount = 0;
@@ -97,7 +97,7 @@ public class ParseClass {
         for (int i = Math.max(step * count, 0); i < Math.min(mDataList.size(), (step + 1) * count); i ++) {
             Log.i("MClass", "开始解析第" + (i + 1) + "场近期比赛数据");
             final MainBean mainBean = mDataList.get(i);
-            // Log.i("MClass", "近期比赛：" + mDataList.get(i).getAUrl());
+            Log.i("MClass", "近期比赛：" + mDataList.get(i).getAUrl());
             apiClient.getNetClient().doGetRequestHtml(mDataList.get(i).getAUrl(), new HashMap<String, String>())
                     .subscribe(new Action1<String>() {
                         @Override
@@ -109,7 +109,7 @@ public class ParseClass {
                     }, new Action1<Throwable>() {
                         @Override
                         public void call(Throwable throwable) {
-                            Log.i("MClass", "error......");
+                            Log.i("MClass", "error......" + throwable.getMessage());
                         }
                     });
         }
@@ -230,7 +230,7 @@ public class ParseClass {
     public static void parseLastData(Document doc) {
         mDataList.clear();
         final Elements elements = doc.body().getElementsByAttribute("infoid");
-        for (int i = 0; i < Math.min(elements.size(), 200); i ++) {
+        for (int i = 0; i < Math.min(elements.size(), 10000); i ++) {
             // 亚盘欧指数据不为空，状态为空
             if (!TextUtils.isEmpty(elements.get(i).child(7).text())) {
                 Log.i("MClass", "开始解析第" + (i + 1) + "条数据..........");
@@ -272,6 +272,22 @@ public class ParseClass {
             nBean.setLiansai(arrayStr2[2].substring(1, arrayStr2[2].length() - 1));
             nBean.setZhuPoint(arrayStr2[8]);
             nBean.setIds(arrayStr2[15]);
+            try {
+                if (s.contains(nBean.getIds() + ",8,") && s.contains(nBean.getIds() + ",12,")) {
+                    int startIndex = s.indexOf(nBean.getIds() + ",8,");
+                    int endIndex = s.indexOf(nBean.getIds() + ",12,");
+                    String pan = s.substring(startIndex, endIndex);
+                    String[] splits = pan.split(",");
+                    if (splits != null && splits.length > 8) {
+                        nBean.setzRate(splits[5].substring(1, splits[5].length() - 1));
+                        nBean.setyPan(splits[6].substring(1, splits[6].length() - 1));
+                        nBean.setkRate(splits[7].substring(1, splits[7].length() - 1));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             Document doc = Jsoup.parseBodyFragment(arrayStr2[5] + arrayStr2[7]);
             Elements elements = doc.getElementsByAttribute("title");
             if (elements.size() == 2) {
@@ -300,6 +316,21 @@ public class ParseClass {
             nBean.setLiansai(arrayStr2[2].substring(1, arrayStr2[2].length() - 1));
             nBean.setZhuPoint(arrayStr2[8]);
             nBean.setIds(arrayStr2[15]);
+            try {
+                if (s.contains(nBean.getIds() + ",8,") && s.contains(nBean.getIds() + ",12,")) {
+                    int startIndex = s.indexOf(nBean.getIds() + ",8,");
+                    int endIndex = s.indexOf(nBean.getIds() + ",12,");
+                    String pan = s.substring(startIndex, endIndex);
+                    String[] splits = pan.split(",");
+                    if (splits != null && splits.length > 8) {
+                        nBean.setzRate(splits[5].substring(1, splits[5].length() - 1));
+                        nBean.setyPan(splits[6].substring(1, splits[6].length() - 1));
+                        nBean.setkRate(splits[7].substring(1, splits[7].length() - 1));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Document doc = Jsoup.parseBodyFragment(arrayStr2[5] + arrayStr2[7]);
             Elements elements = doc.getElementsByAttribute("title");
             if (elements.size() == 2) {
@@ -331,6 +362,32 @@ public class ParseClass {
             nBean.setLiansai(arrayStr2[2].substring(1, arrayStr2[2].length() - 1));
             nBean.setZhuPoint(arrayStr2[8]);
             nBean.setIds(arrayStr2[15]);
+
+            try {
+                if (s.contains(nBean.getIds() + ",8,") && s.contains(nBean.getIds() + ",12,")) {
+                    int startIndex = s.indexOf(nBean.getIds() + ",8,");
+                    int endIndex = s.indexOf(nBean.getIds() + ",12,");
+                    String pan = s.substring(startIndex, endIndex);
+                    String[] splits = pan.split(",");
+                    if (splits != null && splits.length > 8) {
+                        nBean.setzRate(splits[5].substring(1, splits[5].length() - 1));
+                        nBean.setyPan(splits[6].substring(1, splits[6].length() - 1));
+                        nBean.setkRate(splits[7].substring(1, splits[7].length() - 1));
+                    }
+                }
+                /*if (s.contains(nBean.getIds() + ",281,") && s.contains(nBean.getIds() + ",545,")) {
+                    int startIndex = s.indexOf(nBean.getIds() + ",281,");
+                    int endIndex = s.indexOf(nBean.getIds() + ",545,");
+                    String pan = s.substring(startIndex, endIndex);
+                    String[] splits = pan.split(",");
+                    nBean.setOsRate(splits[5].substring(1, splits[5].length() - 1));
+                    nBean.setOpRate(splits[6].substring(1, splits[6].length() - 1));
+                    nBean.setOfRate(splits[7].substring(1, splits[7].length() - 1));
+                }*/
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             Document doc = Jsoup.parseBodyFragment(arrayStr2[5] + arrayStr2[7]);
             Elements elements = doc.getElementsByAttribute("title");
             if (elements.size() == 2) {

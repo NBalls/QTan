@@ -218,6 +218,7 @@ class TDetailActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.dList[i].zhudui.trim()
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.dList[i].zhuPoint.trim() + "-" + mainBean.dList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.dList[i].kedui.trim()
+            rootViews.findViewById<TextView>(R.id.panText).text = mainBean.dList[i].yPan.trim()
 
             if (mainBean.zhu.contains(mainBean.dList[i].zhudui) || mainBean.dList[i].zhudui.trim().contains(mainBean.zhu)) {
                 if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
@@ -249,12 +250,15 @@ class TDetailActivity : AppCompatActivity() {
             if (mainBean.dList[i].zhuPoint.trim().toInt() > mainBean.dList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#FF0000")
             } else if (mainBean.dList[i].zhuPoint.trim().toInt() < mainBean.dList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "输"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#00AE7A")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#00AE7A")
             } else {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "平"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#000000")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#000000")
             }
             container.addView(rootViews)
         }
@@ -268,6 +272,7 @@ class TDetailActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.zList[i].zhudui.trim()
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.zList[i].zhuPoint.trim() + "-" + mainBean.zList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.zList[i].kedui.trim()
+            rootViews.findViewById<TextView>(R.id.panText).text = mainBean.zList[i].yPan.trim()
 
             if (mainBean.zhu.contains(mainBean.zList[i].zhudui) || mainBean.zList[i].zhudui.trim().contains(mainBean.zhu)) {
                 if (mainBean.zList[i].zhuPoint.trim().toInt() > mainBean.zList[i].kePoint.trim().toInt()) {
@@ -299,12 +304,15 @@ class TDetailActivity : AppCompatActivity() {
             if (mainBean.zList[i].zhuPoint.trim().toInt() > mainBean.zList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#FF0000")
             } else if (mainBean.zList[i].zhuPoint.trim().toInt() < mainBean.zList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "输"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#00AE7A")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#00AE7A")
             } else {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "平"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#000000")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#000000")
             }
             container.addView(rootViews)
         }
@@ -318,6 +326,7 @@ class TDetailActivity : AppCompatActivity() {
             rootViews.findViewById<TextView>(R.id.zhuText).text = mainBean.kList[i].zhudui.trim()
             rootViews.findViewById<TextView>(R.id.bifenText).text = mainBean.kList[i].zhuPoint.trim() + "-" + mainBean.kList[i].kePoint.trim()
             rootViews.findViewById<TextView>(R.id.keText).text = mainBean.kList[i].kedui.trim()
+            rootViews.findViewById<TextView>(R.id.panText).text = mainBean.kList[i].yPan.trim()
 
             if (mainBean.ke.contains(mainBean.kList[i].zhudui) || mainBean.kList[i].zhudui.trim().contains(mainBean.ke)) {
                 if (mainBean.kList[i].zhuPoint.trim().toInt() > mainBean.kList[i].kePoint.trim().toInt()) {
@@ -348,12 +357,15 @@ class TDetailActivity : AppCompatActivity() {
             if (mainBean.kList[i].zhuPoint.trim().toInt() > mainBean.kList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "赢"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#FF0000")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#FF0000")
             } else if (mainBean.kList[i].zhuPoint.trim().toInt() < mainBean.kList[i].kePoint.trim().toInt()) {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "输"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#00AE7A")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#00AE7A")
             } else {
                 rootViews.findViewById<TextView>(R.id.resultText).text = "平"
                 rootViews.findViewById<TextView>(R.id.resultText).textColor = Color.parseColor("#000000")
+                rootViews.findViewById<TextView>(R.id.panText).textColor = Color.parseColor("#000000")
             }
             container.addView(rootViews)
         }
