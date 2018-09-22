@@ -173,10 +173,10 @@ public class ParseClass {
                         yBean.setCompany(trElement.get(i).child(0).text().trim());
                         yBean.setStartTime(trElement.get(i).child(2).attr("title"));
                         yBean.setStartZRate(trElement.get(i).child(2).text());
-                        yBean.setStartPan(ParserUtil.changePan(trElement.get(i).child(3).text()));
+                        yBean.setStartPan(ParserUtil.changePan(trElement.get(i).child(3).text().trim()));
                         yBean.setStartKRate(trElement.get(i).child(4).text());
                         yBean.setEndZRate(trElement.get(i).child(5).text());
-                        yBean.setEndPan(ParserUtil.changePan(trElement.get(i).child(6).text()));
+                        yBean.setEndPan(ParserUtil.changePan(trElement.get(i).child(6).text().trim()));
                         yBean.setEndKRate(trElement.get(i).child(7).text());
                         mList.add(yBean);
                     }
@@ -242,7 +242,6 @@ public class ParseClass {
                 String status = elements.get(i).child(2).text();
                 String zhu = elements.get(i).child(3).text();
                 String bifen = elements.get(i).child(4).text();
-                Log.i("MClass", "############bifen:" + bifen);
                 String ke = elements.get(i).child(5).text();
                 mainBean.setId(ids);
                 mainBean.setLiansai(liansai);

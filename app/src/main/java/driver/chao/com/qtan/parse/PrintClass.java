@@ -318,7 +318,7 @@ public class PrintClass {
                 if (isCompany(mDataList.get(i).getyList().get(j).company)) {
                     float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
                     float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
-                    if (startPan == 0.5 && endPan == 0.75) {
+                    if (startPan == 0.75 && endPan == 0.5) {
                         count = count + 1;
                     }
                 }
@@ -345,7 +345,7 @@ public class PrintClass {
                 if (isCompany(mDataList.get(i).getyList().get(j).company)) {
                     float endPan = Float.valueOf(mDataList.get(i).getyList().get(j).endPan);
                     float startPan = Float.valueOf(mDataList.get(i).getyList().get(j).startPan);
-                    if (startPan == 0.5 && endPan == 1) {
+                    if (startPan == 0.75 && endPan == 1) {
                         count = count + 1;
                     }
                 }

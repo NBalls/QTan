@@ -114,7 +114,7 @@ public class MainBean implements Serializable {
     }
 
     public String getYaUrl() {
-        return "http://vip.win007.com/AsianOdds_n.aspx?id=" + id;
+        return "http://vip.win0168.com/AsianOdds_n.aspx?id=" + id;
     }
 
     public String getOuUrl() {
