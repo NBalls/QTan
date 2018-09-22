@@ -171,6 +171,18 @@ class TDetailActivity : AppCompatActivity() {
             saveSheetCut(R.id.defaultInclude, doc)
         }
 
+        findViewById<Button>(R.id.czButton).onClick {
+            val doc = chongZhuNi(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.defaultInclude, doc)
+        }
+
+        findViewById<Button>(R.id.ckButton).onClick {
+            val doc = chongKeNi(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.defaultInclude, doc)
+        }
+
         findViewById<Button>(R.id.updateButton).onClick {
             val data = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).primaryClip
             val item = data.getItemAt(0)

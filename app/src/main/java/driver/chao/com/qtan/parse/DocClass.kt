@@ -690,3 +690,64 @@ fun faKeXiu(mainBean: MainBean): String {
 
     return sb.toString()
 }
+
+fun chongZhuNi(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append(getMYDR()).append("魔尊重楼-逆转乾坤单\n\n")
+    sb.append(mainBean.liansai).append(" ").append(mainBean.time)
+            .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("方向：").append(mainBean.zhu)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("-")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(1, endPan.length - 2))
+        } else {
+            sb.append(endPan.substring(1))
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("【逆转乾坤单】\n\n").append("*温馨提示：信心推荐，长跟是王道")
+
+    return sb.toString()
+}
+
+fun chongKeNi(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append(getMYDR()).append("魔尊重楼-逆转乾坤单\n\n")
+    sb.append(mainBean.liansai).append(" ").append(mainBean.time)
+            .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("方向：").append(mainBean.ke)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("【逆转乾坤单】\n\n").append("*温馨提示：信心推荐，长跟是王道")
+
+    return sb.toString()
+}
