@@ -508,7 +508,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            rootViews.findViewById<ImageView>(R.id.likeImage).onClick {
+            rootViews.findViewById<LinearLayout>(R.id.likeLayout).onClick {
                 mList[i].like = !mList[i].like
                 if (mList[i].like) {
                     rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like_already)
@@ -517,15 +517,22 @@ class MainActivity : AppCompatActivity() {
                     rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like)
                     rootViews.setBackgroundColor(Color.parseColor("#FFFFFF"))
                 }
-                val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
-                val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
-                for (j in 0 until dataList.size) {
-                    if (dataList[j].id == mList[i].id) {
-                        dataList[j].like = mList[i].like
-                        sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
-                        break
+                Observable.create<Boolean> { subscribe ->
+                    val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
+                    val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
+                    for (j in 0 until dataList.size) {
+                        Log.i("MClass", "dataList:" + dataList[j].id + "  mList:" + mList[i].id + "  isEqual:" + dataList[j].id.equals(mList[i].id))
+                        if (dataList[j].id.equals(mList[i].id)) {
+                            dataList[j].like = mList[i].like
+                            sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
+                            break
+                        }
                     }
-                }
+                    subscribe.onNext(true)
+                    subscribe.onCompleted()
+                }.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({}, {})
             }
 
             rootViews.findViewById<LinearLayout>(R.id.liansaiLayout).onClick {
@@ -651,9 +658,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillData(dataList: List<MainBean>) {
-        runOnIoThread {
-            sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
-        }
+        sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
         runOnUiThread {
             fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
             fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)

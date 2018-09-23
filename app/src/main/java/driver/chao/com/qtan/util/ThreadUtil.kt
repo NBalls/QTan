@@ -15,5 +15,5 @@ fun runOnIoThread(body:() -> Unit) {
     }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            .subscribe({}, {})
 }
