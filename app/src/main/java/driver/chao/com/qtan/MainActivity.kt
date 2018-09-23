@@ -430,10 +430,12 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.edit().putString(SP_DATE_KEY, getYMD()).apply()
         sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(mDataList)).apply()
 
-        val dateTime = sharedPreferences.getString(SP_TIME_KEY, "")
-        val time = dateTime.substring(dateTime.indexOf(" ") + 1)
-        val date = sharedPreferences.getString(SP_DATE_KEY, "")
-        parseData(sharedPreferences.getString(SP_DATA_KEY, "{}"), date, time)
+        Handler(Looper.getMainLooper()).post {
+            val dateTime = sharedPreferences.getString(SP_TIME_KEY, "")
+            val time = dateTime.substring(dateTime.indexOf(" ") + 1)
+            val date = sharedPreferences.getString(SP_DATE_KEY, "")
+            parseData(sharedPreferences.getString(SP_DATA_KEY, "{}"), date, time)
+        }
     }
 
     private fun parseData(data: String, date: String, time: String) {
