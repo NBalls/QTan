@@ -416,11 +416,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val data = sharedPreferences.getString(SP_DATA_KEY, "[]")
-        val date = sharedPreferences.getString(SP_DATE_KEY, "")
-        val dateTime = sharedPreferences.getString(SP_TIME_KEY, "")
-        val time = dateTime.substring(dateTime.indexOf(" ") + 1)
-        parseData(data, date, time)
+        findViewById<TextView>(R.id.titleText).text = "数据从本地拉取中....."
+        Observable.create<Boolean> { subscribe ->
+            val data = sharedPreferences.getString(SP_DATA_KEY, "[]")
+            val date = sharedPreferences.getString(SP_DATE_KEY, "")
+            val dateTime = sharedPreferences.getString(SP_TIME_KEY, "")
+            val time = dateTime.substring(dateTime.indexOf(" ") + 1)
+            parseData(data, date, time)
+            subscribe.onNext(true)
+            subscribe.onCompleted()
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {})
     }
 
     private fun saveData(mDataList: List<MainBean>) {
@@ -439,27 +446,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun parseData(data: String, date: String, time: String) {
+        Log.i("MClass", "222222222222")
         val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
         val sb = StringBuffer()
         sb.append("有效比赛:").append(dataList.size).append("场\n")
         sb.append("刷新日期:").append(date).append("\n")
         sb.append("刷新时间:").append(time).append("\n")
-        titleText.text = sb.toString()
-
-        fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
-        fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
-        fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
-        fillItem(PrintClass.parseDown(dataList) as ArrayList<MainBean>, R.id.downLayout)
-        fillItem(PrintClass.parseZero(dataList) as ArrayList<MainBean>, R.id.zeroLayout)
-        fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
-        fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
-        fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
-        fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
-        fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
-        fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
-        fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
-        fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
-        fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
+        runOnUiThread {
+            titleText.text = sb.toString()
+            Log.i("MClass", "333333333333")
+            fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
+            fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
+            fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
+            fillItem(PrintClass.parseDown(dataList) as ArrayList<MainBean>, R.id.downLayout)
+            fillItem(PrintClass.parseZero(dataList) as ArrayList<MainBean>, R.id.zeroLayout)
+            fillItem(PrintClass.parseCut(dataList) as ArrayList<MainBean>, R.id.cutLayout)
+            fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
+            fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
+            fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
+            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
+            fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
+            fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
+            fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
+            fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
+        }
     }
 
     private fun fillItem(mList: ArrayList<MainBean>, parentId: Int) {
