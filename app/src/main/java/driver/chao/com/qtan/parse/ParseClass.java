@@ -286,6 +286,15 @@ public class ParseClass {
                         nBean.setkRate(splits[7].substring(1, splits[7].length() - 1));
                     }
                 }
+                if (s.contains(nBean.getIds() + ",281,") && s.contains(nBean.getIds() + ",545,")) {
+                    int startIndex = s.indexOf(nBean.getIds() + ",281,");
+                    int endIndex = s.indexOf(nBean.getIds() + ",545,");
+                    String pan = s.substring(startIndex, endIndex);
+                    String[] splits = pan.split(",");
+                    nBean.setOsRate(splits[5].substring(1, splits[5].length() - 1));
+                    nBean.setOpRate(splits[6].substring(1, splits[6].length() - 1));
+                    nBean.setOfRate(splits[7].substring(1, splits[7].length() - 1));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -329,6 +338,15 @@ public class ParseClass {
                         nBean.setyPan(splits[6].substring(1, splits[6].length() - 1));
                         nBean.setkRate(splits[7].substring(1, splits[7].length() - 1));
                     }
+                }
+                if (s.contains(nBean.getIds() + ",281,") && s.contains(nBean.getIds() + ",545,")) {
+                    int startIndex = s.indexOf(nBean.getIds() + ",281,");
+                    int endIndex = s.indexOf(nBean.getIds() + ",545,");
+                    String pan = s.substring(startIndex, endIndex);
+                    String[] splits = pan.split(",");
+                    nBean.setOsRate(splits[5].substring(1, splits[5].length() - 1));
+                    nBean.setOpRate(splits[6].substring(1, splits[6].length() - 1));
+                    nBean.setOfRate(splits[7].substring(1, splits[7].length() - 1));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -377,7 +395,7 @@ public class ParseClass {
                         nBean.setkRate(splits[7].substring(1, splits[7].length() - 1));
                     }
                 }
-                /*if (s.contains(nBean.getIds() + ",281,") && s.contains(nBean.getIds() + ",545,")) {
+                if (s.contains(nBean.getIds() + ",281,") && s.contains(nBean.getIds() + ",545,")) {
                     int startIndex = s.indexOf(nBean.getIds() + ",281,");
                     int endIndex = s.indexOf(nBean.getIds() + ",545,");
                     String pan = s.substring(startIndex, endIndex);
@@ -385,7 +403,7 @@ public class ParseClass {
                     nBean.setOsRate(splits[5].substring(1, splits[5].length() - 1));
                     nBean.setOpRate(splits[6].substring(1, splits[6].length() - 1));
                     nBean.setOfRate(splits[7].substring(1, splits[7].length() - 1));
-                }*/
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

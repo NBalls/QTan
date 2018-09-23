@@ -26,7 +26,8 @@ public class NBean implements Serializable {
     @Override
     public String toString() {
         return liansai + " " + date + " " + zhudui + "VS" + kedui + " " + zhuPoint + ":"
-                + kePoint + " " + zRate + " " + yPan + " " + kRate + "\n";
+                + kePoint + " " + zRate + " " + yPan + " " + kRate + " " + osRate + " "
+                + opRate + " " + ofRate + "\n";
     }
 
     public String getDate() {
