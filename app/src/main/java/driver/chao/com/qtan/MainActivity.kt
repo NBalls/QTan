@@ -1,12 +1,17 @@
 package driver.chao.com.qtan
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -75,6 +80,9 @@ class MainActivity : AppCompatActivity() {
     }
     private val validateButton by lazy {
         findViewById<Button>(R.id.validateButton)
+    }
+    private val imageButton by lazy {
+        findViewById<Button>(R.id.imageButton)
     }
     private val queryButton by lazy {
         findViewById<Button>(R.id.queryButton)
@@ -398,6 +406,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        imageButton.onClick {
+            // applyPermission()
+        }
+
         queryButton.onClick {
             findViewById<LinearLayout>(R.id.dateLayout)?.visibility = View.VISIBLE
         }
@@ -416,7 +428,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<TextView>(R.id.titleText).text = "数据从本地拉取中....."
+        (findViewById<TextView>(R.id.titleText) as TextView).text = "数据从本地拉取中....."
         Observable.create<Boolean> { subscribe ->
             val data = sharedPreferences.getString(SP_DATA_KEY, "[]")
             val date = sharedPreferences.getString(SP_DATE_KEY, "")
