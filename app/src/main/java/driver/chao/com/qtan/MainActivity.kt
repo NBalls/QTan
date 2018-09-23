@@ -95,9 +95,9 @@ class MainActivity : AppCompatActivity() {
                 val totalTime = 20 + total / 10 * 10 + total / 10 * 10 + total / 5 * 5 + 10
 
                 Toast.makeText(this@MainActivity, "大概需要解析时间：" + (totalTime / 60) + "分钟......", Toast.LENGTH_LONG).show()
-                findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).visibility = View.VISIBLE
+                findViewById<FrameLayout>(R.id.progressLayout).visibility = View.VISIBLE
                 findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).setMax(totalTime)
-                (findViewById<TextView>(R.id.titleText) as TextView).text = "" + (totalTime / 60) + "分钟"
+                (findViewById<TextView>(R.id.timeText) as TextView).text = "" + (totalTime / 60) + "分钟"
                 Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                             if (count <= totalTime) {
                                 findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).progress = count.toInt()
                             } else {
-                                findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).visibility = View.GONE
+                                findViewById<FrameLayout>(R.id.progressLayout).visibility = View.GONE
                             }
                         }, {})
             }

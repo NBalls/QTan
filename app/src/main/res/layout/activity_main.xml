@@ -29,25 +29,43 @@
                 android:layout_weight="2"
                 android:orientation="vertical"
                 >
-                <com.kuaiest.video.ui.widget.SimpleRoundProgress
-                    android:id="@+id/simpleRoundProgress"
-                    android:layout_width="60dip"
-                    android:layout_height="60dip"
+                <FrameLayout
+                    android:id="@+id/progressLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:srp_max="100"
-                    app:srp_progressColor="#FF0000"
-                    app:srp_progressWidth="8dp"
-                    app:srp_roundColor="#EDEDED"
-                    app:srp_roundWidth="8dp"
-                    app:srp_startAngle="270"
-                    app:srp_style="STROKE"
                     android:visibility="gone"
-                    />
+                    >
+                    <com.kuaiest.video.ui.widget.SimpleRoundProgress
+                        android:id="@+id/simpleRoundProgress"
+                        android:layout_width="60dip"
+                        android:layout_height="60dip"
+                        android:layout_gravity="center"
+                        app:srp_max="100"
+                        app:srp_progressColor="#FF0000"
+                        app:srp_progressWidth="8dp"
+                        app:srp_roundColor="#EDEDED"
+                        app:srp_roundWidth="8dp"
+                        app:srp_startAngle="270"
+                        app:srp_style="STROKE"
+                        />
+
+                    <TextView
+                        android:id="@+id/timeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="center"
+                        />
+
+                </FrameLayout>
                 <TextView
                     android:id="@+id/titleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/black"
                     />
