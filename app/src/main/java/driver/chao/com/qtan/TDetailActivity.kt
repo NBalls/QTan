@@ -206,6 +206,7 @@ class TDetailActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.diaochanInclude).setOnLongClickListener(onLongClickListener)
         findViewById<LinearLayout>(R.id.shixiongInclude).setOnLongClickListener(onLongClickListener)
         findViewById<LinearLayout>(R.id.qixiaInclude).setOnLongClickListener(onLongClickListener)
+        findViewById<LinearLayout>(R.id.defaultInclude).setOnLongClickListener(onLongClickListener)
     }
 
     private val onLongClickListener = View.OnLongClickListener {

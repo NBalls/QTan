@@ -1,4 +1,4 @@
-package com.kuaiest.video.ui.widget
+package driver.chao.com.qtan.widget
 
 import android.content.Context
 import android.graphics.Canvas

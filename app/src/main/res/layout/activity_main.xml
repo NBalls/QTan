@@ -36,7 +36,7 @@
                     android:layout_gravity="center"
                     android:visibility="gone"
                     >
-                    <com.kuaiest.video.ui.widget.SimpleRoundProgress
+                    <driver.chao.com.qtan.widget.SimpleRoundProgress
                         android:id="@+id/simpleRoundProgress"
                         android:layout_width="60dip"
                         android:layout_height="60dip"

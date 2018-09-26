@@ -1,17 +1,12 @@
 package driver.chao.com.qtan
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +14,6 @@ import android.view.View
 import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kuaiest.video.ui.widget.SimpleRoundProgress
 import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.bean.RBean
 import driver.chao.com.qtan.parse.ParseClass
@@ -27,13 +21,12 @@ import driver.chao.com.qtan.parse.PrintClass
 import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
 import driver.chao.com.qtan.util.getYMDHMS
-import driver.chao.com.qtan.util.runOnIoThread
+import driver.chao.com.qtan.widget.SimpleRoundProgress
 import driver.chao.com.qtan.widget.WebLayout
 import driver.chao.com.qtan.widget.WebLayoutListener
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textColor
 import rx.Observable
-import rx.Scheduler
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
