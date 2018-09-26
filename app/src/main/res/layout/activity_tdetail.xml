@@ -348,6 +348,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/gszButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="国师(主)"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+            <Button
+                android:id="@+id/gskButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="国师(客)"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+                <RadioButton
+                    android:id="@+id/bjRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="铂金单"
+                    android:textSize="14sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/zsRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="钻石单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginBottom="20dp"
             >
             <Button

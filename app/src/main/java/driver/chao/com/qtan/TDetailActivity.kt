@@ -183,6 +183,30 @@ class TDetailActivity : AppCompatActivity() {
             saveSheetCut(R.id.defaultInclude, doc)
         }
 
+        findViewById<Button>(R.id.gszButton).onClick {
+            if (findViewById<RadioButton>(R.id.bjRadioButton).isChecked) {
+                val doc = guoshiZhuBo(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            } else if (findViewById<RadioButton>(R.id.zsRadioButton).isChecked) {
+                val doc = guoshiZhuZuan(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            }
+        }
+
+        findViewById<Button>(R.id.gskButton).onClick {
+            if (findViewById<RadioButton>(R.id.bjRadioButton).isChecked) {
+                val doc = guoshiKeBo(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            } else if (findViewById<RadioButton>(R.id.zsRadioButton).isChecked) {
+                val doc = guoshiKeZuan(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            }
+        }
+
         findViewById<Button>(R.id.updateButton).onClick {
             val data = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).primaryClip
             val item = data.getItemAt(0)
