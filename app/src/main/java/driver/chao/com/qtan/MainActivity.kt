@@ -689,7 +689,6 @@ class MainActivity : AppCompatActivity() {
             fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
             fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
             fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
-            Log.i("MClass", "4444444444444444")
         }
     }
 }

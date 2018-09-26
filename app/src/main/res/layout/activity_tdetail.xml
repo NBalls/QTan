@@ -398,6 +398,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/zzzButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="料王(主)"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+            <Button
+                android:id="@+id/zzkButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="料王(客)"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                >
+                <RadioButton
+                    android:id="@+id/zhRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="纵横单"
+                    android:textSize="14sp"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginBottom="20dp"
             >
             <Button
