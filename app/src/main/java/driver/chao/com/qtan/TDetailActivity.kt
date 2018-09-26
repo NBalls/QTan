@@ -222,6 +222,8 @@ class TDetailActivity : AppCompatActivity() {
                     saveSheetCut(R.id.shixiongInclude, text)
                 } else if (findViewById<RadioButton>(R.id.qRadioButton).isChecked) {
                     saveSheetCut(R.id.qixiaInclude, text)
+                } else if (findViewById<RadioButton>(R.id.defaultRadioButton).isChecked) {
+                    saveSheetCut(R.id.defaultInclude, text)
                 }
             }
         }
