@@ -258,6 +258,12 @@ class MainActivity : AppCompatActivity() {
             } else {
                 findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.GONE
             }
+        } else if (buttonView?.id == R.id.diffPanCheckbox) {
+            if (isChecked) {
+                findViewById<LinearLayout>(R.id.outDiffPanLayout).visibility = View.VISIBLE
+            } else {
+                findViewById<LinearLayout>(R.id.outDiffPanLayout).visibility = View.GONE
+            }
         }
     }
 
@@ -279,6 +285,7 @@ class MainActivity : AppCompatActivity() {
         (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.diffPanCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
         if ((findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked) {
             findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
         } else {
@@ -349,6 +356,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.GONE
         }
+        if ((findViewById<CheckBox>(R.id.diffPanCheckbox) as CheckBox).isChecked) {
+            findViewById<LinearLayout>(R.id.outDiffPanLayout).visibility = View.VISIBLE
+        } else {
+            findViewById<LinearLayout>(R.id.outDiffPanLayout).visibility = View.GONE
+        }
         findViewById<Button>(R.id.selectAllButton).onClick {
             (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked = true
             (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).isChecked = true
@@ -363,6 +375,7 @@ class MainActivity : AppCompatActivity() {
             (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).isChecked = true
             (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).isChecked = true
             (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).isChecked = true
+            (findViewById<CheckBox>(R.id.diffPanCheckbox) as CheckBox).isChecked = true
         }
         findViewById<Button>(R.id.unselectAllButton).onClick {
             (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked = false
@@ -377,6 +390,7 @@ class MainActivity : AppCompatActivity() {
             (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).isChecked = false
             (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).isChecked = false
             (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).isChecked = false
+            (findViewById<CheckBox>(R.id.diffPanCheckbox) as CheckBox).isChecked = false
         }
 
         freshButton.onClick {
@@ -467,17 +481,17 @@ class MainActivity : AppCompatActivity() {
             fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
             fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
             fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
-            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
+            fillItem(PrintClass.parseNear(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
             fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
             fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
             fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
             fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
+            fillItem(PrintClass.parseNear(dataList) as ArrayList<MainBean>, R.id.diffPanLayout)
         }
     }
 
     private fun fillItem(mList: ArrayList<MainBean>, parentId: Int) {
         findViewById<LinearLayout>(parentId)?.removeAllViews()
-        Log.i("MClass", "sizesizesize:" + mList.size)
         for (i in 0 until mList.size) {
             val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item, null, false)
             rootViews.findViewById<TextView>(R.id.bisai).text = mList[i].liansai
@@ -551,7 +565,6 @@ class MainActivity : AppCompatActivity() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ dataList ->
                             val likeList = PrintClass.parseLike(dataList)
-                            Log.i("MClass", "likeList:" + likeList.size)
                             fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
                         }, {})
             }
@@ -690,11 +703,12 @@ class MainActivity : AppCompatActivity() {
             fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
             fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
             fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
-            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
+            fillItem(PrintClass.parseNear(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
             fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
             fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
             fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
             fillItem(PrintClass.parseOverMore(dataList) as ArrayList<MainBean>, R.id.overMoreLayout)
+            fillItem(PrintClass.parseNear(dataList) as ArrayList<MainBean>, R.id.diffPanLayout)
         }
     }
 }

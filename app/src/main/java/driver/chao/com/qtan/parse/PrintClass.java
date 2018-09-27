@@ -1,9 +1,17 @@
 package driver.chao.com.qtan.parse;
 
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.TextureView;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import driver.chao.com.qtan.bean.MainBean;
+import driver.chao.com.qtan.bean.NBean;
+import driver.chao.com.qtan.bean.YBean;
 
 /**
  * Created by aaron on 2018/9/13.
@@ -423,6 +431,36 @@ public class PrintClass {
         for (int i = 0; i < mDataList.size(); i ++) {
             if (mDataList.get(i).getLike()) {
                 mList.add(mDataList.get(i));
+            }
+        }
+
+        return mList;
+    }
+
+    /**
+     * 与近期比赛盘口不一致比赛
+     * @param mDataList
+     * @return
+     */
+    public static List<MainBean> parseNear(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            MainBean mainBean = mDataList.get(i);
+            List<NBean> dList = mainBean.dList;
+            List<YBean> yList = mainBean.yList;
+            if (dList != null && dList.size() > 0 && yList != null && yList.size() > 0) {
+                NBean mBean = dList.get(0);
+                if (mBean.zhudui.contains(mainBean.getZhu()) || mainBean.getZhu().contains(mBean.zhudui)) {
+                    if (!TextUtils.isEmpty(mBean.yPan) && !TextUtils.isEmpty(mainBean.yList.get(0).startPan)) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yy");
+                        String date = sdf.format(new Date());
+                        if (mBean.date.substring(0, 2).equals(date)) {
+                            if (Float.valueOf(mBean.yPan) - Float.valueOf(mainBean.yList.get(0).startPan) != 0) {
+                                mList.add(mainBean);
+                            }
+                        }
+                    }
+                }
             }
         }
 

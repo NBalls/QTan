@@ -307,6 +307,47 @@
             android:layout_height="wrap_content">
 
             <CheckBox
+                android:id="@+id/diffPanCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="diff盘口"
+                android:checked="true"
+                />
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0.75至1"
+                android:checked="true"
+                android:visibility="invisible"
+                />
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1至1.25"
+                android:checked="true"
+                android:visibility="invisible"
+                />
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="连续变盘"
+                android:checked="true"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
                 android:id="@+id/allCheckbox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -707,6 +748,37 @@
                 />
             <LinearLayout
                 android:id="@+id/overMoreLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/outDiffPanLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/diffPanTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="盘口不一致"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/diffPanLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
