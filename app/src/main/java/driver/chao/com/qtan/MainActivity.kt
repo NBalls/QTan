@@ -552,7 +552,6 @@ class MainActivity : AppCompatActivity() {
                     val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
                     val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
                     for (j in 0 until dataList.size) {
-                        Log.i("MClass", "dataList:" + dataList[j].id + "  mList:" + mList[i].id + "  isEqual:" + dataList[j].id.equals(mList[i].id))
                         if (dataList[j].id.equals(mList[i].id)) {
                             dataList[j].like = mList[i].like
                             sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()

@@ -258,6 +258,7 @@ public class ParseClass {
             }
         }
         Log.i("MClass", "有效比赛数据：" + mDataList.size() + "场");
+        tanCompleteListener.onTanLoadMainDataCompleteListener(mDataList.size());
     }
 
     public static List<NBean> parseZList(String s) {
