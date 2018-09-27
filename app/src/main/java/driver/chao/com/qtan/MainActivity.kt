@@ -451,7 +451,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun parseData(data: String, date: String, time: String) {
-        Log.i("MClass", "222222222222")
         val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
         val sb = StringBuffer()
         sb.append("有效比赛:").append(dataList.size).append("场\n")
@@ -459,7 +458,6 @@ class MainActivity : AppCompatActivity() {
         sb.append("刷新时间:").append(time).append("\n")
         runOnUiThread {
             titleText.text = sb.toString()
-            Log.i("MClass", "333333333333")
             fillItem(PrintClass.parse144(dataList) as ArrayList<MainBean>, R.id.oneLayout)
             fillItem(PrintClass.parse165(dataList) as ArrayList<MainBean>, R.id.one65Layout)
             fillItem(PrintClass.parseCOver(dataList) as ArrayList<MainBean>, R.id.coverLayout)
@@ -469,7 +467,7 @@ class MainActivity : AppCompatActivity() {
             fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
             fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
             fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
-            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
+            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
             fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
             fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
             fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)
@@ -479,6 +477,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fillItem(mList: ArrayList<MainBean>, parentId: Int) {
         findViewById<LinearLayout>(parentId)?.removeAllViews()
+        Log.i("MClass", "sizesizesize:" + mList.size)
         for (i in 0 until mList.size) {
             val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item, null, false)
             rootViews.findViewById<TextView>(R.id.bisai).text = mList[i].liansai
@@ -523,6 +522,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            /**
+             * 关注比赛
+             */
             rootViews.findViewById<LinearLayout>(R.id.likeLayout).onClick {
                 mList[i].like = !mList[i].like
                 if (mList[i].like) {
@@ -532,7 +534,7 @@ class MainActivity : AppCompatActivity() {
                     rootViews.findViewById<ImageView>(R.id.likeImage).setImageResource(R.drawable.ic_like)
                     rootViews.setBackgroundColor(Color.parseColor("#FFFFFF"))
                 }
-                Observable.create<Boolean> { subscribe ->
+                Observable.create<List<MainBean>> { subscribe ->
                     val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
                     val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
                     for (j in 0 until dataList.size) {
@@ -543,11 +545,15 @@ class MainActivity : AppCompatActivity() {
                             break
                         }
                     }
-                    subscribe.onNext(true)
+                    subscribe.onNext(dataList)
                     subscribe.onCompleted()
                 }.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({}, {})
+                        .subscribe({ dataList ->
+                            val likeList = PrintClass.parseLike(dataList)
+                            Log.i("MClass", "likeList:" + likeList.size)
+                            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
+                        }, {})
             }
 
             rootViews.findViewById<LinearLayout>(R.id.liansaiLayout).onClick {
@@ -684,7 +690,7 @@ class MainActivity : AppCompatActivity() {
             fillItem(PrintClass.parse025(dataList) as ArrayList<MainBean>, R.id.one25Layout)
             fillItem(PrintClass.parseDeep(dataList) as ArrayList<MainBean>, R.id.deepLayout)
             fillItem(dataList as ArrayList<MainBean>, R.id.allLayout)
-            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeLayout)
+            fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
             fillItem(PrintClass.parse075To05(dataList) as ArrayList<MainBean>, R.id.one75To05Layout)
             fillItem(PrintClass.parse075To1(dataList) as ArrayList<MainBean>, R.id.one75To1Layout)
             fillItem(PrintClass.parse1To125(dataList) as ArrayList<MainBean>, R.id.oneTo125Layout)

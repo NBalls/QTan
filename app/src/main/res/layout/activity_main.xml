@@ -770,7 +770,7 @@
                 android:background="#eeeeee"
                 />
             <LinearLayout
-                android:id="@+id/likeLayout"
+                android:id="@+id/likeMainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
