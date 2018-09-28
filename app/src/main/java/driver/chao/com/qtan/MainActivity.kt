@@ -18,6 +18,7 @@ import driver.chao.com.qtan.bean.MainBean
 import driver.chao.com.qtan.bean.RBean
 import driver.chao.com.qtan.parse.ParseClass
 import driver.chao.com.qtan.parse.PrintClass
+import driver.chao.com.qtan.util.ParserUtil.getEndPan
 import driver.chao.com.qtan.util.TanCompleteListener
 import driver.chao.com.qtan.util.getYMD
 import driver.chao.com.qtan.util.getYMDHMS
@@ -496,8 +497,8 @@ class MainActivity : AppCompatActivity() {
             val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item, null, false)
             rootViews.findViewById<TextView>(R.id.bisai).text = mList[i].liansai
             rootViews.findViewById<TextView>(R.id.time).text = mList[i].time
-            rootViews.findViewById<TextView>(R.id.zhudiu).text = mList[i].getZhu()
-            rootViews.findViewById<TextView>(R.id.kedui).text = mList[i].getKe()
+            rootViews.findViewById<TextView>(R.id.zhudiu).text = mList[i].zhu
+            rootViews.findViewById<TextView>(R.id.kedui).text = mList[i].ke
             rootViews.findViewById<TextView>(R.id.panText).text = getEndPan(mList[i])
             rootViews.findViewById<TextView>(R.id.resultText).text = mList[i].bifen
             if (mList[i].like) {
@@ -672,22 +673,6 @@ class MainActivity : AppCompatActivity() {
                 company.contains("盈禾") ||
                 company.contains("立博")
 
-    }
-
-    private fun getEndPan(mainBean: MainBean): String {
-        for (i in 0 until mainBean.yList.size) {
-            if (mainBean.yList[i].company.contains("365")) {
-                return mainBean.yList[i].endPan
-            }
-        }
-
-        for (i in 0 until mainBean.yList.size) {
-            if (mainBean.yList[i].company.contains("Crown")) {
-                return mainBean.yList[i].endPan
-            }
-        }
-
-        return ""
     }
 
     private fun fillData(dataList: List<MainBean>) {

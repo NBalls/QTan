@@ -503,6 +503,21 @@
             </RadioGroup>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/jihaiButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主队--一键出即嗨"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
         <include
             android:id="@+id/defaultInclude"
             layout="@layout/activity_tdetail_default"
@@ -532,5 +547,6 @@
             layout="@layout/activity_tdetail_shixiong"
             android:visibility="gone"
             />
+
     </LinearLayout>
 </ScrollView>

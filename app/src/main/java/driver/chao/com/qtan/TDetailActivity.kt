@@ -19,6 +19,9 @@ import java.io.File
 import java.io.FileOutputStream
 import android.content.ClipboardManager
 import android.text.TextUtils
+import driver.chao.com.qtan.util.ParserUtil
+import driver.chao.com.qtan.util.ParserUtil.getEndPan
+import driver.chao.com.qtan.util.ParserUtil.getStartPan
 
 
 class TDetailActivity : AppCompatActivity() {
@@ -217,6 +220,17 @@ class TDetailActivity : AppCompatActivity() {
             val doc = liaowangKeZong(mainBean)
             clipDoc(this, doc)
             saveSheetCut(R.id.defaultInclude, doc)
+        }
+
+        /**
+         * 一键出即嗨文案
+         */
+        findViewById<Button>(R.id.jihaiButton).onClick {
+            val sb = StringBuffer();
+            sb.append("亚盘以主让")
+                    .append(ParserUtil.reversalPan(getStartPan(mainBean)))
+                    .append("盘开出，")
+            Toast.makeText(this, sb.toString(), Toast.LENGTH_LONG).show()
         }
 
         findViewById<Button>(R.id.updateButton).onClick {
@@ -427,8 +441,8 @@ class TDetailActivity : AppCompatActivity() {
         val rootViews = LayoutInflater.from(this).inflate(R.layout.fragment_parser_item, null, false)
         rootViews.findViewById<TextView>(R.id.bisai).text = mainBean.liansai
         rootViews.findViewById<TextView>(R.id.time).text = mainBean.time
-        rootViews.findViewById<TextView>(R.id.zhudiu).text = mainBean.getZhu()
-        rootViews.findViewById<TextView>(R.id.kedui).text = mainBean.getKe()
+        rootViews.findViewById<TextView>(R.id.zhudiu).text = mainBean.zhu
+        rootViews.findViewById<TextView>(R.id.kedui).text = mainBean.ke
         rootViews.findViewById<TextView>(R.id.panText).text = getEndPan(mainBean)
         rootViews.findViewById<TextView>(R.id.resultText).text = mainBean.bifen
         val bifen = mainBean.bifen
@@ -537,16 +551,6 @@ class TDetailActivity : AppCompatActivity() {
                 container.addView(rootViews)
             }
         }
-    }
-
-    private fun getEndPan(mainBean: MainBean): String {
-        for (i in 0 until mainBean.yList.size) {
-            if (mainBean.yList[i].company.contains("365")) {
-                return mainBean.yList[i].endPan
-            }
-        }
-
-        return ""
     }
 
     private fun isFilter(company: String): Boolean {

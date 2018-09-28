@@ -1,20 +1,12 @@
 package driver.chao.com.qtan.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import driver.chao.com.qtan.bean.MainBean;
 
 /**
  * Created by aaron on 2018/8/6.
  */
 
 public class ParserUtil {
-
-    public static void printSplit(String title) {
-        System.out.println();
-        System.out.println("#####################" + title + "#####################");
-        System.out.println();
-    }
 
     public static String changePan(String pan) {
         float mlevel = 0f;
@@ -73,18 +65,94 @@ public class ParserUtil {
         return String.valueOf(mlevel);
     }
 
-    public static boolean isNearDate(String strDate) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-            Date date1 = sdf.parse(strDate);
-            Date date2 = Calendar.getInstance().getTime();
-            if (date2.getTime() - date1.getTime() <= 365 * 24 * 60 * 60 * 1000) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    public static String reversalPan(String pan) {
+        String mlevel = "";
+        if (pan.equals("0")) {//OK
+            mlevel = "平手";
+        } else if (pan.equals("0.25")) {// OK
+            mlevel = "平/半";
+        } else if (pan.equals("0.5")) {// OK
+            mlevel = "半球";
+        } else if (pan.equals("0.75")) {// OK
+            mlevel = "半/一";
+        } else if (pan.equals("1.0")) {// OK
+            mlevel = "一球";
+        } else if (pan.equals("1.25")) {// OK
+            mlevel = "一/球半";
+        } else if (pan.equals("1.5")) {// OK
+            mlevel = "球半";
+        } else if (pan.equals("1.75")) {// OK
+            mlevel = "球半/两";
+        } else if (pan.equals("2.0")) {// OK
+            mlevel = "两球";
+        } else if (pan.equals("2.25")) {// OK
+            mlevel = "两/两球半";
+        } else if (pan.equals("2.5")) {// OK
+            mlevel = "两球半";
+        } else if (pan.equals("2.75")) {// OK
+            mlevel = "两球半/三";
+        } else if (pan.equals("3.0")) {// OK
+            mlevel = "三球";
+        } else if (pan.equals("-0.25")) {// OK
+            mlevel = "受让平/半";
+        } else if (pan.equals("-0.5")) {// OK
+            mlevel = "受让半球";
+        } else if (pan.equals("-0.75")) {// OK
+            mlevel = "受让半/一";
+        } else if (pan.equals("-1.0")) {// OK
+            mlevel = "受让一球";
+        } else if (pan.equals("-1.25")) {// OK
+            mlevel = "受让一/球半";
+        } else if (pan.equals("-1.5")) {// OK
+            mlevel = "受让球半";
+        } else if (pan.equals("-1.75")) {// OK
+            mlevel = "受让球半/两";
+        } else if (pan.equals("-2.0")) {// OK
+            mlevel = "受让两球";
+        } else if (pan.equals("-2.25")) {// OK
+            mlevel = "受让两/两球半";
+        } else if (pan.equals("-2.5")) {// OK
+            mlevel = "受让两球半";
+        } else if (pan.equals("-2.75")) {// OK
+            mlevel = "受让两球半/三";
+        } else if (pan.equals("-3.0")) {// OK
+            mlevel = "受让三球";
         }
 
-        return false;
+        return String.valueOf(mlevel);
     }
+
+    public static String getStartPan(MainBean mainBean) {
+        for (int i = 0; i < mainBean.yList.size(); i ++) {
+            if (mainBean.yList.get(i).company.contains("365")) {
+                return mainBean.yList.get(i).startPan;
+            }
+        }
+
+        for (int i = 0; i < mainBean.yList.size(); i ++) {
+            if (mainBean.yList.get(i).company.contains("Crown")) {
+                return mainBean.yList.get(i).startPan;
+            }
+        }
+
+        return "";
+    }
+
+    public static String getEndPan(MainBean mainBean) {
+        for (int i = 0; i < mainBean.yList.size(); i ++) {
+            if (mainBean.yList.get(i).company.contains("365")) {
+                return mainBean.yList.get(i).endPan;
+            }
+        }
+
+        for (int i = 0; i < mainBean.yList.size(); i ++) {
+            if (mainBean.yList.get(i).company.contains("Crown")) {
+                return mainBean.yList.get(i).endPan;
+            }
+        }
+
+        return "";
+    }
+
 }
