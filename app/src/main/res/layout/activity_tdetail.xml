@@ -341,6 +341,14 @@
                     android:text="修罗单"
                     android:textSize="14sp"
                     />
+
+                <RadioButton
+                    android:id="@+id/flRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="料王单"
+                    android:textSize="14sp"
+                    />
             </RadioGroup>
         </LinearLayout>
 

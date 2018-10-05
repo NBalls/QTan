@@ -163,15 +163,27 @@ class TDetailActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.fzButton).onClick {
-            val doc = faZhuXiu(mainBean)
-            clipDoc(this, doc)
-            saveSheetCut(R.id.defaultInclude, doc)
+            if (findViewById<RadioButton>(R.id.fxRadioButton).isChecked) {
+                val doc = faZhuXiu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            } else if (findViewById<RadioButton>(R.id.flRadioButton).isChecked) {
+                val doc = faZhuLiao(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            }
         }
 
         findViewById<Button>(R.id.fkButton).onClick {
-            val doc = faKeXiu(mainBean)
-            clipDoc(this, doc)
-            saveSheetCut(R.id.defaultInclude, doc)
+            if (findViewById<RadioButton>(R.id.fxRadioButton).isChecked) {
+                val doc = faKeXiu(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            } else if (findViewById<RadioButton>(R.id.flRadioButton).isChecked) {
+                val doc = faKeLiao(mainBean)
+                clipDoc(this, doc)
+                saveSheetCut(R.id.defaultInclude, doc)
+            }
         }
 
         findViewById<Button>(R.id.czButton).onClick {
