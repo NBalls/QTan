@@ -316,12 +316,12 @@
                 />
 
             <CheckBox
+                android:id="@+id/banTo25CheckBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0.75至1"
+                android:text="0.5至0.25"
                 android:checked="true"
-                android:visibility="invisible"
                 />
 
             <CheckBox
@@ -779,6 +779,37 @@
                 />
             <LinearLayout
                 android:id="@+id/diffPanLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/outBanTo25PanLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                />
+            <TextView
+                android:id="@+id/banTo25PanTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:textColor="#cc0000"
+                android:text="0.5至0.25"
+                android:background="#eeeeee"
+                />
+            <LinearLayout
+                android:id="@+id/banTo25Layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

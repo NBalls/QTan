@@ -467,6 +467,38 @@ public class PrintClass {
         return mList;
     }
 
+    /**
+     * 0.5To0.25
+     * @param mDataList
+     * @return
+     */
+    public static List<MainBean> parserBanTo25(List<MainBean> mDataList) {
+        List<MainBean> mList = new ArrayList();
+        for (int i = 0; i < mDataList.size(); i ++) {
+            int count = 0;
+            MainBean mainBean = mDataList.get(i);
+            for (int j = 0; j < mainBean.yList.size(); j ++) {
+                if (isCompany(mDataList.get(i).getyList().get(j).company)) {
+                    if (Float.valueOf(mainBean.yList.get(j).endPan) == 0.25 &&
+                            Float.valueOf(mainBean.yList.get(j).startPan) == 0.5) {
+                        count = count + 1;
+                    }
+
+                    if (Float.valueOf(mainBean.yList.get(j).endPan) == -0.25 &&
+                            Float.valueOf(mainBean.yList.get(j).startPan) == -0.5) {
+                        count = count + 1;
+                    }
+                }
+            }
+
+            if (count >= 3) {
+                mList.add(mainBean);
+            }
+        }
+
+        return mList;
+    }
+
 
     private static boolean isCompany(String company) {
         return company.contains("365") ||
