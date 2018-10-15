@@ -755,7 +755,7 @@ fun faKeLiao(mainBean: MainBean): String {
 
 fun chongZhuNi(mainBean: MainBean): String {
     val sb = StringBuffer()
-    sb.append(getMYDR()).append("魔尊重楼-逆转乾坤单\n\n")
+    sb.append(getMYDR()).append("三叉戟-逆转乾坤单\n\n")
     sb.append(mainBean.liansai).append(" ").append(mainBean.time)
             .append(" ").append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
     sb.append("方向：").append(mainBean.zhu)
@@ -994,6 +994,71 @@ fun liaowangKeZong(mainBean: MainBean): String {
     }
     sb.append("\n\n").append("此乃竞彩赛事分析，非比赛最终结果，请勿倍投或梭哈\n" +
             "*支持竞彩就等于支持公益")
+
+    return sb.toString()
+}
+
+fun jinyaZhuYi(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append("【移花接木】").append(getMD()).append("赛事分享").append("\n\n")
+    sb.append("时间：").append(mainBean.time).append("\n")
+    sb.append("联赛：").append(mainBean.liansai).append("\n")
+    sb.append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("推荐：").append(mainBean.zhu)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("-")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(1, endPan.length - 2))
+        } else {
+            sb.append(endPan.substring(1))
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("\n\n").append("※中国竞彩赛事分析，彩市有风险，入场需谨慎\n" +
+            "※红黑并非百分百，不退不补，切勿梭哈或倍投，建设理性投资，长跟长赢。")
+
+    return sb.toString()
+}
+
+fun jinyaKeYi(mainBean: MainBean): String {
+    val sb = StringBuffer()
+    sb.append("【移花接木】").append(getMD()).append("赛事分享").append("\n\n")
+    sb.append("时间：").append(mainBean.time).append("\n")
+    sb.append("联赛：").append(mainBean.liansai).append("\n")
+    sb.append(mainBean.zhu).append("VS").append(mainBean.ke).append("\n")
+    sb.append("推荐：").append(mainBean.ke)
+    if (mainBean.yList[0].endPan.toFloat() > 0) {
+        sb.append("+")
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else if (mainBean.yList[0].endPan.toFloat() < 0) {
+        val endPan = mainBean.yList[0].endPan
+        if (endPan.endsWith(".0")) {
+            sb.append(endPan.substring(0, endPan.length - 2))
+        } else {
+            sb.append(endPan)
+        }
+    } else {
+        sb.append("平手")
+    }
+
+    sb.append("\n\n").append("※中国竞彩赛事分析，彩市有风险，入场需谨慎\n" +
+            "※红黑并非百分百，不退不补，切勿梭哈或倍投，建设理性投资，长跟长赢。")
 
     return sb.toString()
 }

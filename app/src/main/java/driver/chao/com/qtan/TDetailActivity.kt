@@ -234,6 +234,18 @@ class TDetailActivity : AppCompatActivity() {
             saveSheetCut(R.id.defaultInclude, doc)
         }
 
+        findViewById<Button>(R.id.jyzButton).onClick {
+            val doc = jinyaZhuYi(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.defaultInclude, doc)
+        }
+
+        findViewById<Button>(R.id.jykButton).onClick {
+            val doc = jinyaKeYi(mainBean)
+            clipDoc(this, doc)
+            saveSheetCut(R.id.defaultInclude, doc)
+        }
+
         /**
          * 一键出即嗨文案
          */

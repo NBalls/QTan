@@ -93,6 +93,50 @@ public class ParseClass {
                 });
     }
 
+
+    public static void parseOYData(final ArrayList<MainBean> dataList) {
+        subscription = Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long count) {
+                        mDataList = dataList;
+                        if (count == 1) {
+                            tanCompleteListener.onTanLoadMainDataCompleteListener(mDataList.size());
+                            tanCompleteListener.onTanLoadMainDataListener();
+                        } else if (count >= 2) {
+                            if (count % 10 == 0) {
+                                int step = Integer.valueOf(count.toString()) / 10 - 2;
+                                int yaCount = 0;
+                                int ouCount = 0;
+                                if (mDataList.size() % 10 == 0) {
+                                    yaCount = mDataList.size() / 10;
+                                } else {
+                                    yaCount = mDataList.size() / 10 + 1;
+                                }
+                                if (mDataList.size() % 10 == 0) {
+                                    ouCount = mDataList.size() / 10;
+                                } else {
+                                    ouCount = mDataList.size() / 10 + 1;
+                                }
+                                if (step < yaCount) {
+                                    parseYaData(step, 10);
+                                    tanCompleteListener.onTanLoadYaDataListener();
+                                } else if (step < yaCount + ouCount) {
+                                    parseOuData(step - yaCount, 10);
+                                    tanCompleteListener.onTanLoadOuDataListener();
+                                } else if (!isFinish) {
+                                    isFinish = true;
+                                    Log.i("MClass", "解析完成.......");
+                                    tanCompleteListener.onTanCompleteListener(mDataList);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
     private static void parseRData(int step, int count) {
         Log.i("MClass", "开始解析欧指数据，开始位置:" + (step) * count);
         for (int i = Math.max(step * count, 0); i < Math.min(mDataList.size(), (step + 1) * count); i ++) {

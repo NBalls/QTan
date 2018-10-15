@@ -33,6 +33,7 @@ import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 /**
  * 应用解析数据主页面
@@ -428,9 +429,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * 刷新欧指和亚盘
+         */
         imageButton.onClick {
-            Toast.makeText(this, "追加比赛结果", Toast.LENGTH_SHORT).show()
-            // applyPermission()
+            val data = sharedPreferences.getString(SP_DATA_KEY, "[]")
+            val dataList = Gson().fromJson<ArrayList<MainBean>>(data, object : TypeToken<ArrayList<MainBean>>() {}.type)
+            ParseClass.parseOYData(dataList)
         }
 
         queryButton.onClick {
