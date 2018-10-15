@@ -429,6 +429,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         imageButton.onClick {
+            Toast.makeText(this, "追加比赛结果", Toast.LENGTH_SHORT).show()
             // applyPermission()
         }
 
