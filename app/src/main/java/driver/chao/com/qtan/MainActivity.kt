@@ -45,24 +45,24 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        val SHARE_NAME = "parser_data"
-        val SP_TIME_KEY = "sp_time_key"
-        val SP_DATE_KEY = "sp_date_key"
-        val SP_DATA_KEY = "sp_data_key"
+        const val SHARE_NAME = "parser_data"
+        const val SP_TIME_KEY = "sp_time_key"
+        const val SP_DATE_KEY = "sp_date_key"
+        const val SP_DATA_KEY = "sp_data_key"
 
-        val TOAST_VALIDATE_ERROR = "数据无法验证....."
-        val TOAST_DATE_ERROR = "日期格式不正确...."
-        val TEXT_LOADING = "正在加载数据......"
-        val TEXT_LOADING_YA = "正在加载亚盘数据......"
-        val TEXT_LOADING_OU = "正在加载欧指数据......"
-        val TEXT_LOADING_RA = "正在加载近期数据......"
-        val TEXT_VALIDATEING = "验证中......"
+        const val TOAST_VALIDATE_ERROR = "数据无法验证....."
+        const val TOAST_DATE_ERROR = "日期格式不正确...."
+        const val TEXT_LOADING = "正在加载数据......"
+        const val TEXT_LOADING_YA = "正在加载亚盘数据......"
+        const val TEXT_LOADING_OU = "正在加载欧指数据......"
+        const val TEXT_LOADING_RA = "正在加载近期数据......"
+        const val TEXT_VALIDATEING = "验证中......"
 
-        val TAG = "TanFragment"
-        val DEFAULT_WEB_URL = "http://www.win0168.com"
-        val DEFAULT_VALIDATE_URL = "http://www.win0168.com/football/hg/Over_"
-        val DEFAULT_HTML_PRE = "<html><head></head><body>"
-        val DEFAULT_HTML_LAST = "</body></html>"
+        const val TAG = "TanFragment"
+        const val DEFAULT_WEB_URL = "http://www.win0168.com"
+        const val DEFAULT_VALIDATE_URL = "http://www.win0168.com/football/hg/Over_"
+        const val DEFAULT_HTML_PRE = "<html><head></head><body>"
+        const val DEFAULT_HTML_LAST = "</body></html>"
     }
     private val webLayout by lazy {
         findViewById<WebLayout>(R.id.webLayout)
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "大概需要解析时间：" + (totalTime / 60 + 1) + "分钟......", Toast.LENGTH_LONG).show()
                 findViewById<FrameLayout>(R.id.progressLayout).visibility = View.VISIBLE
                 findViewById<SimpleRoundProgress>(R.id.simpleRoundProgress).setMax(totalTime)
-                (findViewById<TextView>(R.id.timeText) as TextView).text = "" + (totalTime / 60 + 1) + "分钟"
+                (findViewById<TextView>(R.id.timeText)).text = "" + (totalTime / 60 + 1) + "分钟"
                 Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -151,8 +151,8 @@ class MainActivity : AppCompatActivity() {
         override fun onWebLayoutValidateListener(mList: List<RBean>) {
             val data = sharedPreferences.getString(MainActivity.SP_DATA_KEY, "{}")
             val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
-            for (i in 0 until dataList.size) {
-                for (j in 0 until mList.size) {
+            for (i in dataList.indices - 1) {
+                for (j in mList.indices - 1) {
                     if (mList[j].getZhudui().contains(dataList[i].zhu)
                             && mList[j].getLiansai().contains(dataList[i].liansai)) {
                         dataList[i].bifen = mList[j].points
@@ -279,68 +279,68 @@ class MainActivity : AppCompatActivity() {
         ParseClass.tanCompleteListener = tanCompleteListener
         webLayout.webLayoutListener = webLayoutListener
 
-        (findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.pingCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.cutCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.pingToPBCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.allCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.likeCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.byToBQCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.byToYQCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.yqToYECheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.diffPanCheckbox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        (findViewById<CheckBox>(R.id.banTo25CheckBox) as CheckBox).setOnCheckedChangeListener(onCheckedChangeListener)
-        if ((findViewById<CheckBox>(R.id.coverCheckbox) as CheckBox).isChecked) {
+        (findViewById<CheckBox>(R.id.coverCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.downCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.pingCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.cutCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.pingToPBCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.overCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.one44Checkbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.one65Checkbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.allCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.likeCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.byToBQCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.byToYQCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.yqToYECheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.overMoreCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.diffPanCheckbox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        (findViewById<CheckBox>(R.id.banTo25CheckBox)).setOnCheckedChangeListener(onCheckedChangeListener)
+        if ((findViewById<CheckBox>(R.id.coverCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outCoverLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.downCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.downCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outDownLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.pingCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.pingCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outZeroLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.cutCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.cutCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outCutLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.pingToPBCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.pingToPBCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outOne25Layout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.overCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.overCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outDeepLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.one44Checkbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.one44Checkbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outOneLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.one65Checkbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.one65Checkbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outOne65Layout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.allCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.allCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outAllLayout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.likeCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.likeCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outLikeLayout).visibility = View.GONE
@@ -360,7 +360,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             findViewById<LinearLayout>(R.id.outTo125Layout).visibility = View.GONE
         }
-        if ((findViewById<CheckBox>(R.id.overMoreCheckbox) as CheckBox).isChecked) {
+        if ((findViewById<CheckBox>(R.id.overMoreCheckbox)).isChecked) {
             findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.VISIBLE
         } else {
             findViewById<LinearLayout>(R.id.outOverMoreLayout).visibility = View.GONE
@@ -422,7 +422,7 @@ class MainActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat("yyyyMMdd")
             if (sb.toString() != sdf.format(Date())) {
                 validateButton.text = TEXT_VALIDATEING
-                val url = DEFAULT_VALIDATE_URL + sb.toString() + ".htm"
+                val url = "$DEFAULT_VALIDATE_URL$sb.htm"
                 webLayout.webView2.loadUrl(url)
             } else {
                 Toast.makeText(this, TOAST_VALIDATE_ERROR, Toast.LENGTH_SHORT).show()
@@ -451,12 +451,12 @@ class MainActivity : AppCompatActivity() {
             if (TextUtils.isEmpty(data) || !data.matches(Regex("\\d\\d\\d\\d\\d\\d\\d\\d"))) {
                 Toast.makeText(this, TOAST_DATE_ERROR, Toast.LENGTH_SHORT).show()
             } else {
-                val url = DEFAULT_VALIDATE_URL + data + ".htm"
+                val url = "$DEFAULT_VALIDATE_URL$data.htm"
                 webLayout.webView3.loadUrl(url)
             }
         }
 
-        (findViewById<TextView>(R.id.titleText) as TextView).text = "数据从本地拉取中....."
+        (findViewById<TextView>(R.id.titleText)).text = "数据从本地拉取中....."
         Observable.create<Boolean> { subscribe ->
             val data = sharedPreferences.getString(SP_DATA_KEY, "[]")
             val date = sharedPreferences.getString(SP_DATE_KEY, "")
@@ -573,7 +573,7 @@ class MainActivity : AppCompatActivity() {
                 Observable.create<List<MainBean>> { subscribe ->
                     val data = sharedPreferences.getString(SP_DATA_KEY, "{}")
                     val dataList = Gson().fromJson<List<MainBean>>(data, object : TypeToken<List<MainBean>>() {}.type)
-                    for (j in 0 until dataList.size) {
+                    for (j in dataList.indices - 1) {
                         if (dataList[j].id.equals(mList[i].id)) {
                             dataList[j].like = mList[i].like
                             sharedPreferences.edit().putString(SP_DATA_KEY, Gson().toJson(dataList)).apply()
@@ -585,7 +585,6 @@ class MainActivity : AppCompatActivity() {
                 }.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ dataList ->
-                            val likeList = PrintClass.parseLike(dataList)
                             fillItem(PrintClass.parseLike(dataList) as ArrayList<MainBean>, R.id.likeMainLayout)
                         }, {})
             }
