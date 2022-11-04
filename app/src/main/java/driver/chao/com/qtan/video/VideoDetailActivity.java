@@ -23,7 +23,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "######";
     /** 页面背景颜色 **/
-    private String BACK_COLOR = "#AAAAAA";
+    private String BACK_COLOR = "#222222";
     /** 是否降序 **/
     private boolean isAsc = false;
     /** 是否显示需要 **/
@@ -115,7 +115,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         }
         // 设置背景
         ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
-        imageLayout.setBackgroundColor(Color.RED);
+        imageLayout.setBackgroundResource(R.drawable.animation_back_color);
         ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
         layoutParams.width = dataInfo.width;
         imageLayout.setLayoutParams(layoutParams);

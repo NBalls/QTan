@@ -35,6 +35,42 @@ public class VideoActivity extends AppCompatActivity {
                 dataInfo2.title = "天津";
                 dataInfo2.value = 99;
                 dataInfoList.add(dataInfo2);
+
+                DataInfo dataInfo3 = new DataInfo();
+                dataInfo3.title = "苏州";
+                dataInfo3.value = 94;
+                dataInfoList.add(dataInfo3);
+
+                DataInfo dataInfo4 = new DataInfo();
+                dataInfo4.title = "杭州";
+                dataInfo4.value = 167;
+                dataInfoList.add(dataInfo4);
+
+                DataInfo dataInfo5 = new DataInfo();
+                dataInfo5.title = "南京";
+                dataInfo5.value = 104;
+                dataInfoList.add(dataInfo5);
+
+                DataInfo dataInfo6 = new DataInfo();
+                dataInfo6.title = "广州";
+                dataInfo6.value = 88;
+                dataInfoList.add(dataInfo6);
+
+                DataInfo dataInfo7 = new DataInfo();
+                dataInfo7.title = "深圳";
+                dataInfo7.value = 161;
+                dataInfoList.add(dataInfo7);
+
+                DataInfo dataInfo8 = new DataInfo();
+                dataInfo8.title = "郑州";
+                dataInfo8.value = 144;
+                dataInfoList.add(dataInfo8);
+
+                DataInfo dataInfo9 = new DataInfo();
+                dataInfo9.title = "秦皇岛";
+                dataInfo9.value = 67;
+                dataInfoList.add(dataInfo9);
+
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("dataInfo", dataInfoList);
                 intent.putExtra("bundle", bundle);
