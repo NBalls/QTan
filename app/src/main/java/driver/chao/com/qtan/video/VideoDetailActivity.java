@@ -1,5 +1,6 @@
 package driver.chao.com.qtan.video;
 
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -8,14 +9,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import driver.chao.com.qtan.R;
+import driver.chao.com.qtan.util.Utils;
 import driver.chao.com.qtan.video.bean.DataInfo;
 
 public class VideoDetailActivity extends AppCompatActivity {
@@ -27,18 +28,32 @@ public class VideoDetailActivity extends AppCompatActivity {
     private boolean isAsc = false;
     /** 是否显示需要 **/
     private boolean isShowNum = true;
+    /** 动画时长 **/
+    private long DURATION_TIME = 3000;
+    /** 起始动画延时时间 **/
+    private long DELAY_TIME = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_detail);
-        findViewById(R.id.video_container_layout).setBackgroundColor(Color.parseColor(BACK_COLOR));
-        Bundle bundle = getIntent().getBundleExtra("bundle");
-        ArrayList<DataInfo> result = (ArrayList<DataInfo>) bundle.getSerializable("dataInfo");
-        init(result);
+        initView();
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+            }
+        }, DELAY_TIME);
     }
 
-    private void init(final ArrayList<DataInfo> res) {
+    private void initView() {
+        findViewById(R.id.video_container_layout).setBackgroundColor(Color.parseColor(BACK_COLOR));
+    }
+
+    private void initData() {
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        ArrayList<DataInfo> res = (ArrayList<DataInfo>) bundle.getSerializable("dataInfo");
         if (res == null || res.size() == 0) {
             return;
         }
@@ -52,53 +67,74 @@ public class VideoDetailActivity extends AppCompatActivity {
                 }
             }
         }).collect(Collectors.toList());
-        // 获取最大值和最大值位置Index
-        int maxIndex = 0;
-        double max = result.get(0).value;
-        for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).value > max) {
-                max = result.get(i).value;
-                maxIndex = i;
-            }
-        }
-        final ViewGroup parent = findViewById(R.id.video_container_layout);
-        for (int i = 0; i < result.size(); i++) {
-            // 设置Title
-            View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_video_detail_item, null);
-            if (isShowNum) {
-                String num = i < 10 ? "0" + (i + 1) : (i + 1) + "";
-                ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(result.get(i).title + " " + num);
-            } else {
-                ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(result.get(i).title);
-            }
-            // 设置背景
-            ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
-            imageLayout.setBackgroundColor(Color.RED);
-            // 设置数值
-            ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(result.get(i).value + "");
-            parent.addView(itemView);
-        }
-        parent.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 
-        final int finalMaxIndex = maxIndex;
-        final double finalMax = max;
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        double maxValue = 0;
+        int    maxIndex = 0;
+        if (isAsc) {
+            maxValue = result.get(result.size() - 1).value;
+            maxIndex = result.size() - 1;
+        } else {
+            maxValue = result.get(0).value;
+            maxIndex = 0;
+        }
+        result.get(maxIndex).width = Utils.dip2px(getApplicationContext(), 200);
+        for (int i = 0; i < result.size(); i++) {
+            if (i != maxIndex) {
+                result.get(i).setWidth((int)(result.get(i).value / maxValue * result.get(maxIndex).getWidth()));
+            }
+        }
+        doAnimator(result, 0);
+    }
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private void doAnimator(List<DataInfo> result, int curIndex) {
+        if (curIndex >= result.size()) {
+            return;
+        }
+        init(result.get(curIndex), curIndex);
+
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ViewGroup viewGroup = parent.getChildAt(finalMaxIndex).findViewById(R.id.item_image_layout);
-                int maxWidth = viewGroup.getWidth();
-                double maxValue = finalMax;
-                // 获取总的宽度
-                for (int i = 0; i < parent.getChildCount(); i++) {
-                    if (i != finalMaxIndex) {
-                        ViewGroup imageLayout = parent.getChildAt(i).findViewById(R.id.item_image_layout);
-                        int curWidth = (int)(result.get(i).value / maxValue * maxWidth);
-                        ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
-                        layoutParams.width = curWidth;
-                        imageLayout.setLayoutParams(layoutParams);
-                    }
-                }
+                int index = curIndex + 1;
+                doAnimator(result, index);
+            }
+        }, DURATION_TIME);
+    }
+
+    private void init(DataInfo dataInfo, int index) {
+        final ViewGroup parent = findViewById(R.id.video_container_layout);
+        // 设置Title
+        View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_video_detail_item, null);
+        if (isShowNum) {
+            String num = index < 10 ? "0" + (index + 1) : (index + 1) + "";
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(dataInfo.title + " " + num);
+        } else {
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(dataInfo.title);
+        }
+        // 设置背景
+        ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
+        imageLayout.setBackgroundColor(Color.RED);
+        ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
+        layoutParams.width = dataInfo.width;
+        imageLayout.setLayoutParams(layoutParams);
+        // 设置数值
+        ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(dataInfo.value + "");
+        parent.addView(itemView);
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                itemView.setAlpha(value);
+                itemView.setTranslationY(100 * (1 - value));
             }
         });
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.setDuration(1000);
+        valueAnimator.setStartDelay(0);
+        valueAnimator.start();
     }
 }
