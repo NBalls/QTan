@@ -1,39 +1,42 @@
 package driver.chao.com.qtan.video;
 
-import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.animation.ScaleAnimation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import driver.chao.com.qtan.R;
-import driver.chao.com.qtan.util.Utils;
 import driver.chao.com.qtan.video.bean.DataInfo;
+import driver.chao.com.qtan.video.bean.DataInfoUtil;
 
 public class VideoDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "######";
     /** 页面背景颜色 **/
-    private String BACK_COLOR = "#222222";
+    private String BACK_COLOR = "#000000";
     /** 是否降序 **/
     private boolean isAsc = false;
     /** 是否显示需要 **/
     private boolean isShowNum = true;
     /** 动画时长 **/
-    private long DURATION_TIME = 3000;
+    private long DURATION_TIME = 2000;
     /** 起始动画延时时间 **/
     private long DELAY_TIME = 2000;
+
+    private long DURATION_ADD_TIME = 800;
+    private long DURATION_REMOVE_TIME = 400;
+
+    private List<DataInfo> result = null;
+    private RecyclerView recyclerView;
+    private VideoAdapter videoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,15 @@ public class VideoDetailActivity extends AppCompatActivity {
 
     private void initView() {
         findViewById(R.id.video_container_layout).setBackgroundColor(Color.parseColor(BACK_COLOR));
+        recyclerView = findViewById(R.id.recyclerView);
+        videoAdapter = new VideoAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(videoAdapter);
+
+        MDefaultItemAnimator defaultItemAnimator = new MDefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(DURATION_ADD_TIME);
+        defaultItemAnimator.setRemoveDuration(DURATION_REMOVE_TIME);
+        recyclerView.setItemAnimator(defaultItemAnimator);
     }
 
     private void initData() {
@@ -59,32 +71,9 @@ public class VideoDetailActivity extends AppCompatActivity {
         if (res == null || res.size() == 0) {
             return;
         }
-        List<DataInfo> result = res.stream().sorted(new Comparator<DataInfo>() {
-            @Override
-            public int compare(DataInfo o1, DataInfo o2) {
-                if (isAsc) {
-                    return (int)(o1.value - o2.value);
-                } else {
-                    return (int)(o2.value - o1.value);
-                }
-            }
-        }).collect(Collectors.toList());
-
-        double maxValue = 0;
-        int    maxIndex = 0;
-        if (isAsc) {
-            maxValue = result.get(result.size() - 1).value;
-            maxIndex = result.size() - 1;
-        } else {
-            maxValue = result.get(0).value;
-            maxIndex = 0;
-        }
-        result.get(maxIndex).width = Utils.dip2px(getApplicationContext(), 200);
-        for (int i = 0; i < result.size(); i++) {
-            if (i != maxIndex) {
-                result.get(i).setWidth((int)(result.get(i).value / maxValue * result.get(maxIndex).getWidth()));
-            }
-        }
+        // 初始RecyclerView的height=558
+        Log.i("##########", "recyclerView.height: " + recyclerView.getHeight());
+        result = DataInfoUtil.transferDataInfo(getApplicationContext(), res, isAsc);
         doAnimator(result, 0);
     }
 
@@ -92,9 +81,28 @@ public class VideoDetailActivity extends AppCompatActivity {
 
     private void doAnimator(List<DataInfo> result, int curIndex) {
         if (curIndex >= result.size()) {
+            doAnimationFinish();
             return;
         }
-        init(result.get(curIndex), curIndex);
+        if (curIndex >= 10) {
+            videoAdapter.removeData();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    videoAdapter.addData(result.get(curIndex));
+
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = curIndex + 1;
+                            doAnimator(result, index);
+                        }
+                    }, DURATION_TIME);
+                }
+            }, DURATION_REMOVE_TIME  + 50);
+            return;
+        }
+        videoAdapter.addData(result.get(curIndex));
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -105,38 +113,14 @@ public class VideoDetailActivity extends AppCompatActivity {
         }, DURATION_TIME);
     }
 
-    private void init(DataInfo dataInfo, int index) {
-        final ViewGroup parent = findViewById(R.id.video_container_layout);
-        // 设置Title
-        View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_video_detail_item, null);
-        if (isShowNum) {
-            String num = index < 10 ? "0" + (index + 1) : (index + 1) + "";
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(dataInfo.title + " " + num);
-        } else {
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(dataInfo.title);
-        }
-        // 设置背景
-        ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
-        imageLayout.setBackgroundResource(R.drawable.animation_back_color);
-        ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
-        layoutParams.width = dataInfo.width;
-        imageLayout.setLayoutParams(layoutParams);
-        // 设置数值
-        ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(dataInfo.value + "");
-        parent.addView(itemView);
+    private void doAnimationFinish() {
+        videoAdapter.setData(result);
+        videoAdapter.setScale(true);
+        videoAdapter.notifyDataSetChanged();
+        int count = result.size();
+        float scale = 558f / (55 * count);
+        recyclerView.startAnimation(new ScaleAnimation(1, 1, 1, 0.5f));
+        Log.i("##########", "recyclerView.Height: " + recyclerView.getHeight() + "  " + recyclerView.getChildAt(0).getHeight());
 
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (float) animation.getAnimatedValue();
-                itemView.setAlpha(value);
-                itemView.setTranslationY(100 * (1 - value));
-            }
-        });
-        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.setDuration(1000);
-        valueAnimator.setStartDelay(0);
-        valueAnimator.start();
     }
 }

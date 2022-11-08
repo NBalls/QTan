@@ -36,7 +36,7 @@ class ImageActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+        /*if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImage = data.data
             val filePathColumns = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(selectedImage!!, filePathColumns, null, null, null)
@@ -45,7 +45,7 @@ class ImageActivity : AppCompatActivity() {
             val imagePath = c.getString(columnIndex)
             showImage(imagePath)
             c.close()
-        }
+        }*/
     }
 
     //加载图片
