@@ -3,11 +3,11 @@ package driver.chao.com.qtan
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import org.jetbrains.anko.onClick
 
 class ImageActivity : AppCompatActivity() {
@@ -39,7 +39,7 @@ class ImageActivity : AppCompatActivity() {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImage = data.data
             val filePathColumns = arrayOf(MediaStore.Images.Media.DATA)
-            val c = contentResolver.query(selectedImage, filePathColumns, null, null, null)
+            val c = contentResolver.query(selectedImage!!, filePathColumns, null, null, null)
             c.moveToFirst()
             val columnIndex = c.getColumnIndex(filePathColumns[0])
             val imagePath = c.getString(columnIndex)

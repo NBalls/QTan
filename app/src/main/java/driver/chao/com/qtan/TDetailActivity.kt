@@ -1,7 +1,6 @@
 package driver.chao.com.qtan
 
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +18,7 @@ import java.io.File
 import java.io.FileOutputStream
 import android.content.ClipboardManager
 import android.text.TextUtils
+import androidx.appcompat.app.AppCompatActivity
 import driver.chao.com.qtan.util.ParserUtil
 import driver.chao.com.qtan.util.ParserUtil.getEndPan
 import driver.chao.com.qtan.util.ParserUtil.getStartPan

@@ -3,7 +3,6 @@ package driver.chao.com.qtan
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import driver.chao.com.qtan.bean.MainBean
@@ -479,9 +479,9 @@ class MainActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).post {
             val dateTime = sharedPreferences.getString(SP_TIME_KEY, "")
-            val time = dateTime.substring(dateTime.indexOf(" ") + 1)
+            val time = dateTime?.substring(dateTime.indexOf(" ") + 1)
             val date = sharedPreferences.getString(SP_DATE_KEY, "")
-            parseData(sharedPreferences.getString(SP_DATA_KEY, "{}"), date, time)
+            parseData(sharedPreferences.getString(SP_DATA_KEY, "{}")?: "", date?: "", time?: "")
         }
     }
 
