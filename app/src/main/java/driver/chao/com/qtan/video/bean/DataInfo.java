@@ -5,52 +5,24 @@ import java.io.Serializable;
 public class DataInfo implements Serializable {
     // 左侧名称
     public String title;
+    // 是否显示名称（否则在颜色组件中显示 ）
+    public boolean isShowName;
     // 左侧序号(从1开始)
     public int num;
+    // 是否显示序号
+    public boolean isShowNum = true;
+    // 左侧间距
+    public int leftMargin = 0;
     // 数量
     public double value;
     // 宽度
     public int width;
     // 颜色
     public String color = "#FFFFFF";
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
+    // 总量前缀
+    public String preContent = "";
+    // 总量后缀
+    public String lastContent = "";
+    // money Icon
+    public boolean isShowMoney = false;
 }

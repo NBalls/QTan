@@ -3,7 +3,7 @@ package driver.chao.com.qtan.video;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import driver.chao.com.qtan.R;
+import driver.chao.com.qtan.util.Utils;
 import driver.chao.com.qtan.video.bean.DataInfo;
 
 public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    // 默认左边距
+    public static final int DEFAULT_LEFT_MARGIN = 80;
+    // 默认名称文案颜色
+    public static final String DEFAULT_FONT_COLOR = "#FFFF00";
     private List<DataInfo> data = null;
-    public boolean isShowNum = false;
+    public String fontColor = "";
+    public String numColor = "";
+    public String itemColor = "";
 
     @NonNull
     @Override
@@ -30,17 +36,38 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return new VideoViewHolder(itemView);
     }
 
-    @SuppressLint("WrongConstant")
+    @SuppressLint({"WrongConstant", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         View itemView = holder.itemView;
-        Log.i("###########", "position: " + position);
-        if (isShowNum) {
+        DataInfo dataInfo = data.get(position);
+        String nameContent = "";
+        if (dataInfo.isShowName) {
+            nameContent = dataInfo.title;
+        }
+        // 设置名称
+        if (dataInfo.isShowNum) {
             int index = data.get(position).num;
             String num = index < 10 ? "0" + index : "" + index;
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(data.get(position).title + " " + num);
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(nameContent + " " + num);
         } else {
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(data.get(position).title);
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(nameContent);
+        }
+        // 名称颜色
+        if (!TextUtils.isEmpty(fontColor)) {
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setTextColor(Color.parseColor(fontColor));
+        } else {
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setTextColor(Color.parseColor(DEFAULT_FONT_COLOR));
+        }
+        // 设置左侧边距
+        if (dataInfo.leftMargin != 0) {
+            TextView nameTv = ((TextView)itemView.findViewById(R.id.item_name_tv));
+            ViewGroup.LayoutParams layoutParams = nameTv.getLayoutParams();
+            layoutParams.width = Utils.dip2px(nameTv.getContext(), dataInfo.leftMargin);
+        } else {
+            TextView nameTv = ((TextView)itemView.findViewById(R.id.item_name_tv));
+            ViewGroup.LayoutParams layoutParams = nameTv.getLayoutParams();
+            layoutParams.width = Utils.dip2px(nameTv.getContext(), DEFAULT_LEFT_MARGIN);
         }
         // 设置背景
         ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
@@ -48,14 +75,36 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setGradientType(GradientDrawable.RECTANGLE);
         drawable.setCornerRadius(9);
-        drawable.setColor(Color.parseColor(data.get(position).getColor()));
+        if (!TextUtils.isEmpty(itemColor)) {
+            drawable.setColor(Color.parseColor(itemColor));
+        } else {
+            drawable.setColor(Color.parseColor(dataInfo.color));
+        }
         imageLayout.setBackground(drawable);
-
+        // 设置宽度
         ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
-        layoutParams.width = data.get(position).width;
+        layoutParams.width = dataInfo.width;
         imageLayout.setLayoutParams(layoutParams);
+        // 设置背景里面的名称
+        if (!dataInfo.isShowName) {
+            itemView.findViewById(R.id.item_name_tv2).setVisibility(View.VISIBLE);
+            ((TextView) itemView.findViewById(R.id.item_name_tv2)).setText(dataInfo.title);
+        } else {
+            itemView.findViewById(R.id.item_name_tv2).setVisibility(View.GONE);
+        }
+
         // 设置数值
-        ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(data.get(position).value + "");
+        if (dataInfo.isShowMoney) {
+            ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent + "💰");
+        } else {
+            ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent);
+        }
+        // 设置数值颜色
+        if (!TextUtils.isEmpty(numColor)) {
+            ((TextView)itemView.findViewById(R.id.item_num_tv)).setTextColor(Color.parseColor(numColor));
+        } else {
+            ((TextView)itemView.findViewById(R.id.item_num_tv)).setTextColor(Color.WHITE);
+        }
     }
 
     @Override

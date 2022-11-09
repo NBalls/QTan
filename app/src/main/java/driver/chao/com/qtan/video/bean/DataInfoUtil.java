@@ -1,6 +1,9 @@
 package driver.chao.com.qtan.video.bean;
 
 import android.content.Context;
+import android.text.TextUtils;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,17 +24,17 @@ public class DataInfoUtil {
     private static final String COLOR_10 = "#6f4070";
 
 
-    public static List<DataInfo> transferDataInfo(Context context, List<DataInfo> res, boolean isAsc) {
+    public static ArrayList<DataInfo> transferDataInfo(Context context, List<DataInfo> res, boolean isDesc, String widthValue) {
         if (res == null || res.size() == 0) {
-            return res;
+            return new ArrayList<>();
         }
         List<DataInfo> result = res.stream().sorted(new Comparator<DataInfo>() {
             @Override
             public int compare(DataInfo o1, DataInfo o2) {
-                if (isAsc) {
-                    return (int)(o1.value - o2.value);
-                } else {
+                if (isDesc) {
                     return (int)(o2.value - o1.value);
+                } else {
+                    return (int)(o1.value - o2.value);
                 }
             }
         }).collect(Collectors.toList());
@@ -40,44 +43,48 @@ public class DataInfoUtil {
         }
         double maxValue = 0;
         int    maxIndex = 0;
-        if (isAsc) {
-            maxValue = result.get(result.size() - 1).value;
-            maxIndex = result.size() - 1;
-        } else {
+        if (isDesc) {
             maxValue = result.get(0).value;
             maxIndex = 0;
+        } else {
+            maxValue = result.get(result.size() - 1).value;
+            maxIndex = result.size() - 1;
         }
-        result.get(maxIndex).width = Utils.dip2px(context, 200);
+        if (!TextUtils.isEmpty(widthValue)) {
+            result.get(maxIndex).width = Utils.dip2px(context, Integer.parseInt(widthValue));
+        } else {
+            result.get(maxIndex).width = Utils.dip2px(context, 100);
+        }
         for (int i = 0; i < result.size(); i++) {
             if (i != maxIndex) {
-                result.get(i).setWidth((int)(result.get(i).value / maxValue * result.get(maxIndex).getWidth()));
+                result.get(i).width = ((int)(result.get(i).value / maxValue * result.get(maxIndex).width));
             }
 
             int position = i;
             if (position % 10 == 0) {
-                result.get(i).setColor(COLOR_1);
+                result.get(i).color = COLOR_1;
             } else if (position % 10 == 1) {
-                result.get(i).setColor(COLOR_2);
+                result.get(i).color = COLOR_2;
             } else if (position % 10 == 2) {
-                result.get(i).setColor(COLOR_3);
+                result.get(i).color = COLOR_3;
             } else if (position % 10 == 3) {
-                result.get(i).setColor(COLOR_4);
+                result.get(i).color = COLOR_4;
             } else if (position % 10 == 4) {
-                result.get(i).setColor(COLOR_5);
+                result.get(i).color = COLOR_5;
             } else if (position % 10 == 5) {
-                result.get(i).setColor(COLOR_6);
+                result.get(i).color = COLOR_6;
             } else if (position % 10 == 6) {
-                result.get(i).setColor(COLOR_7);
+                result.get(i).color = COLOR_7;
             } else if (position % 10 == 7) {
-                result.get(i).setColor(COLOR_8);
+                result.get(i).color = COLOR_8;
             } else if (position % 10 == 8) {
-                result.get(i).setColor(COLOR_9);
+                result.get(i).color = COLOR_9;
             } else if (position % 10 == 9) {
-                result.get(i).setColor(COLOR_10);
+                result.get(i).color = COLOR_10;
             }
         }
 
-        return result;
+        return new ArrayList<>(result);
     }
 
 }

@@ -31,14 +31,402 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/video_operate_layout"
+        android:id="@+id/video_content_operate_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/video_title_layout"
         >
+        <EditText
+            android:id="@+id/video_pre_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:hint="数值前缀"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_last_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="数值后缀"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:text="亿"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_ratio_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="数值系数"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_ratio_count"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="小数位"
+            android:inputType="number"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_content_operate_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_content_operate_layout"
+        >
+        <EditText
+            android:id="@+id/video_width_value"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="背景宽度"
+            android:padding="5dp"
+            android:inputType="number"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_left_margin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="左间距"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:inputType="number"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+        <EditText
+            android:id="@+id/video_source_edt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="数据来源"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_author_edt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="数据整理"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_content_operate_layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_content_operate_layout2"
+        >
+        <EditText
+            android:id="@+id/video_back_edt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="整体背景"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_font_color"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="名称颜色"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_num_color"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="数值颜色"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_item_color"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="背景颜色"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_content_operate_layout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_content_operate_layout3"
+        >
+        <EditText
+            android:id="@+id/video_total_location"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计上中下"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_total_font_size"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计字号"
+            android:layout_marginLeft="10dp"
+            android:inputType="number"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_total_font_color"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计字色"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_total_right_margin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计右边距"
+            android:layout_marginLeft="10dp"
+            android:inputType="number"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_content_operate_layout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_content_operate_layout4"
+        >
+        <EditText
+            android:id="@+id/video_total_ratio"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计系数"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_total_decimal_count"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计小数位"
+            android:layout_marginLeft="10dp"
+            android:inputType="number"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:id="@+id/video_total_unit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计单位"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@drawable/video_input_back"
+            />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="总计右边距"
+            android:layout_marginLeft="10dp"
+            android:inputType="number"
+            android:padding="5dp"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:visibility="invisible"
+            android:background="@drawable/video_input_back"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_operate_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_content_operate_layout5"
+        >
+
+        <CheckBox
+            android:id="@+id/video_desc_operate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="降序"
+            />
 
         <CheckBox
             android:id="@+id/video_num_operate"
@@ -48,6 +436,58 @@
             android:text="序号"
             />
 
+        <CheckBox
+            android:id="@+id/video_quick_operate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="快照"
+            />
+
+        <CheckBox
+            android:id="@+id/video_money_operate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="图标"
+            />
+
+        <CheckBox
+            android:id="@+id/video_tail_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="结尾"
+            />
+
+        <CheckBox
+            android:id="@+id/video_total_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="总计"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_operate_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_operate_layout"
+        >
+
+        <CheckBox
+            android:id="@+id/video_name_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="名称"
+            />
 
     </LinearLayout>
 
@@ -61,7 +501,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/video_operate_layout"
+        app:layout_constraintTop_toBottomOf="@+id/video_operate_layout2"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
