@@ -2,11 +2,16 @@ package driver.chao.com.qtan.video;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import driver.chao.com.qtan.R;
 import driver.chao.com.qtan.video.bean.DataInfo;
@@ -17,79 +22,35 @@ public class VideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+        ((CheckBox) findViewById(R.id.video_num_operate)).setChecked(true);
 
         // 跳转视频详情页绘制视频
         findViewById(R.id.video_goto_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VideoActivity.this, VideoDetailActivity.class);
+                // 获取数据
+                String content = ((EditText) findViewById(R.id.content_edt)).getText().toString();
+                String[] contentArray = content.split("\n");
                 ArrayList<DataInfo> dataInfoList = new ArrayList<>();
-                DataInfo dataInfo = new DataInfo();
-                dataInfo.title = "北京";
-                dataInfo.value = 123;
-                dataInfoList.add(dataInfo);
-                DataInfo dataInfo1 = new DataInfo();
-                dataInfo1.title = "上海";
-                dataInfo1.value = 145;
-                dataInfoList.add(dataInfo1);
-                DataInfo dataInfo2 = new DataInfo();
-                dataInfo2.title = "天津";
-                dataInfo2.value = 99;
-                dataInfoList.add(dataInfo2);
-
-                DataInfo dataInfo3 = new DataInfo();
-                dataInfo3.title = "苏州";
-                dataInfo3.value = 94;
-                dataInfoList.add(dataInfo3);
-
-                DataInfo dataInfo4 = new DataInfo();
-                dataInfo4.title = "杭州";
-                dataInfo4.value = 167;
-                dataInfoList.add(dataInfo4);
-
-                DataInfo dataInfo5 = new DataInfo();
-                dataInfo5.title = "南京";
-                dataInfo5.value = 104;
-                dataInfoList.add(dataInfo5);
-
-                DataInfo dataInfo6 = new DataInfo();
-                dataInfo6.title = "广州";
-                dataInfo6.value = 88;
-                dataInfoList.add(dataInfo6);
-
-                DataInfo dataInfo7 = new DataInfo();
-                dataInfo7.title = "深圳";
-                dataInfo7.value = 161;
-                dataInfoList.add(dataInfo7);
-
-                DataInfo dataInfo8 = new DataInfo();
-                dataInfo8.title = "郑州";
-                dataInfo8.value = 144;
-                dataInfoList.add(dataInfo8);
-
-                DataInfo dataInfo9 = new DataInfo();
-                dataInfo9.title = "秦皇岛";
-                dataInfo9.value = 67;
-                dataInfoList.add(dataInfo9);
-
-                DataInfo dataInfo10 = new DataInfo();
-                dataInfo10.title = "唐山";
-                dataInfo10.value = 167;
-                dataInfoList.add(dataInfo10);
-
-                DataInfo dataInfo11 = new DataInfo();
-                dataInfo11.title = "石家庄";
-                dataInfo11.value = 107;
-                dataInfoList.add(dataInfo11);
-
-                DataInfo dataInfo12 = new DataInfo();
-                dataInfo12.title = "沧州";
-                dataInfo12.value = 67;
-                dataInfoList.add(dataInfo12);
-
+                for (int i = 0; i < contentArray.length; i++) {
+                    String[] infoArray = contentArray[i].split(" ");
+                    if (infoArray.length >= 2) {
+                        DataInfo dataInfo = new DataInfo();
+                        dataInfo.title = infoArray[0];
+                        String value = infoArray[infoArray.length - 1];
+                        if (!TextUtils.isEmpty(value)) {
+                            dataInfo.value = Double.parseDouble(value);
+                        }
+                        dataInfoList.add(dataInfo);
+                    }
+                }
+                // 是否显示序号
+                boolean isSelected = findViewById(R.id.video_num_operate).isSelected();
+                Intent intent = new Intent(VideoActivity.this, VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("dataInfo", dataInfoList);
                 intent.putExtra("bundle", bundle);
+                intent.putExtra("show_num", isSelected);
                 startActivity(intent);
             }
         });

@@ -1,11 +1,15 @@
 package driver.chao.com.qtan.video;
 
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.ScaleAnimation;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import driver.chao.com.qtan.R;
+import driver.chao.com.qtan.util.Utils;
 import driver.chao.com.qtan.video.bean.DataInfo;
 import driver.chao.com.qtan.video.bean.DataInfoUtil;
 
@@ -66,6 +71,8 @@ public class VideoDetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        boolean isSelected = getIntent().getBooleanExtra("show_num", false);
+        videoAdapter.isShowNum = isSelected;
         Bundle bundle = getIntent().getBundleExtra("bundle");
         ArrayList<DataInfo> res = (ArrayList<DataInfo>) bundle.getSerializable("dataInfo");
         if (res == null || res.size() == 0) {
@@ -115,12 +122,51 @@ public class VideoDetailActivity extends AppCompatActivity {
 
     private void doAnimationFinish() {
         videoAdapter.setData(result);
-        videoAdapter.setScale(true);
-        videoAdapter.notifyDataSetChanged();
-        int count = result.size();
-        float scale = 558f / (55 * count);
-        recyclerView.startAnimation(new ScaleAnimation(1, 1, 1, 0.5f));
-        Log.i("##########", "recyclerView.Height: " + recyclerView.getHeight() + "  " + recyclerView.getChildAt(0).getHeight());
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        for (int i = 0; i < result.size(); i++) {
+            //手动调用建立和绑定ViewHolder方法，
+            RecyclerView.ViewHolder holder = videoAdapter.createViewHolder(recyclerView, videoAdapter.getItemViewType(i));
+            videoAdapter.onBindViewHolder(holder, i);
+            //测量
+            holder.itemView.measure(
+                    View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            //布局
+            holder.itemView.layout(0, 0, holder.itemView.getMeasuredWidth(),
+                    holder.itemView.getMeasuredHeight());
+            //开启绘图缓存
+                    /*holder.itemView.setDrawingCacheEnabled(true);
+                    holder.itemView.buildDrawingCache();
+                    Bitmap drawingCache = holder.itemView.getDrawingCache();
+                    if (drawingCache != null) {
+                        bitmapCache.put(String.valueOf(i), drawingCache);
+                    }
+                    //获取itemView的实际高度并累加
+                    height += holder.itemView.getMeasuredHeight();*/
+            linearLayout.setVisibility(View.VISIBLE);
+            linearLayout.addView(holder.itemView);
+        }
 
+        linearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setVisibility(View.INVISIBLE);
+                float scale = (((float) recyclerView.getHeight())) / (linearLayout.getHeight());
+                linearLayout.setPivotX(0);
+                linearLayout.setPivotY(linearLayout.getHeight());
+                ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, scale);
+                valueAnimator.setDuration(1000);
+                valueAnimator.setStartDelay(0);
+                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        float value = (Float) animation.getAnimatedValue();
+                        linearLayout.setScaleX(value);
+                        linearLayout.setScaleY(value);
+                    }
+                });
+                valueAnimator.start();
+            }
+        });
     }
 }

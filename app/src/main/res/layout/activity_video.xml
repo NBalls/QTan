@@ -19,18 +19,36 @@
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/content_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:gravity="top"
+            android:padding="10dp"
+            android:background="@drawable/video_input_back"
+            android:hint="请输入数据内容"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_operate_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_title_layout"
+        >
+
+        <CheckBox
+            android:id="@+id/video_num_operate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="请输入标题"
-            android:layout_weight="1"
+            android:checked="true"
+            android:text="序号"
             />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="请输入标题"
-            android:layout_weight="1"
-            />
+
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -43,7 +61,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/video_title_layout"
+        app:layout_constraintTop_toBottomOf="@+id/video_operate_layout"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

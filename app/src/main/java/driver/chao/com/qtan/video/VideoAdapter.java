@@ -21,8 +21,7 @@ import driver.chao.com.qtan.video.bean.DataInfo;
 public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<DataInfo> data = null;
-    private boolean isScale = false;
-    private float scale = 0.5f;
+    public boolean isShowNum = false;
 
     @NonNull
     @Override
@@ -36,13 +35,13 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         View itemView = holder.itemView;
         Log.i("###########", "position: " + position);
-        // if (isShowNum) {
+        if (isShowNum) {
             int index = data.get(position).num;
             String num = index < 10 ? "0" + index : "" + index;
             ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(data.get(position).title + " " + num);
-        /*} else {
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(dataInfo.title);
-        }*/
+        } else {
+            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(data.get(position).title);
+        }
         // 设置背景
         ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
         GradientDrawable drawable=new GradientDrawable();
@@ -52,16 +51,11 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         drawable.setColor(Color.parseColor(data.get(position).getColor()));
         imageLayout.setBackground(drawable);
 
-        // imageLayout.setBackgroundResource(R.drawable.animation_back_color);
         ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
         layoutParams.width = data.get(position).width;
         imageLayout.setLayoutParams(layoutParams);
         // 设置数值
         ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(data.get(position).value + "");
-
-        if (isScale) {
-            itemView.setScaleY(0.5f);
-        }
     }
 
     @Override
@@ -92,22 +86,6 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         data.remove(0);
         notifyItemRemoved(0);
-    }
-
-    public float getScale() {
-        return scale;
-    }
-
-    public void setScale(float scale) {
-        this.scale = scale;
-    }
-
-    public boolean isScale() {
-        return isScale;
-    }
-
-    public void setScale(boolean scale) {
-        isScale = scale;
     }
 
     static class VideoViewHolder extends RecyclerView.ViewHolder {
