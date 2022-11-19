@@ -32,9 +32,9 @@ public class DataInfoUtil {
             @Override
             public int compare(DataInfo o1, DataInfo o2) {
                 if (isDesc) {
-                    return (int)(o2.value - o1.value);
+                    return (int)(o2.value * 10000 - o1.value * 10000);
                 } else {
-                    return (int)(o1.value - o2.value);
+                    return (int)(o1.value * 10000 - o2.value * 10000);
                 }
             }
         }).collect(Collectors.toList());
