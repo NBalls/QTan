@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 >
                 <TextView
                     android:id="@+id/video_custom_tv"
@@ -53,7 +53,6 @@
                     android:textSize="16sp"
                     android:textColor="#FFFF00"
                     android:textStyle="bold"
-                    android:text="2020年数据"
                     />
             </LinearLayout>
 

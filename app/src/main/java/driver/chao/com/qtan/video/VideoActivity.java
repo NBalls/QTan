@@ -56,6 +56,7 @@ public class VideoActivity extends AppCompatActivity {
                 String totalDecimalCount = ((EditText)findViewById(R.id.video_total_decimal_count)).getText().toString();
                 String totalUnitContent = ((EditText)findViewById(R.id.video_total_unit)).getText().toString();
                 String customContent = ((EditText)findViewById(R.id.video_custom_content)).getText().toString();
+                String defaultCount = ((EditText)findViewById(R.id.video_default_count)).getText().toString();
 
                 String content = ((EditText) findViewById(R.id.content_edt)).getText().toString();
                 if (TextUtils.isEmpty(content)) {
@@ -116,6 +117,7 @@ public class VideoActivity extends AppCompatActivity {
                 videoInfo.totalDecimalCount = totalDecimalCount;
                 videoInfo.totalUnit = totalUnitContent;
                 videoInfo.customContent = customContent;
+                videoInfo.defaultCount = defaultCount;
                 Intent intent = new Intent(VideoActivity.this, VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(DATA_INFO_CONTENT, result);

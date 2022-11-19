@@ -49,6 +49,7 @@ public class VideoDetailActivity extends AppCompatActivity {
     private VideoAdapter videoAdapter;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private double total = 0;
+    private int pageSize = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +136,11 @@ public class VideoDetailActivity extends AppCompatActivity {
             findViewById(R.id.video_custom_layout).setVisibility(View.GONE);
         }
 
+        if (!TextUtils.isEmpty(videoInfo.defaultCount)) {
+            videoAdapter.defaultCount = videoInfo.defaultCount;
+            pageSize = Integer.parseInt(videoInfo.defaultCount);
+        }
+
         // 是否快照
         if (videoInfo.isQuick) {
             videoAdapter.setData(result);
@@ -174,7 +180,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             }
             return;
         }
-        if (curIndex >= 10) {
+        if (curIndex >= pageSize) {
             videoAdapter.removeData();
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -208,7 +214,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
         for (int i = 0; i < result.size(); i++) {
             //手动调用建立和绑定ViewHolder方法，
-            RecyclerView.ViewHolder holder = videoAdapter.createViewHolder(recyclerView, videoAdapter.getItemViewType(i));
+            VideoAdapter.VideoViewHolder holder = videoAdapter.createViewHolder(recyclerView, videoAdapter.getItemViewType(i));
             videoAdapter.onBindViewHolder(holder, i);
             //测量
             holder.itemView.measure(

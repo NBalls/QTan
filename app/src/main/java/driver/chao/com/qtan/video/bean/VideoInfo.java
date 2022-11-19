@@ -37,4 +37,6 @@ public class VideoInfo implements Serializable {
     public String totalUnit;
     // 自定义内容
     public String customContent;
+    // 默认个数
+    public String defaultCount;
 }

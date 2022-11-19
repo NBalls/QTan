@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import driver.chao.com.qtan.R;
 import driver.chao.com.qtan.util.Utils;
 import driver.chao.com.qtan.video.bean.DataInfo;
 
-public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
     // 默认左边距
     public static final int DEFAULT_LEFT_MARGIN = 80;
     // 默认名称文案颜色
@@ -28,17 +31,18 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public String fontColor = "";
     public String numColor = "";
     public String itemColor = "";
+    public String defaultCount = "10";
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_video_detail_item, viewGroup, false);
         return new VideoViewHolder(itemView);
     }
 
     @SuppressLint({"WrongConstant", "SetTextI18n"})
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
         View itemView = holder.itemView;
         DataInfo dataInfo = data.get(position);
         String nameContent = "";
@@ -49,28 +53,25 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (dataInfo.isShowNum) {
             int index = data.get(position).num;
             String num = index < 10 ? "0" + index : "" + index;
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(nameContent + " " + num);
+            holder.nameTv.setText(nameContent + " " + num);
         } else {
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setText(nameContent);
+            holder.nameTv.setText(nameContent);
         }
         // 名称颜色
         if (!TextUtils.isEmpty(fontColor)) {
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setTextColor(Color.parseColor(fontColor));
+            holder.nameTv.setTextColor(Color.parseColor(fontColor));
         } else {
-            ((TextView)itemView.findViewById(R.id.item_name_tv)).setTextColor(Color.parseColor(DEFAULT_FONT_COLOR));
+            holder.nameTv.setTextColor(Color.parseColor(DEFAULT_FONT_COLOR));
         }
         // 设置左侧边距
         if (dataInfo.leftMargin != 0) {
-            TextView nameTv = ((TextView)itemView.findViewById(R.id.item_name_tv));
-            ViewGroup.LayoutParams layoutParams = nameTv.getLayoutParams();
-            layoutParams.width = Utils.dip2px(nameTv.getContext(), dataInfo.leftMargin);
+            ViewGroup.LayoutParams layoutParams = holder.nameTv.getLayoutParams();
+            layoutParams.width = Utils.dip2px(holder.nameTv.getContext(), dataInfo.leftMargin);
         } else {
-            TextView nameTv = ((TextView)itemView.findViewById(R.id.item_name_tv));
-            ViewGroup.LayoutParams layoutParams = nameTv.getLayoutParams();
-            layoutParams.width = Utils.dip2px(nameTv.getContext(), DEFAULT_LEFT_MARGIN);
+            ViewGroup.LayoutParams layoutParams = holder.nameTv.getLayoutParams();
+            layoutParams.width = Utils.dip2px(holder.nameTv.getContext(), DEFAULT_LEFT_MARGIN);
         }
         // 设置背景
-        ViewGroup imageLayout = itemView.findViewById(R.id.item_image_layout);
         GradientDrawable drawable=new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setGradientType(GradientDrawable.RECTANGLE);
@@ -80,30 +81,47 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else {
             drawable.setColor(Color.parseColor(dataInfo.color));
         }
-        imageLayout.setBackground(drawable);
+        holder.imageLayout.setBackground(drawable);
         // 设置宽度
-        ViewGroup.LayoutParams layoutParams = imageLayout.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = holder.imageLayout.getLayoutParams();
         layoutParams.width = dataInfo.width;
-        imageLayout.setLayoutParams(layoutParams);
+        holder.imageLayout.setLayoutParams(layoutParams);
         // 设置背景里面的名称
         if (!dataInfo.isShowName) {
-            itemView.findViewById(R.id.item_name_tv2).setVisibility(View.VISIBLE);
-            ((TextView) itemView.findViewById(R.id.item_name_tv2)).setText(dataInfo.title);
+            holder.nameTv2.setVisibility(View.VISIBLE);
+            holder.nameTv2.setText(dataInfo.title);
         } else {
-            itemView.findViewById(R.id.item_name_tv2).setVisibility(View.GONE);
+            holder.nameTv2.setVisibility(View.GONE);
         }
 
         // 设置数值
         if (dataInfo.isShowMoney) {
-            ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent + "💰");
+            holder.numTv.setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent + "💰");
         } else {
-            ((TextView)itemView.findViewById(R.id.item_num_tv)).setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent);
+            holder.numTv.setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent);
         }
         // 设置数值颜色
         if (!TextUtils.isEmpty(numColor)) {
-            ((TextView)itemView.findViewById(R.id.item_num_tv)).setTextColor(Color.parseColor(numColor));
+            holder.numTv.setTextColor(Color.parseColor(numColor));
         } else {
-            ((TextView)itemView.findViewById(R.id.item_num_tv)).setTextColor(Color.WHITE);
+            holder.numTv.setTextColor(Color.WHITE);
+        }
+        // 判断默认个数
+        if (!TextUtils.isEmpty(defaultCount)) {
+            if (Integer.parseInt(defaultCount) == 15) {
+                holder.constraintLayout.getLayoutParams().height = Utils.dip2px(holder.imageLayout.getContext(), 13.5f);
+                holder.nameTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9.5f);
+                holder.imageLayout.getLayoutParams().height = Utils.dip2px(holder.imageLayout.getContext(), 11);
+                holder.nameTv2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                holder.numTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9.5f);
+            } else {
+                // 默认10个
+                holder.constraintLayout.getLayoutParams().height = Utils.dip2px(holder.imageLayout.getContext(), 20);
+                holder.nameTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+                holder.imageLayout.getLayoutParams().height = Utils.dip2px(holder.imageLayout.getContext(), 15);
+                holder.nameTv2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                holder.numTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+            }
         }
     }
 
@@ -139,8 +157,19 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     static class VideoViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView nameTv;
+        public LinearLayout imageLayout;
+        public TextView nameTv2;
+        public TextView numTv;
+        public ConstraintLayout constraintLayout;
+
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
+            constraintLayout = itemView.findViewById(R.id.item_layout_container);
+            nameTv = itemView.findViewById(R.id.item_name_tv);
+            imageLayout = itemView.findViewById(R.id.item_image_layout);
+            nameTv2 = itemView.findViewById(R.id.item_name_tv2);
+            numTv = itemView.findViewById(R.id.item_num_tv);
         }
     }
 }
