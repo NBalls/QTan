@@ -35,4 +35,6 @@ public class VideoInfo implements Serializable {
     public String totalDecimalCount;
     // 总计单位
     public String totalUnit;
+    // 自定义内容
+    public String customContent;
 }

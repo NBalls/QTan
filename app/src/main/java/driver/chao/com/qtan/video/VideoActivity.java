@@ -2,7 +2,9 @@ package driver.chao.com.qtan.video;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,7 +25,7 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
 
         // 跳转视频详情页绘制视频
-        findViewById(R.id.video_goto_layout).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.video_goto_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 获取数据
@@ -53,6 +55,7 @@ public class VideoActivity extends AppCompatActivity {
                 String totalRatioContent = ((EditText)findViewById(R.id.video_total_ratio)).getText().toString();
                 String totalDecimalCount = ((EditText)findViewById(R.id.video_total_decimal_count)).getText().toString();
                 String totalUnitContent = ((EditText)findViewById(R.id.video_total_unit)).getText().toString();
+                String customContent = ((EditText)findViewById(R.id.video_custom_content)).getText().toString();
 
                 String content = ((EditText) findViewById(R.id.content_edt)).getText().toString();
                 if (TextUtils.isEmpty(content)) {
@@ -112,12 +115,56 @@ public class VideoActivity extends AppCompatActivity {
                 videoInfo.totalRatio = totalRatioContent;
                 videoInfo.totalDecimalCount = totalDecimalCount;
                 videoInfo.totalUnit = totalUnitContent;
+                videoInfo.customContent = customContent;
                 Intent intent = new Intent(VideoActivity.this, VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(DATA_INFO_CONTENT, result);
                 bundle.putSerializable(VIDEO_INFO_CONTENT, videoInfo);
                 intent.putExtra(DATA_INFO_BUNDLE, bundle);
                 startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.video_clear_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((EditText) findViewById(R.id.content_edt)).setText("");
+                Toast.makeText(getApplicationContext(), "清除成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        findViewById(R.id.video_save_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = ((EditText) findViewById(R.id.content_edt)).getText().toString();
+                SPUtil.saveData(content);
+                Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        findViewById(R.id.video_restore_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = SPUtil.getData();
+                ((EditText) findViewById(R.id.content_edt)).setText(content);
+                Toast.makeText(getApplicationContext(), "恢复成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ((EditText)findViewById(R.id.content_edt)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null && !TextUtils.isEmpty(s.toString())) {
+                    SPUtil.saveData(s.toString());
+                }
             }
         });
     }

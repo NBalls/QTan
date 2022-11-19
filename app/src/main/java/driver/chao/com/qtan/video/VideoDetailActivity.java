@@ -128,6 +128,12 @@ public class VideoDetailActivity extends AppCompatActivity {
         } else {
             ((FrameLayout.LayoutParams) findViewById(R.id.right_content_layout).getLayoutParams()).rightMargin = Utils.dip2px(getApplicationContext(), 10);
         }
+        if (!TextUtils.isEmpty(videoInfo.customContent)) {
+            findViewById(R.id.video_custom_layout).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.video_custom_tv)).setText(videoInfo.customContent);
+        } else {
+            findViewById(R.id.video_custom_layout).setVisibility(View.GONE);
+        }
 
         // 是否快照
         if (videoInfo.isQuick) {
