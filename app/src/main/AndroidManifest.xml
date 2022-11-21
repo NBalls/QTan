@@ -23,6 +23,7 @@
         android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- 启动Activity -->
         <activity
             android:name=".StartActivity"
             android:exported="true" >
@@ -32,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 视频Activity -->
         <activity
             android:name=".video.VideoDetailActivity"
             android:exported="true"
@@ -40,6 +42,7 @@
             android:name=".video.VideoActivity"
             android:exported="true"
             tools:ignore="Instantiatable"></activity>
+        <!-- 盘口Activity -->
         <activity
             android:name=".MainActivity"
             tools:ignore="Instantiatable">
@@ -50,6 +53,11 @@
         <activity
             android:name=".ImageActivity"
             tools:ignore="Instantiatable" />
+        <!-- 截屏Activity -->
+        <activity
+            android:name=".screen.ScreenActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable"></activity>
     </application>
 
 </manifest>
