@@ -95,10 +95,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         }
 
         // 设置数值
-        if (dataInfo.isShowMoney) {
-            holder.numTv.setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent + "💰");
+        if (dataInfo.isStatistics) {
+            if (dataInfo.isShowMoney) {
+                holder.numTv.setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent + "💰");
+            } else {
+                holder.numTv.setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent);
+            }
         } else {
-            holder.numTv.setText(dataInfo.preContent + dataInfo.value + dataInfo.lastContent);
+            holder.numTv.setText(dataInfo.preContent + dataInfo.valueContent + dataInfo.lastContent);
         }
         // 设置数值颜色
         if (!TextUtils.isEmpty(numColor)) {

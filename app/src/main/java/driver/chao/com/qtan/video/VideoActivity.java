@@ -40,6 +40,7 @@ public class VideoActivity extends AppCompatActivity {
                 boolean isShowTotal = ((CheckBox)findViewById(R.id.video_total_check)).isChecked();
                 boolean isShowName = ((CheckBox)findViewById(R.id.video_name_position)).isChecked();
                 boolean isQuick = ((CheckBox)findViewById(R.id.video_quick_operate)).isChecked();
+                boolean isStatistics = ((CheckBox)findViewById(R.id.video_statistics)).isChecked();
                 String width = ((EditText)findViewById(R.id.video_width_value)).getText().toString();
                 String leftMargin = ((EditText)findViewById(R.id.video_left_margin)).getText().toString();
                 String source = ((EditText)findViewById(R.id.video_source_edt)).getText().toString();
@@ -74,17 +75,24 @@ public class VideoActivity extends AppCompatActivity {
                         DataInfo dataInfo = new DataInfo();
                         dataInfo.title = infoArray[0];
                         String value = infoArray[infoArray.length - 1];
-                        if (!TextUtils.isEmpty(value)) {
-                            dataInfo.value = Double.parseDouble(value);
-                        }
-                        if (!TextUtils.isEmpty(ratioContent)) {
-                            Double ratio = Double.parseDouble(ratioContent);
-                            dataInfo.value = dataInfo.value * ratio;
-                        }
-                        if (!TextUtils.isEmpty(ratioCount)) {
-                            Integer integer = Integer.parseInt(ratioCount);
-                            String infoValue = String.format("%." + integer + "f", dataInfo.value);
-                            dataInfo.value = Double.parseDouble(infoValue);
+                        if (isStatistics) {
+                            if (!TextUtils.isEmpty(value)) {
+                                dataInfo.value = Double.parseDouble(value);
+                            }
+                            if (!TextUtils.isEmpty(ratioContent)) {
+                                Double ratio = Double.parseDouble(ratioContent);
+                                dataInfo.value = dataInfo.value * ratio;
+                            }
+                            if (!TextUtils.isEmpty(ratioCount)) {
+                                Integer integer = Integer.parseInt(ratioCount);
+                                String infoValue = String.format("%." + integer + "f", dataInfo.value);
+                                dataInfo.value = Double.parseDouble(infoValue);
+                            }
+                            dataInfo.isStatistics = true;
+                        } else {
+                            dataInfo.value = 1f;
+                            dataInfo.valueContent = value;
+                            dataInfo.isStatistics = false;
                         }
                         if (!TextUtils.isEmpty(leftMargin)) {
                             Integer integer = Integer.parseInt(leftMargin);

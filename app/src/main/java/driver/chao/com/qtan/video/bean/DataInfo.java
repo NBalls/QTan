@@ -25,4 +25,8 @@ public class DataInfo implements Serializable {
     public String lastContent = "";
     // money Icon
     public boolean isShowMoney = false;
+    // 是否统计数据
+    public boolean isStatistics = true;
+    // 自定义文案
+    public String valueContent = "";
 }
