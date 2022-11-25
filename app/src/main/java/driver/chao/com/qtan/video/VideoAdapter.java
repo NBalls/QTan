@@ -110,6 +110,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         } else {
             holder.numTv.setTextColor(Color.WHITE);
         }
+        // 数值是否可展示
+        if (dataInfo.isNumVisible) {
+            holder.numTv.setVisibility(View.VISIBLE);
+        } else {
+            holder.numTv.setVisibility(View.GONE);
+        }
         // 判断默认个数
         if (!TextUtils.isEmpty(defaultCount)) {
             if (Integer.parseInt(defaultCount) == 15) {

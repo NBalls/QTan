@@ -41,6 +41,7 @@ public class VideoActivity extends AppCompatActivity {
                 boolean isShowName = ((CheckBox)findViewById(R.id.video_name_position)).isChecked();
                 boolean isQuick = ((CheckBox)findViewById(R.id.video_quick_operate)).isChecked();
                 boolean isStatistics = ((CheckBox)findViewById(R.id.video_statistics)).isChecked();
+                boolean isNumVisible = ((CheckBox)findViewById(R.id.video_num_visible)).isChecked();
                 String width = ((EditText)findViewById(R.id.video_width_value)).getText().toString();
                 String leftMargin = ((EditText)findViewById(R.id.video_left_margin)).getText().toString();
                 String source = ((EditText)findViewById(R.id.video_source_edt)).getText().toString();
@@ -103,6 +104,7 @@ public class VideoActivity extends AppCompatActivity {
                         dataInfo.isShowMoney = isShowMoney;
                         dataInfo.preContent = preContent;
                         dataInfo.lastContent = lastContent;
+                        dataInfo.isNumVisible = isNumVisible;
                         dataInfoList.add(dataInfo);
                     }
                 }

@@ -29,4 +29,6 @@ public class DataInfo implements Serializable {
     public boolean isStatistics = true;
     // 自定义文案
     public String valueContent = "";
+    // 是否显示
+    public boolean isNumVisible = true;
 }

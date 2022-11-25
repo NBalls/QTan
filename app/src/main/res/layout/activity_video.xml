@@ -586,12 +586,12 @@
             />
 
         <CheckBox
+            android:id="@+id/video_num_visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="名称"
-            android:visibility="invisible"
+            android:text="数值"
             />
 
         <CheckBox
