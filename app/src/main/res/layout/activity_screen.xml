@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#31414E"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:singleLine="true"
             android:maxLines="1"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="2022-11-20 21:25:14"
             android:textColor="#CBCBCB"
-            android:textSize="9sp"
+            android:textSize="11sp"
             android:layout_marginLeft="9dp"
             android:layout_marginTop="12dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -55,20 +55,61 @@
             app:layout_constraintTop_toBottomOf="@+id/screen_time_tv"
             />
 
-        <TextView
-            android:id="@+id/screen_time_tv2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/screen_btn_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2022-11-20 21:25:14"
-            android:textColor="#2E2E2E"
-            android:textSize="11sp"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/screen_divide"
-            />
+            >
+
+            <TextView
+                android:id="@+id/screen_time_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2022-11-20 21:25:14"
+                android:textColor="#2E2E2E"
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_marginLeft="9dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="7dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_gravity="bottom"
+                android:paddingRight="22dp"
+                >
+                <Button
+                    android:layout_width="42dp"
+                    android:layout_height="22dp"
+                    android:text="删除"
+                    android:textColor="#FDFDFD"
+                    android:textSize="11sp"
+                    android:background="@drawable/delete_btn_back_color"
+                    android:paddingLeft="3dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingBottom="1dp"
+                    />
+
+                <Button
+                    android:layout_width="63dp"
+                    android:layout_height="22dp"
+                    android:text="红单判定"
+                    android:textColor="#FDFDFD"
+                    android:textSize="11sp"
+                    android:background="@drawable/operate_btn_back_color"
+                    android:paddingLeft="5dp"
+                    android:paddingBottom="1dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/screen_content_tv"
@@ -76,12 +117,11 @@
             android:layout_height="wrap_content"
             android:text="NBA 04:30 火箭VS太阳\n推荐：大226.5"
             android:textColor="#3B404C"
-            android:textSize="13sp"
-            android:layout_marginTop="7dp"
+            android:textSize="14sp"
             android:layout_marginLeft="9dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/screen_time_tv2"
+            app:layout_constraintTop_toBottomOf="@+id/screen_btn_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
