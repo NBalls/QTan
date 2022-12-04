@@ -86,8 +86,6 @@
             android:layout_marginLeft="10dp"
             android:textSize="12sp"
             android:background="@drawable/video_input_back"
-            android:text="韩篮 13：00 首尔三星雷电VS安养人参
-推荐：安养人参-5.5"
             />
     </LinearLayout>
 
