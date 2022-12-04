@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".OfficialActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="免费文案："
+            android:textSize="16sp"
+            android:textColor="#000000"
+            />
+        <EditText
+            android:id="@+id/screen_title_edt_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:padding="4dp"
+            android:textSize="12sp"
+            android:background="@drawable/video_input_back"
+            android:text="深入研究足彩行业多年，致力于通过自己的研究提供精确的比赛预测，很高兴即嗨提供的平台能够将自己的学习分享出来，很高兴与各位嗨友相互交流学习，我会通过基本面和数据体系以及临场的数据变化提供独到的分析视角"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="付费文案："
+            android:textSize="16sp"
+            android:textColor="#000000"
+            />
+        <EditText
+            android:id="@+id/screen_title_edt_content2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:padding="4dp"
+            android:textSize="12sp"
+            android:background="@drawable/video_input_back"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:gravity="top"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="输入内容："
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_gravity="top"
+            />
+        <EditText
+            android:id="@+id/official_content_edt_content"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="12sp"
+            android:background="@drawable/video_input_back"
+            android:text="韩篮 13：00 首尔三星雷电VS安养人参
+推荐：安养人参-5.5"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:gravity="top"
+        >
+        <CheckBox
+            android:id="@+id/official_num_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="比分"
+            android:checked="true"
+            />
+
+        <CheckBox
+            android:id="@+id/official_dai_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="带来"
+            android:checked="true"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:gravity="top"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主队胜场"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_gravity="top"
+            />
+
+        <EditText
+            android:id="@+id/official_num_count"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textSize="12sp"
+            android:inputType="number"
+            android:text="4"
+            android:background="@drawable/video_input_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主队排名"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            />
+
+        <EditText
+            android:id="@+id/official_position_one"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textSize="12sp"
+            android:inputType="number"
+            android:text="4"
+            android:background="@drawable/video_input_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客队排名"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            />
+
+        <EditText
+            android:id="@+id/official_position_two"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textSize="12sp"
+            android:inputType="number"
+            android:text="4"
+            android:background="@drawable/video_input_back"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/official_button_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="生成"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        />
+
+</LinearLayout>

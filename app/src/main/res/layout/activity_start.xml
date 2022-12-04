@@ -17,7 +17,7 @@
             android:id="@+id/start_goto_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="跳转视频"
+            android:text="跳转视频-头条视频制作"
             android:textSize="18sp"
             android:textColor="#000000"
             android:layout_marginTop="10dp"
@@ -27,7 +27,7 @@
             android:id="@+id/start_goto_pan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="跳转盘口"
+            android:text="跳转盘口-球探盘口分析"
             android:textSize="18sp"
             android:textColor="#000000"
             android:layout_marginTop="10dp"
@@ -37,12 +37,22 @@
             android:id="@+id/start_goto_screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="跳转截屏"
+            android:text="跳转截屏-料码单子截图"
             android:textSize="18sp"
             android:textColor="#000000"
             android:layout_marginTop="10dp"
             />
 
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/start_goto_jihai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转文案-即嗨文案编写"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_marginTop="10dp"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

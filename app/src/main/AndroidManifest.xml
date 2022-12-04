@@ -23,17 +23,19 @@
         android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".OfficialActivity"
+            android:exported="true" />
         <!-- 启动Activity -->
         <activity
             android:name=".StartActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- 视频Activity -->
+        </activity> <!-- 视频Activity -->
         <activity
             android:name=".video.VideoDetailActivity"
             android:exported="true"
@@ -41,23 +43,20 @@
         <activity
             android:name=".video.VideoActivity"
             android:exported="true"
-            tools:ignore="Instantiatable"></activity>
-        <!-- 盘口Activity -->
+            tools:ignore="Instantiatable" /> <!-- 盘口Activity -->
         <activity
             android:name=".MainActivity"
-            tools:ignore="Instantiatable">
-        </activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".TDetailActivity"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".ImageActivity"
-            tools:ignore="Instantiatable" />
-        <!-- 截屏Activity -->
+            tools:ignore="Instantiatable" /> <!-- 截屏Activity -->
         <activity
             android:name=".screen.ScreenActivity"
             android:exported="true"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
     </application>
 
 </manifest>

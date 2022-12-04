@@ -39,5 +39,13 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // 跳转即嗨文案制作
+        findViewById(R.id.start_goto_jihai).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, ScreenActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
