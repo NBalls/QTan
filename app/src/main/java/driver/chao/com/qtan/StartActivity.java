@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import driver.chao.com.qtan.hook.InstrumentationHook;
 import driver.chao.com.qtan.screen.ScreenActivity;
 import driver.chao.com.qtan.video.VideoActivity;
 
@@ -15,6 +16,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        // Hook的方式，Hook instrumentation
+        InstrumentationHook.instrumentationProxy(this);
         // 跳转制作视频
         findViewById(R.id.start_goto_video).setOnClickListener(new View.OnClickListener() {
             @Override
