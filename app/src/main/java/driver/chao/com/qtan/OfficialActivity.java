@@ -42,9 +42,8 @@ public class OfficialActivity extends AppCompatActivity {
                 }
                 StringBuffer result = new StringBuffer();
                 if (daiCheck) {
-                    result.append("今天给大家带来一场").append(mList.get(0)).append("比赛：");
+                    result.append("今天给大家带来一场").append(mList.get(0)).append("比赛。");
                 }
-                result.append(mList.get(0)).append("。");
                 String[] dui = mList.get(2).split("VS");
                 if (dui.length != 2) {
                     return;
